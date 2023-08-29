@@ -10,6 +10,8 @@ import SnapKit
 
 class AddNewPlaceVC: UIViewController {
     
+    var placeCoordinate: String?
+    
     private lazy var rectangle: UIView = {
         let line = UIView()
         line.backgroundColor = .systemGray
@@ -19,7 +21,7 @@ class AddNewPlaceVC: UIViewController {
     
     private lazy var placeName: CustomTextField = {
         let view = CustomTextField()
-        //view.labelText = "Place Name"
+        view.labelText = "Place Name"
         view.placeholderName = "Please write a place name"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "Place Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
@@ -37,10 +39,11 @@ class AddNewPlaceVC: UIViewController {
 
     private lazy var country: CustomTextField = {
         let view = CustomTextField()
-        view.labelText = "Country, City"
-        //view.placeholderName = "France, Paris"
+        view.labelText = "City, Country"
+        view.placeholderName = "Paris, France"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "France, Paris", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+
         
         return view
     }()
@@ -50,9 +53,9 @@ class AddNewPlaceVC: UIViewController {
         //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 0
+        layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .horizontal
-        
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         
        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -82,27 +85,41 @@ class AddNewPlaceVC: UIViewController {
     
 
     override func viewDidLayoutSubviews() {
-        collectionView.roundCorners(corners: [.topRight,.topLeft,.bottomLeft], radius: 16)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         view.backgroundColor = Color.lightGray.color
 
         setupView()
+        
+        getLocation()
 
     }
     
+    func getLocation(){
+        guard let placeCoordinate = placeCoordinate else {return}
+        country.txtField.text = placeCoordinate
+    }
     
     func setupView(){
+        
+
         view.addSubviews(rectangle,
                          placeName,
                          visitDescription,
                          country,
                          addPlaceBtn,collectionView)
         
+
+        
+        
         setupLayout()
+        
+
         
     }
     
@@ -138,7 +155,7 @@ class AddNewPlaceVC: UIViewController {
         
         collectionView.snp.makeConstraints({make in
             make.top.equalTo(country.snp.bottom).offset(16)
-            make.leading.equalToSuperview().offset(24)
+            make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-94)
         })
@@ -146,7 +163,7 @@ class AddNewPlaceVC: UIViewController {
         addPlaceBtn.snp.makeConstraints({make in
             make.top.equalTo(collectionView.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview().offset(-24)
         })
         
@@ -160,7 +177,7 @@ class AddNewPlaceVC: UIViewController {
 extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: 269, height: 215)
+        let size = CGSize(width: collectionView.frame.width * 0.8, height: collectionView.frame.height - 16)
         return size
     }
     

@@ -112,6 +112,14 @@
 		E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
 		E10977D82A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
 		E10977D92A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
+		E10977DB2A9DDEB60058DA0B /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977DA2A9DDEB60058DA0B /* HomeCollectionViewCell.swift */; };
+		E10977DD2A9DDEC50058DA0B /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977DC2A9DDEC50058DA0B /* HomeTableViewCell.swift */; };
+		E10977DF2A9DDEE40058DA0B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977DE2A9DDEE40058DA0B /* HomeViewModel.swift */; };
+		E10977E12A9DDF170058DA0B /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E02A9DDF170058DA0B /* HomeModel.swift */; };
+		E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */; };
+		E10977E52A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E42A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift */; };
+		E10977E72A9DEA470058DA0B /* AddNewPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */; };
+		E10977E82A9DEA470058DA0B /* AddNewPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +186,12 @@
 		E10977CE2A9DC7880058DA0B /* AddNewPlaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceVC.swift; sourceTree = "<group>"; };
 		E10977D22A9DC79F0058DA0B /* AddNewPlaceCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceCVC.swift; sourceTree = "<group>"; };
 		E10977D62A9DC7F10058DA0B /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		E10977DA2A9DDEB60058DA0B /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		E10977DC2A9DDEC50058DA0B /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		E10977DE2A9DDEE40058DA0B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		E10977E02A9DDF170058DA0B /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceModel.swift; sourceTree = "<group>"; };
+		E10977E42A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +374,10 @@
 			isa = PBXGroup;
 			children = (
 				E10977A62A9D480A0058DA0B /* HomeVC.swift */,
+				E10977DA2A9DDEB60058DA0B /* HomeCollectionViewCell.swift */,
+				E10977DC2A9DDEC50058DA0B /* HomeTableViewCell.swift */,
+				E10977DE2A9DDEE40058DA0B /* HomeViewModel.swift */,
+				E10977E02A9DDF170058DA0B /* HomeModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -384,10 +402,20 @@
 				E10977C62A9DC76D0058DA0B /* MapCollectionViewCell.swift */,
 				E10977CA2A9DC77A0058DA0B /* MapViewModel.swift */,
 				E10977D62A9DC7F10058DA0B /* MapModel.swift */,
-				E10977CE2A9DC7880058DA0B /* AddNewPlaceVC.swift */,
-				E10977D22A9DC79F0058DA0B /* AddNewPlaceCVC.swift */,
+				E10977E62A9DEA3D0058DA0B /* AddNewPlace */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		E10977E62A9DEA3D0058DA0B /* AddNewPlace */ = {
+			isa = PBXGroup;
+			children = (
+				E10977CE2A9DC7880058DA0B /* AddNewPlaceVC.swift */,
+				E10977D22A9DC79F0058DA0B /* AddNewPlaceCVC.swift */,
+				E10977E42A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift */,
+				E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */,
+			);
+			path = AddNewPlace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -564,18 +592,24 @@
 				E109777F2A9D39EA0058DA0B /* KeyChainHelper.swift in Sources */,
 				E10977772A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
 				E109778B2A9D41B90058DA0B /* LoginViewModel.swift in Sources */,
+				E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
+				E10977DB2A9DDEB60058DA0B /* HomeCollectionViewCell.swift in Sources */,
 				E10977CB2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
+				E10977E12A9DDF170058DA0B /* HomeModel.swift in Sources */,
 				E10977422A9D35C20058DA0B /* CustomView.swift in Sources */,
 				E10977462A9D35ED0058DA0B /* CustomTextView.swift in Sources */,
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
+				E10977DF2A9DDEE40058DA0B /* HomeViewModel.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E109778F2A9D41CD0058DA0B /* LoginModel.swift in Sources */,
 				E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */,
 				E10977592A9D37660058DA0B /* DesignSystem.swift in Sources */,
 				E10977482A9D35FE0058DA0B /* CustomButton.swift in Sources */,
+				E10977E52A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift in Sources */,
+				E10977DD2A9DDEC50058DA0B /* HomeTableViewCell.swift in Sources */,
 				E10977CF2A9DC7890058DA0B /* AddNewPlaceVC.swift in Sources */,
 				E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */,
 				E10977442A9D35DB0058DA0B /* CustomTextField.swift in Sources */,
@@ -594,6 +628,7 @@
 				E10977802A9D39EA0058DA0B /* KeyChainHelper.swift in Sources */,
 				E10977D42A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E10977992A9D45520058DA0B /* SignUpViewModel.swift in Sources */,
+				E10977E82A9DEA470058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E109777C2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */,
 				E10977A82A9D480A0058DA0B /* HomeVC.swift in Sources */,
 				E10977C02A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
@@ -620,6 +655,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E10977E72A9DEA470058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977D52A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E10977B52A9D4C910058DA0B /* VisitsModel.swift in Sources */,
 				E10977892A9D415F0058DA0B /* SignUpVC.swift in Sources */,

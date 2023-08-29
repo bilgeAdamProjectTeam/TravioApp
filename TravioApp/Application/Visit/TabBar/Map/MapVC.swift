@@ -14,6 +14,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
     
     var viewModel = MapViewModel()
     var allPlaces: [Place]?
+    var address:String?
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView(frame: self.view.frame)
@@ -120,11 +121,38 @@ class MapVC: UIViewController, MKMapViewDelegate {
             // Add the annotation to the map view
             mapView.addAnnotation(annotation)
             
-            let vc = AddNewPlaceVC()
-            vc.preferredContentSize = CGSize(width: 390, height: 790)
-            present(vc, animated: true, completion: nil)
+            let location = CLLocation(latitude:coordinate.latitude, longitude: coordinate.longitude)
+            let geocoder = CLGeocoder()
             
-            print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
+            geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+                if let error = error {
+                    print("Hata: \(error)")
+                    return
+                }
+                
+                guard let placemark = placemarks?.first else {
+                    print("Yer bulunamadı.")
+                    return
+                }
+                
+                if let name = placemark.name,
+                   let locality = placemark.locality ,
+                   let city = placemark.administrativeArea,
+                   let country = placemark.country {
+                    self.address = "\(city),\(country)"
+                    print("Koordinatın Yeri: \(String(describing: self.address))")
+                } else {
+                    print("Yer adı alınamadı.")
+                }
+                
+                let vc = AddNewPlaceVC()
+                vc.preferredContentSize = CGSize(width: 390, height: 790)
+                vc.placeCoordinate = self.address
+                self.present(vc, animated: true, completion: nil)
+                print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
+            }
+            
+           
             
            
         }

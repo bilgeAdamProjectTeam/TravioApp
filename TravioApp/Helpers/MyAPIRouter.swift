@@ -42,6 +42,8 @@ enum MyAPIRouter: URLRequestConvertible {
     //Router case'leri oluşturuluyor
     case postLogIn(parameters: Parameters)
     case postRegister(parameters: Parameters)
+
+    //case createPlace(paramet)
     //case postUpload
     //Place
     case postPlace(parameters: Parameters)
