@@ -13,7 +13,7 @@ class MapCollectionViewCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .darkGray
+        img.backgroundColor = Color.darkGray.color
         img.layer.shadowColor = Color.darkGray.color.cgColor
         img.layer.shadowOffset = CGSize(width: 0, height: 0)
         img.layer.shadowOpacity = 0.15
@@ -22,7 +22,6 @@ class MapCollectionViewCell: UICollectionViewCell {
 //        img.layer.cornerRadius = 16
         img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
         img.contentMode = .scaleAspectFill
-        
         
         
         return img

@@ -7,10 +7,17 @@
 
 
 
+
 import UIKit
 import SnapKit
 
+protocol HomeTableViewCellDelegate: AnyObject {
+    func didTapSeeAllButton(in cell: HomeTableViewCell)
+}
+
 class HomeTableViewCell: UITableViewCell{
+    
+    weak var delegate: HomeTableViewCellDelegate?
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
@@ -30,6 +37,7 @@ class HomeTableViewCell: UITableViewCell{
         let btn = UIButton()
         btn.setTitle("See All", for: .normal)
         btn.setTitleColor(.systemBlue, for: .normal)
+        btn.addTarget(self, action: #selector(seeAllPage), for: .touchUpInside)
         return btn
     }()
     
@@ -74,8 +82,15 @@ class HomeTableViewCell: UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func seeAllPage() {
+        delegate?.didTapSeeAllButton(in: self)
+    }
 
-    
+//    @objc func seeAllPage(){
+//        let vc = SeeAllVC()
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
+
     
     func setupView(){
         

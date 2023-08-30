@@ -116,6 +116,10 @@
 		E10977EC2A9FA3090058DA0B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */; };
 		E10977EE2A9FA31F0058DA0B /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */; };
 		E10977F02A9FA3420058DA0B /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977EF2A9FA3420058DA0B /* HomeCollectionViewCell.swift */; };
+		E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977F72A9FA5000058DA0B /* SeeAllVC.swift */; };
+		E10977FA2A9FA5230058DA0B /* SeeAllCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */; };
+		E10977FC2A9FA5360058DA0B /* SeeAllViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977FB2A9FA5360058DA0B /* SeeAllViewModel.swift */; };
+		E10977FE2A9FA5450058DA0B /* SeeAllModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +190,10 @@
 		E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		E10977EF2A9FA3420058DA0B /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		E10977F72A9FA5000058DA0B /* SeeAllVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllVC.swift; sourceTree = "<group>"; };
+		E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllCollectionViewCell.swift; sourceTree = "<group>"; };
+		E10977FB2A9FA5360058DA0B /* SeeAllViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllViewModel.swift; sourceTree = "<group>"; };
+		E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,6 +380,7 @@
 				E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */,
 				E10977E92A9FA2D60058DA0B /* HomeModel.swift */,
 				E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */,
+				E10977F42A9FA4D90058DA0B /* SeeAll */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -400,6 +409,17 @@
 				E10977D22A9DC79F0058DA0B /* AddNewPlaceCVC.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		E10977F42A9FA4D90058DA0B /* SeeAll */ = {
+			isa = PBXGroup;
+			children = (
+				E10977F72A9FA5000058DA0B /* SeeAllVC.swift */,
+				E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */,
+				E10977FB2A9FA5360058DA0B /* SeeAllViewModel.swift */,
+				E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */,
+			);
+			path = SeeAll;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -563,6 +583,7 @@
 			files = (
 				E109777B2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */,
 				E10977B32A9D4C910058DA0B /* VisitsModel.swift in Sources */,
+				E10977FC2A9FA5360058DA0B /* SeeAllViewModel.swift in Sources */,
 				E10977EA2A9FA2D60058DA0B /* HomeModel.swift in Sources */,
 				E10977A72A9D480A0058DA0B /* HomeVC.swift in Sources */,
 				E10977982A9D45520058DA0B /* SignUpViewModel.swift in Sources */,
@@ -573,6 +594,7 @@
 				E10977732A9D39720058DA0B /* Extension.swift in Sources */,
 				E10977B72A9D4CAC0058DA0B /* VisitsCVC.swift in Sources */,
 				E10977122A9D2EEF0058DA0B /* LoginVC.swift in Sources */,
+				E10977FA2A9FA5230058DA0B /* SeeAllCollectionViewCell.swift in Sources */,
 				E10977872A9D415F0058DA0B /* SignUpVC.swift in Sources */,
 				E109777F2A9D39EA0058DA0B /* KeyChainHelper.swift in Sources */,
 				E10977772A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
@@ -586,6 +608,7 @@
 				E10977422A9D35C20058DA0B /* CustomView.swift in Sources */,
 				E10977F02A9FA3420058DA0B /* HomeCollectionViewCell.swift in Sources */,
 				E10977462A9D35ED0058DA0B /* CustomTextView.swift in Sources */,
+				E10977FE2A9FA5450058DA0B /* SeeAllModel.swift in Sources */,
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E109778F2A9D41CD0058DA0B /* LoginModel.swift in Sources */,
@@ -596,6 +619,7 @@
 				E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */,
 				E10977442A9D35DB0058DA0B /* CustomTextField.swift in Sources */,
 				E10977BF2A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
+				E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */,
 				E10977A02A9D479B0058DA0B /* MenuVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

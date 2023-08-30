@@ -24,7 +24,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         img.contentMode = .scaleAspectFill
         
         
-        
         return img
     }()
     

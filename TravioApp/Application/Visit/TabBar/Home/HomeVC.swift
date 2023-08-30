@@ -142,10 +142,19 @@ class HomeVC: UIViewController {
     
 }
 
+extension HomeVC: HomeTableViewCellDelegate{
+    
+    func didTapSeeAllButton(in cell: HomeTableViewCell) {
+        let vc = SeeAllVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
 
 
 extension HomeVC: UITableViewDelegate{
-    
+
     
 }
 
@@ -174,11 +183,17 @@ extension HomeVC: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
+        cell.delegate = self
+        
         return cell
     }
     
     
 }
+
+
+
+// HomeTableViewCellDelegate işlevi
 
 
 //extension HomeVC: UICollectionViewDelegateFlowLayout{
