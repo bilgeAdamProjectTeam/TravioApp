@@ -7,10 +7,14 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class AddNewPlaceVC: UIViewController {
     
     var placeCoordinate: String?
+    //    var selectedImage: UIImage?
+    var selectedIndexPath: IndexPath?
+    var cellImages: [UIImage?] = []
     
     private lazy var rectangle: UIView = {
         let line = UIView()
@@ -36,20 +40,20 @@ class AddNewPlaceVC: UIViewController {
         view.txtView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing "
         return view
     }()
-
+    
     private lazy var country: CustomTextField = {
         let view = CustomTextField()
         view.labelText = "City, Country"
         view.placeholderName = "Paris, France"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "France, Paris", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-
+        
         
         return view
     }()
     
     private lazy var collectionView:UICollectionView = {
-
+        
         //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 10
@@ -57,7 +61,7 @@ class AddNewPlaceVC: UIViewController {
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         
-       
+        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -67,7 +71,7 @@ class AddNewPlaceVC: UIViewController {
         cv.isPagingEnabled = true
         
         cv.register(AddNewPlaceCVC.self, forCellWithReuseIdentifier: "CustomCell")
-      
+        
         return cv
         
     }()
@@ -76,6 +80,7 @@ class AddNewPlaceVC: UIViewController {
         let btn = CustomButton()
         btn.labelText = "Add Place"
         btn.backgroundColor = Color.turquoise.color
+        btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
         //btn.backgroundColor = Color.darkGray.color
         //btn.isEnabled = false
         //btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
@@ -83,7 +88,7 @@ class AddNewPlaceVC: UIViewController {
         return btn
     }()
     
-
+    
     override func viewDidLayoutSubviews() {
         
     }
@@ -91,14 +96,96 @@ class AddNewPlaceVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         view.backgroundColor = Color.lightGray.color
-
+        
         setupView()
         
         getLocation()
-
+        
+        cellImages = [UIImage?](repeating: nil, count: 3)
+        
+        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openGallery))
+        //                yourImageView.addGestureRecognizer(tapGesture)
+        
     }
+    
+    // Fotoğraf Yükleme
+    func addPlace() {
+        let placeNameText = placeName.txtField.text ?? ""
+        let descriptionText = visitDescription.txtView.text ?? ""
+        let countryText = country.txtField.text ?? ""
+        
+        let uploadURL = "https://api.iosclass.live/upload" // Yükleme URL'si
+        
+        // Resimleri yükleme işlemi
+        AF.upload(multipartFormData: { multipartFormData in
+            for (index, image) in self.cellImages.enumerated() {
+                if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
+                }
+            }
+            
+            // Diğer parametreleri eklemek
+            multipartFormData.append(placeNameText.data(using: .utf8)!, withName: "placeName")
+            multipartFormData.append(descriptionText.data(using: .utf8)!, withName: "description")
+            multipartFormData.append(countryText.data(using: .utf8)!, withName: "country")
+        }, to: uploadURL)
+        .validate(contentType: ["application/json"])
+        .responseDecodable(of: UploadResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+                if value.messageType == "S" {
+                    self.showAlert(title: "Success", message: value.message)
+                    // Başarılıysa burada ek işlemler yapabilirsiniz.
+                } else {
+                    self.showAlert(title: "Error", message: value.message)
+                    // Hata durumunda burada işlemler yapabilirsiniz.
+                }
+            case .failure(let error):
+                print("API failure: \(error)")
+                self.showAlert(title: "Error", message: "An error occurred.")
+            }
+        }
+    }
+
+    
+    @objc func addPlaceButtonTapped() {
+        addPlace()
+    }
+    
+    func uploadImages(images: [UIImage]) {
+        let uploadURL = "YOUR_UPLOAD_URL" // API yükleme URL'si
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            for (index, image) in images.enumerated() {
+                if let imageData = image.jpegData(compressionQuality: 0.8) {
+                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
+                }
+            }
+        }, to: uploadURL)
+        .responseDecodable(of: UploadResponse.self) { response in
+            switch response.result {
+            case .success(let value):
+                print("Upload success: \(value.message)")
+                for url in value.urls {
+                    print("Uploaded URL: \(url)")
+                }
+            case .failure(let error):
+                print("Upload failure: \(error)")
+            }
+        }
+    }
+    
+    
+    
+    @objc func openGallery() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     
     func getLocation(){
         guard let placeCoordinate = placeCoordinate else {return}
@@ -107,19 +194,19 @@ class AddNewPlaceVC: UIViewController {
     
     func setupView(){
         
-
+        
         view.addSubviews(rectangle,
                          placeName,
                          visitDescription,
                          country,
                          addPlaceBtn,collectionView)
         
-
+        
         
         
         setupLayout()
         
-
+        
         
     }
     
@@ -170,10 +257,7 @@ class AddNewPlaceVC: UIViewController {
         
     }
     
-
 }
-
-
 extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -181,6 +265,17 @@ extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
         return size
     }
     
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath // Seçilen hücrenin indeksini kaydedin
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
     
 }
 
@@ -197,11 +292,57 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? AddNewPlaceCVC else { return UICollectionViewCell() }
         
+        if let image = cellImages[indexPath.item] {
+            cell.images.image = image
+            cell.stackView.isHidden = true
+        } else {
+            cell.images.image = nil
+        }
+        
+        
         return cell
     }
     
+
+}
+
+
+
+extension AddNewPlaceVC: UIImagePickerControllerDelegate{
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage,
+           let selectedIndexPath = selectedIndexPath {
+            // Seçilen fotoğrafı ilgili hücreye ekle
+            cellImages[selectedIndexPath.item] = selectedImage
+            collectionView.reloadItems(at: [selectedIndexPath])
+            
+        }
+        
+        selectedIndexPath = nil
+    }
+    
+}
+
+
+
+extension AddNewPlaceVC: UINavigationControllerDelegate{
     
     
 }
+
+
+extension UIViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+}
+
+
 
