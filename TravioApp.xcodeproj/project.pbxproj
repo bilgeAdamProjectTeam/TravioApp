@@ -112,6 +112,10 @@
 		E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
 		E10977D82A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
 		E10977D92A9DC7F10058DA0B /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977D62A9DC7F10058DA0B /* MapModel.swift */; };
+		E10977EA2A9FA2D60058DA0B /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E92A9FA2D60058DA0B /* HomeModel.swift */; };
+		E10977EC2A9FA3090058DA0B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */; };
+		E10977EE2A9FA31F0058DA0B /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */; };
+		E10977F02A9FA3420058DA0B /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977EF2A9FA3420058DA0B /* HomeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +182,10 @@
 		E10977CE2A9DC7880058DA0B /* AddNewPlaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceVC.swift; sourceTree = "<group>"; };
 		E10977D22A9DC79F0058DA0B /* AddNewPlaceCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceCVC.swift; sourceTree = "<group>"; };
 		E10977D62A9DC7F10058DA0B /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
+		E10977E92A9FA2D60058DA0B /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		E10977EF2A9FA3420058DA0B /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +368,10 @@
 			isa = PBXGroup;
 			children = (
 				E10977A62A9D480A0058DA0B /* HomeVC.swift */,
+				E10977EF2A9FA3420058DA0B /* HomeCollectionViewCell.swift */,
+				E10977ED2A9FA31F0058DA0B /* HomeTableViewCell.swift */,
+				E10977E92A9FA2D60058DA0B /* HomeModel.swift */,
+				E10977EB2A9FA3090058DA0B /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -551,6 +563,7 @@
 			files = (
 				E109777B2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */,
 				E10977B32A9D4C910058DA0B /* VisitsModel.swift in Sources */,
+				E10977EA2A9FA2D60058DA0B /* HomeModel.swift in Sources */,
 				E10977A72A9D480A0058DA0B /* HomeVC.swift in Sources */,
 				E10977982A9D45520058DA0B /* SignUpViewModel.swift in Sources */,
 				E10977942A9D42E10058DA0B /* TabBarController.swift in Sources */,
@@ -564,11 +577,14 @@
 				E109777F2A9D39EA0058DA0B /* KeyChainHelper.swift in Sources */,
 				E10977772A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
 				E109778B2A9D41B90058DA0B /* LoginViewModel.swift in Sources */,
+				E10977EE2A9FA31F0058DA0B /* HomeTableViewCell.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
+				E10977EC2A9FA3090058DA0B /* HomeViewModel.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
 				E10977CB2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E10977422A9D35C20058DA0B /* CustomView.swift in Sources */,
+				E10977F02A9FA3420058DA0B /* HomeCollectionViewCell.swift in Sources */,
 				E10977462A9D35ED0058DA0B /* CustomTextView.swift in Sources */,
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
