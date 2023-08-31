@@ -42,7 +42,7 @@ enum MyAPIRouter: URLRequestConvertible {
     //Router case'leri oluşturuluyor
     case postLogIn(parameters: Parameters)
     case postRegister(parameters: Parameters)
-    case postUpload(imageData: Data)
+    case postUpload(image: [Data?])
 
     //case createPlace(paramet)
     //case postUpload
@@ -68,8 +68,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/auth/login"
         case .postRegister(_):
             return "/v1/auth/register"
-//        case .postUpload:
-//            return "/upload"
+        case .postUpload:
+            return "/upload"
         case .postPlace, .getAllPlaces:
             return "/v1/places"
         case .getPlaceByID(let placeId):
@@ -84,8 +84,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/visits"
         case .getVisitByID(let visitId):
             return "/v1/visits\(visitId)"
-        case .postUpload(_):
-            return "/upload"
+//        case .postUpload(_):
+//            return "/upload"
         }
     }
     
@@ -104,8 +104,6 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters) :
             return parameters
-        case .postUpload(let imageData):
-            return ["file": imageData]
         default:
             return [:]
         }
@@ -124,6 +122,22 @@ enum MyAPIRouter: URLRequestConvertible {
         }
     }
     
+    
+    var multipartFormData: MultipartFormData {
+        let formData = MultipartFormData()
+        switch self{
+        case .postUpload(let imageData):
+            imageData.forEach{image in
+                guard let image = image else { return }
+                formData.append(image, withName: "file", fileName: "image.jpg",
+                                mimeType:"image/jpeg")
+            }
+            return formData
+        default:
+            break
+        }
+        return formData
+    }
     
     //API isteği oluşturan fonksiyon hazırlanıyor
     public func asURLRequest() throws -> URLRequest {

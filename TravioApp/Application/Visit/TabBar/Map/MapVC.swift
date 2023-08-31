@@ -148,8 +148,11 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 let vc = AddNewPlaceVC()
                 vc.preferredContentSize = CGSize(width: 390, height: 790)
                 vc.placeCoordinate = self.address
+                vc.longitude = coordinate.longitude
+                vc.latitude = coordinate.latitude
                 self.present(vc, animated: true, completion: nil)
                 print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
+                
             }
             
            

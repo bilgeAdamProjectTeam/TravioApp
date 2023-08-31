@@ -32,6 +32,28 @@ class NetworkingHelper {
     }
     
     
+    func uploadImage<T: Codable>(route: MyAPIRouter, callback: @escaping (Result<T,Error>) -> Void){
+        
+        
+        let request: URLRequestConvertible = route
+
+        AF.upload(multipartFormData: route.multipartFormData , with: request).validate()
+            .responseData {response in
+                switch response.result {
+                case .success(let data):
+                    do {
+        
+                        let decodedData = try JSONDecoder().decode(T.self, from: data)
+                        callback(.success(decodedData))
+                    } catch {
+                        callback(.failure(error))
+                    }
+                case .failure(let err):
+                    callback(.failure(err))
+                }
+            }
+    }
+    
     
     
 }
