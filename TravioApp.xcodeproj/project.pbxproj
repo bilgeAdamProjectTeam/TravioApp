@@ -43,9 +43,9 @@
 		E10977732A9D39720058DA0B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977722A9D39720058DA0B /* Extension.swift */; };
 		E10977742A9D39720058DA0B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977722A9D39720058DA0B /* Extension.swift */; };
 		E10977752A9D39720058DA0B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977722A9D39720058DA0B /* Extension.swift */; };
-		E10977772A9D39C00058DA0B /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkHelper.swift */; };
-		E10977782A9D39C00058DA0B /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkHelper.swift */; };
-		E10977792A9D39C00058DA0B /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkHelper.swift */; };
+		E10977772A9D39C00058DA0B /* NetworkingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkingHelper.swift */; };
+		E10977782A9D39C00058DA0B /* NetworkingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkingHelper.swift */; };
+		E10977792A9D39C00058DA0B /* NetworkingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977762A9D39C00058DA0B /* NetworkingHelper.swift */; };
 		E109777B2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109777A2A9D39D30058DA0B /* MyAPIRouter.swift */; };
 		E109777C2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109777A2A9D39D30058DA0B /* MyAPIRouter.swift */; };
 		E109777D2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109777A2A9D39D30058DA0B /* MyAPIRouter.swift */; };
@@ -163,7 +163,7 @@
 		E109775E2A9D38760058DA0B /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		E109775F2A9D38760058DA0B /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		E10977722A9D39720058DA0B /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		E10977762A9D39C00058DA0B /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
+		E10977762A9D39C00058DA0B /* NetworkingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelper.swift; sourceTree = "<group>"; };
 		E109777A2A9D39D30058DA0B /* MyAPIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAPIRouter.swift; sourceTree = "<group>"; };
 		E109777E2A9D39EA0058DA0B /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
 		E10977862A9D415F0058DA0B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -312,7 +312,7 @@
 			children = (
 				E109777A2A9D39D30058DA0B /* MyAPIRouter.swift */,
 				E109777E2A9D39EA0058DA0B /* KeyChainHelper.swift */,
-				E10977762A9D39C00058DA0B /* NetworkHelper.swift */,
+				E10977762A9D39C00058DA0B /* NetworkingHelper.swift */,
 				E10977722A9D39720058DA0B /* Extension.swift */,
 			);
 			path = Helpers;
@@ -590,7 +590,7 @@
 				E10977122A9D2EEF0058DA0B /* LoginVC.swift in Sources */,
 				E10977872A9D415F0058DA0B /* SignUpVC.swift in Sources */,
 				E109777F2A9D39EA0058DA0B /* KeyChainHelper.swift in Sources */,
-				E10977772A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
+				E10977772A9D39C00058DA0B /* NetworkingHelper.swift in Sources */,
 				E109778B2A9D41B90058DA0B /* LoginViewModel.swift in Sources */,
 				E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
@@ -634,7 +634,7 @@
 				E10977C02A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
 				E10977952A9D42E10058DA0B /* TabBarController.swift in Sources */,
 				E10977A12A9D479B0058DA0B /* MenuVC.swift in Sources */,
-				E10977782A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
+				E10977782A9D39C00058DA0B /* NetworkingHelper.swift in Sources */,
 				E10977BC2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
 				E10977742A9D39720058DA0B /* Extension.swift in Sources */,
 				E10977902A9D41CD0058DA0B /* LoginModel.swift in Sources */,
@@ -666,7 +666,7 @@
 				E10977A92A9D480A0058DA0B /* HomeVC.swift in Sources */,
 				E10977D12A9DC7890058DA0B /* AddNewPlaceVC.swift in Sources */,
 				E10977BD2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
-				E10977792A9D39C00058DA0B /* NetworkHelper.swift in Sources */,
+				E10977792A9D39C00058DA0B /* NetworkingHelper.swift in Sources */,
 				E10977752A9D39720058DA0B /* Extension.swift in Sources */,
 				E10977B12A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E10977CD2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,

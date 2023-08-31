@@ -42,6 +42,7 @@ enum MyAPIRouter: URLRequestConvertible {
     //Router case'leri oluşturuluyor
     case postLogIn(parameters: Parameters)
     case postRegister(parameters: Parameters)
+    case postUpload(imageData: Data)
 
     //case createPlace(paramet)
     //case postUpload
@@ -83,13 +84,15 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/visits"
         case .getVisitByID(let visitId):
             return "/v1/visits\(visitId)"
+        case .postUpload(_):
+            return "/upload"
         }
     }
     
     //Method değişkeni case'lere göre değerleri belirleniyor
     var method: HTTPMethod {
         switch self {
-        case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit:
+        case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit, .postUpload:
             return .post
         case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID:
             return .get
@@ -101,6 +104,8 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters) :
             return parameters
+        case .postUpload(let imageData):
+            return ["file": imageData]
         default:
             return [:]
         }
@@ -114,6 +119,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return [:]
         case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID:
             return ["Authorization" : "Bearer \(token)"]
+        case .postUpload:
+            return ["Content-Type": "multipart/form-data"]
         }
     }
     

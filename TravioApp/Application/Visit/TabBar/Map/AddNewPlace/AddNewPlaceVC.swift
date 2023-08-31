@@ -80,7 +80,7 @@ class AddNewPlaceVC: UIViewController {
         let btn = CustomButton()
         btn.labelText = "Add Place"
         btn.backgroundColor = Color.turquoise.color
-        btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
+//        btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
         //btn.backgroundColor = Color.darkGray.color
         //btn.isEnabled = false
         //btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
@@ -110,73 +110,73 @@ class AddNewPlaceVC: UIViewController {
         
     }
     
-    // Fotoğraf Yükleme
-    func addPlace() {
-        let placeNameText = placeName.txtField.text ?? ""
-        let descriptionText = visitDescription.txtView.text ?? ""
-        let countryText = country.txtField.text ?? ""
-        
-        let uploadURL = "https://api.iosclass.live/upload" // Yükleme URL'si
-        
-        // Resimleri yükleme işlemi
-        AF.upload(multipartFormData: { multipartFormData in
-            for (index, image) in self.cellImages.enumerated() {
-                if let imageData = image?.jpegData(compressionQuality: 0.8) {
-                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
-                }
-            }
-            
-            // Diğer parametreleri eklemek
-            multipartFormData.append(placeNameText.data(using: .utf8)!, withName: "placeName")
-            multipartFormData.append(descriptionText.data(using: .utf8)!, withName: "description")
-            multipartFormData.append(countryText.data(using: .utf8)!, withName: "country")
-        }, to: uploadURL)
-        .validate(contentType: ["application/json"])
-        .responseDecodable(of: UploadResponse.self) { response in
-            switch response.result {
-            case .success(let value):
-                if value.messageType == "S" {
-                    self.showAlert(title: "Success", message: value.message)
-                    // Başarılıysa burada ek işlemler yapabilirsiniz.
-                } else {
-                    self.showAlert(title: "Error", message: value.message)
-                    // Hata durumunda burada işlemler yapabilirsiniz.
-                }
-            case .failure(let error):
-                print("API failure: \(error)")
-                self.showAlert(title: "Error", message: "An error occurred.")
-            }
-        }
-    }
-
+//    // Fotoğraf Yükleme
+//    func addPlace() {
+//        let placeNameText = placeName.txtField.text ?? ""
+//        let descriptionText = visitDescription.txtView.text ?? ""
+//        let countryText = country.txtField.text ?? ""
+//
+//        let uploadURL = "https://api.iosclass.live/upload" // Yükleme URL'si
+//
+//        // Resimleri yükleme işlemi
+//        AF.upload(multipartFormData: { multipartFormData in
+//            for (index, image) in self.cellImages.enumerated() {
+//                if let imageData = image?.jpegData(compressionQuality: 0.8) {
+//                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
+//                }
+//            }
+//
+//            // Diğer parametreleri eklemek
+//            multipartFormData.append(placeNameText.data(using: .utf8)!, withName: "placeName")
+//            multipartFormData.append(descriptionText.data(using: .utf8)!, withName: "description")
+//            multipartFormData.append(countryText.data(using: .utf8)!, withName: "country")
+//        }, to: uploadURL)
+//        .validate(contentType: ["application/json"])
+//        .responseDecodable(of: UploadResponse.self) { response in
+//            switch response.result {
+//            case .success(let value):
+//                if value.messageType == "S" {
+//                    self.showAlert(title: "Success", message: value.message)
+//                    // Başarılıysa burada ek işlemler yapabilirsiniz.
+//                } else {
+//                    self.showAlert(title: "Error", message: value.message)
+//                    // Hata durumunda burada işlemler yapabilirsiniz.
+//                }
+//            case .failure(let error):
+//                print("API failure: \(error)")
+//                self.showAlert(title: "Error", message: "An error occurred.")
+//            }
+//        }
+//    }
+//
+//
+//    @objc func addPlaceButtonTapped() {
+//        addPlace()
+//    }
     
-    @objc func addPlaceButtonTapped() {
-        addPlace()
-    }
-    
-    func uploadImages(images: [UIImage]) {
-        let uploadURL = "YOUR_UPLOAD_URL" // API yükleme URL'si
-        
-        AF.upload(multipartFormData: { multipartFormData in
-            for (index, image) in images.enumerated() {
-                if let imageData = image.jpegData(compressionQuality: 0.8) {
-                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
-                }
-            }
-        }, to: uploadURL)
-        .responseDecodable(of: UploadResponse.self) { response in
-            switch response.result {
-            case .success(let value):
-                print("Upload success: \(value.message)")
-                for url in value.urls {
-                    print("Uploaded URL: \(url)")
-                }
-            case .failure(let error):
-                print("Upload failure: \(error)")
-            }
-        }
-    }
-    
+//    func uploadImages(images: [UIImage]) {
+//        let uploadURL = "YOUR_UPLOAD_URL" // API yükleme URL'si
+//
+//        AF.upload(multipartFormData: { multipartFormData in
+//            for (index, image) in images.enumerated() {
+//                if let imageData = image.jpegData(compressionQuality: 0.8) {
+//                    multipartFormData.append(imageData, withName: "file", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
+//                }
+//            }
+//        }, to: uploadURL)
+//        .responseDecodable(of: UploadResponse.self) { response in
+//            switch response.result {
+//            case .success(let value):
+//                print("Upload success: \(value.message)")
+//                for url in value.urls {
+//                    print("Uploaded URL: \(url)")
+//                }
+//            case .failure(let error):
+//                print("Upload failure: \(error)")
+//            }
+//        }
+//    }
+//
     
     
     @objc func openGallery() {
@@ -299,7 +299,7 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
             cell.images.image = nil
         }
         
-        
+        cell.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         return cell
     }
     
