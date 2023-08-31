@@ -226,7 +226,6 @@ class VisitsDetailVC: UIViewController {
         
         buttonAddPhoto.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.leading.equalToSuperview().offset(324)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(50)
             make.width.equalTo(50)
