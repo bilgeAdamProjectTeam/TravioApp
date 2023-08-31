@@ -14,9 +14,9 @@ class VisitsDetailVC: UIViewController {
     
     
     var viewModel = VisitsViewModel()
-    var id = ""
-    var travelImage : [Image]?
-    var detailTravel: Travel?
+    var placeId = ""
+    var visitImages : [Image]?
+    var detailVisit: Visit?
     
     private lazy var gradient:UIImageView = {
         let img = UIImageView()
@@ -34,8 +34,6 @@ class VisitsDetailVC: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .horizontal
         
-        
-       
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -120,37 +118,37 @@ class VisitsDetailVC: UIViewController {
         mapView.roundCorners(corners: [.bottomLeft,.topLeft,.topRight], radius: 16)
     }
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        setupView()
+        
+        
+        viewModel.isLoadingDidChange = { [weak self] isLoading in
+            DispatchQueue.main.async {
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    print("indicator çalıştı")
+                } else {
+                    self?.activityIndicator.stopAnimating()
+                    print("indicator durdu")
+                }
+            }
+        }
+        
+//        viewModel.getImages(id: id) {
+//            guard let imagesArr = self.viewModel.imagesArr else {return}
+//            self.travelImage = imagesArr.data.images
+//
+//            //viewModel.imagesArr?.data.images[0].caption
+//            self.collectionView.reloadData()
+//
+//        }
+        
+        
         
         setupView()
         
-
-        viewModel.isLoadingDidChange = { [weak self] isLoading in
-                    DispatchQueue.main.async {
-                        if isLoading {
-                            self?.activityIndicator.startAnimating()
-                            print("indicator çalıştı")
-                        } else {
-                            self?.activityIndicator.stopAnimating()
-                            print("indicator durdu")
-                        }
-                    }
-                }
-        
-        
-        viewModel.getImages(id: id) {
-            guard let imagesArr = self.viewModel.imagesArr else {return}
-            self.travelImage = imagesArr.data.images
-            
-            //viewModel.imagesArr?.data.images[0].caption
-            self.collectionView.reloadData()
-
-        }
         getTravelDetail()
         
         //
@@ -198,22 +196,22 @@ class VisitsDetailVC: UIViewController {
     ///   - label: label description
     ///
     func dateFormatter(visitDate: String, label: UILabel) {
-       
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            if let date = dateFormatter.date(from: visitDate) {
-                dateFormatter.dateFormat = "dd - MMMM - yyyy" // Ayın tam adını yazdırmak için
-                label.text = dateFormatter.string(from: date)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        if let date = dateFormatter.date(from: visitDate) {
+            dateFormatter.dateFormat = "dd MMMM yyyy" // Ayın tam adını yazdırmak için
+            label.text = dateFormatter.string(from: date)
             
         }
     }
     
     func setMapView(latitude:Double, longitude:Double){
-        guard let detailTravel = detailTravel else {return}
+        guard let detailVisit = detailVisit else {return}
         let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
         annotation.coordinate = locationCoordinate
-        annotation.title = detailTravel.location
+        annotation.title = detailVisit.place.title
         mapView.addAnnotation(annotation)
         let region = MKCoordinateRegion(center: locationCoordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapView.setRegion(region, animated: true)
@@ -221,18 +219,19 @@ class VisitsDetailVC: UIViewController {
 
     
     func getTravelDetail(){
-        guard let title = self.detailTravel?.location, let date = self.detailTravel?.visit_date, let  information = self.detailTravel?.information else {return}
-            self.titleLabel.text = title
+        guard let title = self.detailVisit?.place.title,
+              let date = self.detailVisit?.visited_at,
+              let information = self.detailVisit?.place.description,
+              let latitude = detailVisit?.place.latitude,
+              let longitude = detailVisit?.place.longitude else {return}
+        
+        self.titleLabel.text = title
         dateFormatter(visitDate: date, label: self.dateLabel)
-       // locationCoordinate = CLLocationCoordinate2D(latitude: detailTravel?.latitude, longitude: detailTravel?.longitude)
-            self.descriptionLbl.text = information
+        self.descriptionLbl.text = information
         
         // Mapview
         
-        setMapView(latitude: Double(detailTravel!.latitude), longitude: Double(detailTravel!.longitude))
-        
-
-        
+        self.setMapView(latitude: latitude, longitude: longitude)
     }
     
     func setupLayout(){
@@ -324,10 +323,17 @@ extension VisitsDetailVC:UICollectionViewDataSource{
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      
-        guard let travelImage = travelImage else {return 0}
+       
+        viewModel.getVisitImage(placeId: placeId) { result in
+            guard let images = self.viewModel.images else { return }
+            self.visitImages = images.data.images
+            
+            self.collectionView.reloadData()
+        }
         
-        return travelImage.count
+       guard let visitImages = visitImages else {return 0}
+        
+        return visitImages.count
         
         
     }
@@ -336,11 +342,13 @@ extension VisitsDetailVC:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? VisitsDetailCell else { return UICollectionViewCell() }
 
-        if let travelImage {
+        
+        
+        if let visitImages {
             
-            cell.configure(with: (travelImage[indexPath.row]))
+            cell.configure(with: (visitImages[indexPath.row]))
             
-            pageControl.numberOfPages = travelImage.count
+            pageControl.numberOfPages = visitImages.count
         }
         
         

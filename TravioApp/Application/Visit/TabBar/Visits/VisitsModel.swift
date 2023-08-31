@@ -7,45 +7,54 @@
 
 import Foundation
 
-struct TravelResponse: Codable {
-    let data: TravelData
-    let status: String
+struct VisitResponse: Codable {
+    var data: VisitData
+    var status: String
 }
 
-struct TravelData: Codable {
-    let count: Int
-    let travels: [Travel]
+struct VisitData: Codable {
+    var count: Int
+    var visits: [Visit]
 }
 
-struct Travel: Codable {
-    let id: String
-    let visit_date: String
-    let location: String
-    let information: String
-    let image_url: String
-    let latitude: Double
-    let longitude: Double
-    let created_at: String
-    let updated_at: String
+struct Visit: Codable {
+    var id: String
+    var place_id: String
+    var visited_at: String
+    var created_at: String
+    var updated_at: String
+    var place: VisitPlace
+}
+
+struct VisitPlace: Codable {
+    var id: String
+    var creator: String
+    var place: String
+    var title: String
+    var description: String
+    var cover_image_url: String
+    var latitude: Double
+    var longitude: Double
+    var created_at: String
+    var updated_at: String
 }
 
 
 
 struct ImageResponse: Codable {
-    let data: ImageData
-    let status: String
+    var data: ImageData
+    var status: String
 }
 
 struct ImageData: Codable {
-    let images: [Image]
-    let count: Int
+    var images: [Image]
+    var count: Int
 }
 
 struct Image: Codable {
-    let id: String
-    let travel_id: String
-    let image_url: String
-    let caption: String
-    let created_at: String
-    let updated_at: String
+    var id: String
+    var place_id: String
+    var image_url: String
+    var created_at: String
+    var updated_at: String
 }

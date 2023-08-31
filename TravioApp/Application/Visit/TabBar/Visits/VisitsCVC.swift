@@ -11,12 +11,11 @@ import SnapKit
 import SDWebImage
 
 class VisitsCVC: UICollectionViewCell {
+    
     static let imageCache = NSCache<NSString, UIImage>()
     
     private lazy var containerView:UIView = {
         let view = UIView()
-     
-        
         return view
     }()
     
@@ -116,9 +115,9 @@ class VisitsCVC: UICollectionViewCell {
     }
 
     
-    func configure(with travel: Travel) {
-        name.text = travel.location
-        backgroundImage.sd_setImage(with: URL(string: travel.image_url))
+    func configure(with visit: Visit) {
+        name.text = visit.place.place
+        backgroundImage.sd_setImage(with: URL(string: visit.place.cover_image_url))
     }
     
 

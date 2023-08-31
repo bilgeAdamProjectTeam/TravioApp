@@ -11,8 +11,9 @@ import SnapKit
 import UIKit
 
 class VisitsVC: UIViewController {
+    
     let visitsViewModel = VisitsViewModel()
-    var dizi: [Travel] = []
+    var visits: [Visit] = []
 
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -46,13 +47,15 @@ class VisitsVC: UIViewController {
 
         setupViews()
         
-        visitsViewModel.getData { result in
-            self.dizi.append(contentsOf: result.data.travels)
+        configureVM()
+      
+    }
+    
+    func configureVM() {
+        visitsViewModel.getVisits(callback: { result in
+            self.visits.append(contentsOf: result.data.visits)
             self.MyCollection.reloadData()
-            
-        }
-        
-        
+        })
     }
     
     func setupViews() {
@@ -83,14 +86,14 @@ class VisitsVC: UIViewController {
 
 extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dizi.count
+        return visits.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? VisitsCVC else { return UICollectionViewCell() }
-        let travel = dizi[indexPath.item]
+        let visit = visits[indexPath.item]
         
-        cell.configure(with: travel)
+        cell.configure(with: visit)
         
         return cell
     }
@@ -100,13 +103,15 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var travelData = visitsViewModel.arr?.data.travels[indexPath.row]
-        var travelId = dizi[indexPath.item].id
-        print(dizi[indexPath.item].id)
+        guard let data = visitsViewModel.visits?.data else { return }
+        var visitData = data.visits[indexPath.row]
+        var placeId = visitData.place_id
+        print(placeId)
         //visitsViewModel.getImages(id: travelId, callback: <#T##(ImageResponse) -> Void#>)
+        
         let vc = VisitsDetailVC()
-        vc.id = travelId
-        vc.detailTravel = travelData
+        vc.placeId = placeId
+        //vc.detailTravel = travelData
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

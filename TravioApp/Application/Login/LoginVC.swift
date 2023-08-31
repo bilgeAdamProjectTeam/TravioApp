@@ -41,7 +41,8 @@ class LoginVC: UIViewController {
         let view = CustomTextField()
         view.labelText = "Email"
         view.placeholderName = "bilgeadam@gmail.com"
-        view.txtField.text = "furk@n.dev"
+        view.txtField.text = "t@gmail.com"
+        
         
         return view
     }()
@@ -50,7 +51,7 @@ class LoginVC: UIViewController {
         let view = CustomTextField()
         view.labelText = "Password"
         view.placeholderName = "*********"
-        view.txtField.text = "123123123"
+        view.txtField.text = "12345678"
         view.txtField.isSecureTextEntry = true
         
         return view

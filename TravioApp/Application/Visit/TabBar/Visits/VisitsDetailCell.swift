@@ -14,7 +14,6 @@ class VisitsDetailCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
-
         return img
     }()
     
@@ -30,8 +29,6 @@ class VisitsDetailCell: UICollectionViewCell {
     
     func configure(with photos: Image){
         
-        //        ImageR.image = UIImage(contentsOfFile: photos.image_url)
-        //imageTitle.text = photos.title
         
         if let imageUrl = URL(string: photos.image_url) {
             DispatchQueue.global().async {
