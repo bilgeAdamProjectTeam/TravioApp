@@ -68,18 +68,18 @@ class VisitsVC: UIViewController {
     
     func setupLayouts() {
         retangle.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalToSuperview().offset(0)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(128)
+            make.top.equalToSuperview().offset(128)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         header.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(24)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
         }
         
         MyCollection.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalToSuperview().offset(0)
-            make.top.equalToSuperview().offset(0)
+            make.bottom.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview()
         }
     }
 }
