@@ -22,6 +22,7 @@
 		E06FEEB22AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB32AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB42AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
+		E06FEEB72AA20E8100D68E93 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E06FEEB62AA20E8100D68E93 /* Kingfisher */; };
 		E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770D2A9D2EEF0058DA0B /* AppDelegate.swift */; };
 		E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770F2A9D2EEF0058DA0B /* SceneDelegate.swift */; };
 		E10977122A9D2EEF0058DA0B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977112A9D2EEF0058DA0B /* LoginVC.swift */; };
@@ -205,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E06FEEB72AA20E8100D68E93 /* Kingfisher in Frameworks */,
 				E10977572A9D37200058DA0B /* IQKeyboardManagerSwift in Frameworks */,
 				E10977512A9D36A40058DA0B /* SwiftyJSON in Frameworks */,
 				E10977542A9D36EE0058DA0B /* SDWebImageLinkPlugin in Frameworks */,
@@ -458,6 +460,7 @@
 				E10977502A9D36A40058DA0B /* SwiftyJSON */,
 				E10977532A9D36EE0058DA0B /* SDWebImageLinkPlugin */,
 				E10977562A9D37200058DA0B /* IQKeyboardManagerSwift */,
+				E06FEEB62AA20E8100D68E93 /* Kingfisher */,
 			);
 			productName = TravioApp;
 			productReference = E109770A2A9D2EEF0058DA0B /* TravioApp.app */;
@@ -537,6 +540,7 @@
 				E109774F2A9D36A40058DA0B /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				E10977522A9D36EE0058DA0B /* XCRemoteSwiftPackageReference "SDWebImageLinkPlugin" */,
 				E10977552A9D37200058DA0B /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				E06FEEB52AA20E8000D68E93 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E109770B2A9D2EEF0058DA0B /* Products */;
 			projectDirPath = "";
@@ -1020,6 +1024,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E06FEEB52AA20E8000D68E93 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		E10977492A9D36690058DA0B /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1063,6 +1075,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E06FEEB62AA20E8100D68E93 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E06FEEB52AA20E8000D68E93 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		E109774A2A9D36690058DA0B /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E10977492A9D36690058DA0B /* XCRemoteSwiftPackageReference "Alamofire" */;

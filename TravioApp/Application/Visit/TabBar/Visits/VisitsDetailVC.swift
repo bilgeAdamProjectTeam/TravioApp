@@ -178,8 +178,6 @@ class VisitsDetailVC: UIViewController {
         
         darkMode()
         
-        configureVM()
-        
         getTravelDetail()
       
     }
@@ -307,7 +305,8 @@ class VisitsDetailVC: UIViewController {
         }
     }
     
-    func setMapView(latitude:Double, longitude:Double){
+    func setMapView(latitude:Double, longitude:Double) {
+        
         guard let detailVisit = detailVisit else {return}
         let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
@@ -317,28 +316,21 @@ class VisitsDetailVC: UIViewController {
         let region = MKCoordinateRegion(center: locationCoordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapView.setRegion(region, animated: true)
     }
-    
-    func configureVM() {
+
+    func getTravelDetail() {
+        
         viewModel.getVisitImage(placeId: placeId) { result in
             guard let images = self.viewModel.images else { return }
             self.visitImages = images.data.images
-            
             self.collectionView.reloadData()
         }
-    }
-
-    func getTravelDetail(){
-        guard let title = self.detailVisit?.place.title,
-              let date = self.detailVisit?.visited_at,
-              let information = self.detailVisit?.place.description,
-              let latitude = detailVisit?.place.latitude,
-              let longitude = detailVisit?.place.longitude else {return}
         
-        self.titleLabel.text = title
-        dateFormatter(visitDate: date, label: self.dateLabel)
-        self.descriptionLbl.text = information
-        
-        self.setMapView(latitude: latitude, longitude: longitude)
+        guard let detailVisit = detailVisit else { return }
+        self.titleLabel.text = detailVisit.place.title
+        dateFormatter(visitDate: detailVisit.visited_at, label: self.dateLabel)
+        self.descriptionLbl.text = detailVisit.place.description
+        self.labelAddedBy.text = "Added by \(detailVisit.place.creator)"
+        self.setMapView(latitude: detailVisit.place.latitude, longitude: detailVisit.place.longitude)
     }
     
     func darkMode() {

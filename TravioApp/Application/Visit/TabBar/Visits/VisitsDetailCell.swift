@@ -28,19 +28,11 @@ class VisitsDetailCell: UICollectionViewCell {
     
     
     func configure(with photos: Image){
-        
-        
+
         if let imageUrl = URL(string: photos.image_url) {
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: imageUrl),
-                   let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async {
-                        self.images.image = image
-                    }
-                }
-            }
-        }
-        
+            
+            self.images.kf.setImage(with: imageUrl)
+        } 
     }
         
     //view.frame = CGRect(x: 0, y: 0, width: 390, height: 249)

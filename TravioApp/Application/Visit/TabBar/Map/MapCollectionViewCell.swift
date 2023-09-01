@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import SDWebImage
+import Kingfisher
 
 class MapCollectionViewCell: UICollectionViewCell {
     
@@ -74,14 +74,7 @@ class MapCollectionViewCell: UICollectionViewCell {
             cityName.text = places.place
         
         if let imageUrl = URL(string: places.coverImageURL!) {
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: imageUrl),
-                   let image = UIImage(data: imageData) {
-                    DispatchQueue.main.async {
-                        self.images.image = image
-                    }
-                }
-            }
+            self.images.kf.setImage(with: imageUrl)
         }
         
     }

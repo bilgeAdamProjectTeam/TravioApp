@@ -8,11 +8,9 @@
 
 import UIKit
 import SnapKit
-import SDWebImage
+import Kingfisher
 
 class VisitsCVC: UICollectionViewCell {
-    
-    static let imageCache = NSCache<NSString, UIImage>()
     
     private lazy var containerView:UIView = {
         let view = UIView()
@@ -46,12 +44,6 @@ class VisitsCVC: UICollectionViewCell {
         lbl.textColor = .white
         return lbl
     }()
-    
-//    private lazy var gradient:UIImageView = {
-//        let img = UIImageView()
-//        img.image = UIImage(named: "gradient")
-//        return img
-//    }()
     
     
     override init(frame: CGRect) {
@@ -90,7 +82,6 @@ class VisitsCVC: UICollectionViewCell {
         addSubviews(containerView)
         
         containerView.addSubviews(backgroundImage,
-//                                  gradient,
                                   locationImage,
                                   labelPlaceName,
                                   labelLocationName)
@@ -122,17 +113,13 @@ class VisitsCVC: UICollectionViewCell {
             make.leading.equalTo(locationImage.snp.trailing).offset(6)
             make.top.equalTo(labelPlaceName.snp.bottom)
         }
-        
-//        gradient.snp.makeConstraints { make in
-//            make.leading.trailing.bottom.equalToSuperview().offset(0)
-//            make.height.equalTo(110)
-//        }
     }
     
     func configure(with visit: Visit) {
         labelPlaceName.text = visit.place.title
         labelLocationName.text = visit.place.place
-        backgroundImage.sd_setImage(with: URL(string: visit.place.cover_image_url))
+        
+        backgroundImage.kf.setImage(with: URL(string: visit.place.cover_image_url))
     }
      
 }
