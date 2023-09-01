@@ -81,8 +81,6 @@ class VisitsViewModel {
     
     func getVisitImage(placeId:String, callback: @escaping (ImageResponse) -> Void) {
         
-        //guard let placeId = placeId else { return }
-        
 //        isLoadingDidChange?(true)
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllImagesbyPlaceID(placeId: placeId), callback: {(result: Result<ImageResponse, Error>) in
