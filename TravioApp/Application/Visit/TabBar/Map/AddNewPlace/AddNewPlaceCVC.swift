@@ -11,7 +11,9 @@ import SnapKit
 
 class AddNewPlaceCVC: UICollectionViewCell {
     
-    private lazy var images : UIImageView = {
+//    var selectedImage: UIImage?
+    
+    lazy var images : UIImageView = {
         let img = UIImageView()
         img.backgroundColor = .white
         img.layer.shadowColor = Color.darkGray.color.cgColor
@@ -21,7 +23,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
         img.clipsToBounds = false
         img.layer.cornerRadius = 16
         img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
-        img.contentMode = .scaleAspectFit
+        img.contentMode = .scaleAspectFill
         
         
         return img
@@ -44,7 +46,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
         return lbl
     }()
     
-    private lazy var stackView : UIStackView = {
+     lazy var stackView : UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
         sv.spacing = 10
@@ -54,6 +56,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
         
         return sv
     }()
+    
     
 
     

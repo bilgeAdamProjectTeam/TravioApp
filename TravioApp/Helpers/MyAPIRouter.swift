@@ -42,6 +42,9 @@ enum MyAPIRouter: URLRequestConvertible {
     //Router case'leri oluşturuluyor
     case postLogIn(parameters: Parameters)
     case postRegister(parameters: Parameters)
+    case postUpload(image: [Data?])
+
+    //case createPlace(paramet)
     //case postUpload
     //Place
     case postPlace(parameters: Parameters)
@@ -65,8 +68,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/auth/login"
         case .postRegister(_):
             return "/v1/auth/register"
-//        case .postUpload:
-//            return "/upload"
+        case .postUpload:
+            return "/upload"
         case .postPlace, .getAllPlaces:
             return "/v1/places"
         case .getPlaceByID(let placeId):
@@ -81,13 +84,15 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/visits"
         case .getVisitByID(let visitId):
             return "/v1/visits\(visitId)"
+//        case .postUpload(_):
+//            return "/upload"
         }
     }
     
     //Method değişkeni case'lere göre değerleri belirleniyor
     var method: HTTPMethod {
         switch self {
-        case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit:
+        case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit, .postUpload:
             return .post
         case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID:
             return .get
@@ -112,9 +117,27 @@ enum MyAPIRouter: URLRequestConvertible {
             return [:]
         case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID:
             return ["Authorization" : "Bearer \(token)"]
+        case .postUpload:
+            return ["Content-Type": "multipart/form-data"]
         }
     }
     
+    
+    var multipartFormData: MultipartFormData {
+        let formData = MultipartFormData()
+        switch self{
+        case .postUpload(let imageData):
+            imageData.forEach{image in
+                guard let image = image else { return }
+                formData.append(image, withName: "file", fileName: "image.jpg",
+                                mimeType:"image/jpeg")
+            }
+            return formData
+        default:
+            break
+        }
+        return formData
+    }
     
     //API isteği oluşturan fonksiyon hazırlanıyor
     public func asURLRequest() throws -> URLRequest {
