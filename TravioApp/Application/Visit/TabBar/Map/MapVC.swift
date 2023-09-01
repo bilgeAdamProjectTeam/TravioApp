@@ -28,6 +28,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
         let region = MKCoordinateRegion(center: rotation, latitudinalMeters: 100000, longitudinalMeters: 100000)
         map.setRegion(region, animated: true)
         map.delegate = self
+        map.isUserInteractionEnabled = true
         
         return map
         
@@ -105,7 +106,8 @@ class MapVC: UIViewController, MKMapViewDelegate {
         return annotationView
     }
     
-    @objc func getLocationLongPress(sender: UILongPressGestureRecognizer) /*-> CLLocationCoordinate2D*/{
+    
+    @objc func getLocationLongPress(sender: UILongPressGestureRecognizer) {
 
         if sender.state == .began {
             let touchPoint = sender.location(in: mapView)
@@ -119,7 +121,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
             annotation.subtitle = "Description"
             
             // Add the annotation to the map view
-            mapView.addAnnotation(annotation)
+           // mapView.addAnnotation(annotation)
             
             let location = CLLocation(latitude:coordinate.latitude, longitude: coordinate.longitude)
             let geocoder = CLGeocoder()
@@ -135,12 +137,9 @@ class MapVC: UIViewController, MKMapViewDelegate {
                     return
                 }
                 
-                if let name = placemark.name,
-                   let locality = placemark.locality ,
-                   let city = placemark.administrativeArea,
+                if let city = placemark.administrativeArea,
                    let country = placemark.country {
                     self.address = "\(city),\(country)"
-                    print("Koordinatın Yeri: \(String(describing: self.address))")
                 } else {
                     print("Yer adı alınamadı.")
                 }
@@ -150,8 +149,13 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 vc.placeCoordinate = self.address
                 vc.longitude = coordinate.longitude
                 vc.latitude = coordinate.latitude
+                
+                vc.completionHandler = {
+                                self.mapView.addAnnotation(annotation) // Pin ekleme
+                            }
+    
                 self.present(vc, animated: true, completion: nil)
-                print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
+                //print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
                 
             }
             
@@ -160,7 +164,6 @@ class MapVC: UIViewController, MKMapViewDelegate {
            
         }
         
-
         // return coordinate
     }
     

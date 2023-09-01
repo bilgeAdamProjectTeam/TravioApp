@@ -12,13 +12,13 @@ import Alamofire
 class AddNewPlaceVC: UIViewController {
     
     var placeCoordinate: String?
-    //    var selectedImage: UIImage?
     var selectedIndexPath: IndexPath?
     var cellImages: [UIImage?] = []
     var dataImage: [Data?] = []
     var viewModel = AddNewPlaceViewModel()
     var longitude:Double?
     var latitude:Double?
+    var completionHandler: (() -> Void)?
     
     private lazy var rectangle: UIView = {
         let line = UIView()
@@ -41,7 +41,7 @@ class AddNewPlaceVC: UIViewController {
         let view = CustomTextView()
         view.labelText = "Visit Description"
         view.txtView.frame = CGRect(x: 0, y: 0, width: 310, height: 162)
-        view.txtView.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing "
+        view.txtView.text = ""
         return view
     }()
     
@@ -85,9 +85,6 @@ class AddNewPlaceVC: UIViewController {
         btn.labelText = "Add Place"
         btn.backgroundColor = Color.turquoise.color
         btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
-        //btn.backgroundColor = Color.darkGray.color
-        //btn.isEnabled = false
-        //btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         
         return btn
     }()
@@ -108,10 +105,6 @@ class AddNewPlaceVC: UIViewController {
         getLocation()
         
         cellImages = [UIImage?](repeating: nil, count: 3)
-        
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openGallery))
-        //                yourImageView.addGestureRecognizer(tapGesture)
-        
     }
     
 
@@ -120,8 +113,8 @@ class AddNewPlaceVC: UIViewController {
         guard let place = country.txtField.text,
               let title = placeName.txtField.text,
               let desc = visitDescription.txtView.text,
-              let latitude = latitude,
-              let longitude = longitude else { return }
+              let latitude = self.latitude,
+              let longitude = self.longitude else { return }
 
               //let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first,
               //let selectedImage = s
@@ -130,12 +123,12 @@ class AddNewPlaceVC: UIViewController {
         self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
                 
                     guard let url = urls.first else { return }
-//                    let params = PlaceInfo(place:place, title: title, description: desc, cover_image_url: url, latitude: latitude, longitude: longitude)
                     let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude]
-                    
+
                     viewModel.postPlace( params: params) {
-                        
-                        self.dismiss(animated: true, completion: nil)
+                        dismiss(animated: true, completion: {
+                                    self.completionHandler?() // completionHandler'ı çağır
+                                })
                     }
                 })
             
