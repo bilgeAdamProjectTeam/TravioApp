@@ -119,7 +119,7 @@ class MapVC: UIViewController, MKMapViewDelegate {
             annotation.subtitle = "Description"
             
             // Add the annotation to the map view
-            mapView.addAnnotation(annotation)
+            //mapView.addAnnotation(annotation)
             
             let location = CLLocation(latitude:coordinate.latitude, longitude: coordinate.longitude)
             let geocoder = CLGeocoder()
@@ -150,8 +150,14 @@ class MapVC: UIViewController, MKMapViewDelegate {
                 vc.placeCoordinate = self.address
                 vc.longitude = coordinate.longitude
                 vc.latitude = coordinate.latitude
+//                self.present(vc, animated: true, completion: nil)
+//                print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
+                
+                vc.completionHandler = {
+                    self.mapView.addAnnotation(annotation) // Pin ekleme
+                }
+                
                 self.present(vc, animated: true, completion: nil)
-                print("latitude: \(coordinate.latitude)", "longitude: \(coordinate.longitude)")
                 
             }
             

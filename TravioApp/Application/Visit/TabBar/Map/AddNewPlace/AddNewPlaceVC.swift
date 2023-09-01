@@ -19,6 +19,7 @@ class AddNewPlaceVC: UIViewController {
     var viewModel = AddNewPlaceViewModel()
     var longitude:Double?
     var latitude:Double?
+    var completionHandler: (() -> Void)?
     
     private lazy var rectangle: UIView = {
         let line = UIView()
@@ -133,10 +134,11 @@ class AddNewPlaceVC: UIViewController {
 //                    let params = PlaceInfo(place:place, title: title, description: desc, cover_image_url: url, latitude: latitude, longitude: longitude)
                     let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude]
                     
-                    viewModel.postPlace( params: params) {
-                        
-                        self.dismiss(animated: true, completion: nil)
-                    }
+            viewModel.postPlace( params: params) {
+                dismiss(animated: true, completion: {
+                    self.completionHandler?() // completionHandler'ı çağır
+                })
+            }
                 })
             
             }

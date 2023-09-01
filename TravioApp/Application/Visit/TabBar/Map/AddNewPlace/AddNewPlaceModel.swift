@@ -16,7 +16,7 @@ struct UploadResponse: Codable {
 
 struct GalleryResponse: Codable {
     var message: String
-    var image_url: String
+    var status: String
 }
 
 struct GalleryInfo: Codable {
