@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import SnapKit
 
-class MapVC: UIViewController, MKMapViewDelegate {
+class MapVC: UIViewController /*, MKMapViewDelegate */ {
     
     var viewModel = MapViewModel()
     var allPlaces: [Place]?
@@ -71,39 +71,37 @@ class MapVC: UIViewController, MKMapViewDelegate {
             //self.allPlaces?.append(contentsOf: result.data.places)
             self.allPlaces = result.data?.places
             self.collectionView.reloadData()
+            self.addPinsToMap()
         })
+        
+        
 
     }
     
-
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
+    func addPinsToMap() {
+        guard let allPlaces = allPlaces else { return }
+        
+        for place in allPlaces {
+            guard let latitude = place.latitude, let longitude = place.longitude else { return }
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            annotation.title = place.title
+            annotation.subtitle = place.description
+            mapView.addAnnotation(annotation)
         }
         
-        let identifier = "locationMarker"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
-        
-        if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        if let pinImage = UIImage(named: "annotation") {
-            let size = CGSize(width: 32, height: 42)
-            
-            UIGraphicsBeginImageContext(size)
-            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            annotationView?.image = resizedImage
-        }
-        return annotationView
     }
+    
+
+    func scrollToPlace(_ place: Place) {
+        guard let allPlaces = allPlaces else { return }
+
+        if let index = allPlaces.firstIndex(where: { $0.id == place.id }) {
+            let indexPath = IndexPath(item: index, section: 0)
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
+
     
     @objc func getLocationLongPress(sender: UILongPressGestureRecognizer) /*-> CLLocationCoordinate2D*/{
 
@@ -227,6 +225,52 @@ extension MapVC: UICollectionViewDataSource{
     }
     
     
+    
+}
+
+extension MapVC: MKMapViewDelegate{
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let identifier = "locationMarker"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+        
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if let pinImage = UIImage(named: "annotation") {
+            let size = CGSize(width: 32, height: 42)
+            
+            UIGraphicsBeginImageContext(size)
+            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView?.image = resizedImage
+        }
+        return annotationView
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        // Pin tıklandığında yapılacak işlemleri burada gerçekleştirin.
+
+        if let annotation = view.annotation as? MKPointAnnotation {
+            if let placeName = annotation.title {
+                if let place = allPlaces?.first(where: { $0.title == placeName }) {
+                    scrollToPlace(place)
+                }
+            }
+        }
+    }
+
     
 }
 
