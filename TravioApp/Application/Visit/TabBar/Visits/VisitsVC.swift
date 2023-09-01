@@ -111,7 +111,7 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         let vc = VisitsDetailVC()
         vc.placeId = placeId
-        //vc.detailTravel = travelData
+        vc.detailVisit = visitData
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
