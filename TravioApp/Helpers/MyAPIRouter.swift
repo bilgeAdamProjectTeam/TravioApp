@@ -79,7 +79,7 @@ enum MyAPIRouter: URLRequestConvertible {
         case .postImage:
             return "/v1/galleries"
         case .getAllImagesbyPlaceID(let placeId):
-            return "/v1/galleries\(placeId)"
+            return "/v1/galleries/\(placeId)"
         case .postVisit, .getVisits:
             return "/v1/visits"
         case .getVisitByID(let visitId):
@@ -102,7 +102,7 @@ enum MyAPIRouter: URLRequestConvertible {
     //
     var parameters: Parameters? {
         switch self {
-        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters) :
+        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters) :
             return parameters
         default:
             return [:]
