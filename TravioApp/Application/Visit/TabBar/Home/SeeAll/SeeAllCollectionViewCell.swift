@@ -45,7 +45,7 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
     private lazy var vectorIcon: UIImageView = {
         let icon = UIImageView()
         icon.image = UIImage(named: "miniVector")
-        //icon.frame = CGRect(x: 0, y: 0, width: 9, height: 12)
+        icon.frame = CGRect(x: 0, y: 0, width: 9, height: 12)
         return icon
     }()
     
@@ -91,8 +91,6 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
         })
         vectorIcon.snp.makeConstraints({make in
             make.top.equalTo(placeName.snp.bottom).offset(3)
-            make.height.equalTo(12)
-            make.width.equalTo(9)
         })
         cityName.snp.makeConstraints({make in
             make.top.equalTo(placeName.snp.bottom)

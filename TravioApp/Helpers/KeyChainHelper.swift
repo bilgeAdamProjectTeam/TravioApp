@@ -7,7 +7,6 @@
 
 import Foundation
 
-import Foundation
 
 final class KeychainHelper {
     
@@ -20,10 +19,9 @@ final class KeychainHelper {
         // Create query
         let query = [
             kSecValueData: data,
-            //Verinin şifrelenmesi
-            kSecClass: kSecClassGenericPassword,
             kSecAttrService: service,
             kSecAttrAccount: account,
+            kSecClass: kSecClassGenericPassword
         ] as CFDictionary
         
         
@@ -39,14 +37,7 @@ final class KeychainHelper {
             
             let attributesToUpdate = [kSecValueData: data] as CFDictionary
             
-            // Update existing item
             SecItemUpdate(query, attributesToUpdate)
-        }
-        
-        if status != errSecSuccess {
-            // Print out the error
-            
-            print("Error: \(status)")
         }
     }
     
@@ -65,7 +56,8 @@ final class KeychainHelper {
         return (result as? Data)
     }
     
-    func delete(service: String, account: String) {
+    
+    func delete(_ service:String, account:String){
         
         let query = [
             kSecAttrService: service,
@@ -75,6 +67,37 @@ final class KeychainHelper {
         
         // Delete item from keychain
         SecItemDelete(query)
+    }
+ 
+    func getAllKeyChainItemsOfClass(_ secClass: String) -> [String:String] {
+
+        let query: [String: Any] = [
+            kSecClass as String : secClass,
+            kSecReturnData as String  : kCFBooleanTrue,
+            kSecReturnAttributes as String : kCFBooleanTrue,
+            kSecReturnRef as String : kCFBooleanTrue,
+            kSecMatchLimit as String : kSecMatchLimitAll
+        ]
+
+        var result: AnyObject?
+
+        let lastResultCode = withUnsafeMutablePointer(to: &result) {
+            SecItemCopyMatching(query as CFDictionary, UnsafeMutablePointer($0))
+        }
+
+        var values = [String:String]()
+        if lastResultCode == noErr {
+            let array = result as? Array<Dictionary<String, Any>>
+
+            for item in array! {
+                if let key = item[kSecAttrAccount as String] as? String,
+                    let value = item[kSecValueData as String] as? Data {
+                    values[key] = String(data: value, encoding:.utf8)
+                }
+            }
+        }
+
+        return values
     }
     
 }

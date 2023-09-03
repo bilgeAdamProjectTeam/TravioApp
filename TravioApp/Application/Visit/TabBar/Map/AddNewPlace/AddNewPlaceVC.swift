@@ -34,6 +34,7 @@ class AddNewPlaceVC: UIViewController {
         view.placeholderName = "Please write a place name"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "Place Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+        view.txtField.delegate = self
         
         return view
     }()
@@ -304,6 +305,13 @@ extension AddNewPlaceVC: UINavigationControllerDelegate{
     
 }
 
+extension AddNewPlaceVC: UITextFieldDelegate{
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
 
 extension UIViewController {
     func showAlert(title: String, message: String) {
