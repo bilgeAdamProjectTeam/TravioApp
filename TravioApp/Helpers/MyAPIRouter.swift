@@ -58,6 +58,7 @@ enum MyAPIRouter: URLRequestConvertible {
     case postVisit(parameters: Parameters)
     case getVisits(parameters: Parameters)
     case getVisitByID(visitId : String)
+    case getProfile
     
     
     
@@ -84,6 +85,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/visits"
         case .getVisitByID(let visitId):
             return "/v1/visits\(visitId)"
+        case .getProfile:
+            return "/v1/me"
 //        case .postUpload(_):
 //            return "/upload"
         }
@@ -94,7 +97,7 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit, .postUpload:
             return .post
-        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID:
+        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getProfile:
             return .get
         }
     }
@@ -115,7 +118,7 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn, .postRegister, .getAllPlaces, .getPlaceByID, .getAllImagesbyPlaceID:
             return [:]
-        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID:
+        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile:
             return ["Authorization" : "Bearer \(token)"]
         case .postUpload:
             return ["Content-Type": "multipart/form-data"]

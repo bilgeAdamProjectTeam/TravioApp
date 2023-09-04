@@ -35,7 +35,7 @@ class TabBarController: UITabBarController {
 
         vc3.tabBarItem = UITabBarItem(title: "Map", image: img3, tag: 2)
 
-        let vc4 = MenuVC()
+        let vc4 = SettingsVC()
         let nav4 = UINavigationController(rootViewController: vc4)
         let img4 = UIImage(named: "Menu")
 
