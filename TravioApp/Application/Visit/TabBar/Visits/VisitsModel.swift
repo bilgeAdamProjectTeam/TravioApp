@@ -7,13 +7,8 @@
 
 import Foundation
 
-struct VisitsResponse: Codable {
-    var data: VisitData
-    var status: String
-}
-
 struct VisitResponse: Codable {
-    var data: Visit
+    var data: VisitData
     var status: String
 }
 

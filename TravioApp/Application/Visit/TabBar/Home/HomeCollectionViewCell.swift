@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class HomeCollectionViewCell: UICollectionViewCell {
     
@@ -22,8 +23,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         img.layer.cornerRadius = 16
         img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
         img.contentMode = .scaleAspectFill
-        
-        
         return img
     }()
     
@@ -46,48 +45,26 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private lazy var vectorIcon: UIImageView = {
         let icon = UIImageView()
         icon.image = UIImage(named: "miniVector")
-        //icon.frame = CGRect(x: 0, y: 0, width: 9, height: 12)
         return icon
     }()
-    
-    
-    
     
     override init(frame: CGRect) {
         super .init(frame: frame)
         
         setupView()
-
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func configure(with places: Place){
-//            placeName.text = places.title
-//            cityName.text = places.place
-//
-//        if let imageUrl = URL(string: places.coverImageURL!) {
-//            DispatchQueue.global().async {
-//                if let imageData = try? Data(contentsOf: imageUrl),
-//                   let image = UIImage(data: imageData) {
-//                    DispatchQueue.main.async {
-//                        self.images.image = image
-//                    }
-//                }
-//            }
-//        }
-//
-//    }
-    
     func setupView(){
-        //contentView.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
-        
 
-        addSubviews(images)
-        images.addSubviews(placeName,vectorIcon,cityName)
+        self.contentView.addSubviews(images)
+        
+        images.addSubviews(placeName,
+                           vectorIcon,
+                           cityName)
 
         setupLayout()
     }
@@ -121,5 +98,24 @@ class HomeCollectionViewCell: UICollectionViewCell {
         })
         
     }
+    
+    func configureCC(with place: HomePlace) {
+        placeName.text = place.title
+        cityName.text = place.place
+        images.kf.setImage(with: URL(string: place.cover_image_url))
+    }
+    
+//    func configure(with data: Any) {
+//        if let homeResponse = data as? HomeResponse {
+//            guard let places = homeResponse.data.places.first else { return }
+//            placeName.text = homeResponse.data.places.first?.title
+//            cityName.text = homeResponse.data.places.first?.place
+//            images.kf.setImage(with: URL(string: places.cover_image_url))
+//        } else if let visitResponse = data as? VisitResponse {
+//            placeName.text = visitResponse.data.place.title
+//            cityName.text = visitResponse.data.place.place
+//            images.kf.setImage(with: URL(string: visitResponse.data.place.cover_image_url))
+//        }
+//    }
 }
 

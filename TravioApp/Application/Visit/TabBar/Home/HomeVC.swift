@@ -11,9 +11,11 @@ import SnapKit
 
 class HomeVC: UIViewController {
     
+    let homeViewModel = HomeViewModel()
+    var serviceDataArray: [[HomePlace]] = [[]]
+    
     private lazy var retangle: UIView = {
         let view = CustomView()
-        
         return view
     }()
     
@@ -24,14 +26,6 @@ class HomeVC: UIViewController {
         return logo
     }()
     
-//    private lazy var travio: UIImageView = {
-//        let logo = UIImageView()
-//        logo.image = UIImage(named: "travio")
-//        return logo
-//
-//    }()
-    
-    
     private lazy var tableView:UITableView = {
        let tv = UITableView()
         tv.delegate = self
@@ -41,56 +35,31 @@ class HomeVC: UIViewController {
         tv.rowHeight = UITableView.automaticDimension
         tv.estimatedRowHeight = 100
         tv.allowsSelection = false
-//        tv.contentInset = UIEdgeInsets(top: 52, left: 0, bottom: 52, right: 0)
-        //tv.rowHeight = 300
         tv.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
         return tv
     }()
     
-//    private lazy var collectionView:UICollectionView = {
-//
-//        //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
-//        let layout = UICollectionViewFlowLayout()
-//        layout.minimumLineSpacing = 10
-//        layout.minimumInteritemSpacing = 0
-//        layout.scrollDirection = .horizontal
-//
-//
-//
-//        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.delegate = self
-//        cv.dataSource = self
-//        cv.backgroundColor = .clear
-//        cv.contentInsetAdjustmentBehavior = .never
-//        cv.showsHorizontalScrollIndicator = false
-//        cv.isPagingEnabled = true
-//
-//        cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
-//
-//        return cv
-//    }()
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
-//        tableView.register(nib, forCellReuseIdentifier: "HomeTableViewCell")
+        homeViewModel.fetchHomeData { result in
+            self.serviceDataArray = result
+        }
         
         setupView()
-    
-        //print("")
+        
     }
     
     func setupView(){
         
-        
         view.backgroundColor = Color.turquoise.color
+        
         navigationController?.navigationBar.isHidden = true
-        view.addSubviews(retangle,logo)
+        
+        view.addSubviews(retangle,
+                         logo)
+        
         retangle.addSubview(tableView)
-//        retangle.addSubview(collectionView)
         
         setupLayout()
     }
@@ -103,15 +72,7 @@ class HomeVC: UIViewController {
             make.leading.equalToSuperview().offset(16)
             make.width.equalTo(170)
             make.height.equalTo(62)
-
         }
-        
-//        travio.snp.makeConstraints({make in
-//            make.top.equalToSuperview().offset(44.28)
-//            make.leading.equalTo(logo.snp.trailing)
-//            make.trailing.equalToSuperview().offset(-202.46)
-//            make.bottom.equalTo(retangle.snp.top).offset(-52.68)
-//        })
         
         retangle.snp.makeConstraints { make in
             make.top.equalTo(logo.snp.bottom).offset(35)
@@ -119,39 +80,22 @@ class HomeVC: UIViewController {
         }
         
         tableView.snp.makeConstraints({make in
-//            make.edges.equalToSuperview()
             make.top.equalToSuperview().offset(44)
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
 
         })
-        
-        
-//        collectionView.snp.makeConstraints({make in
-//            make.top.equalToSuperview().offset(87)
-//            make.bottom.equalToSuperview().offset(-454)
-//            make.leading.equalToSuperview().offset(24)
-//            make.trailing.equalToSuperview()
-//
-//        })
-        
-        
     }
-    
-    
 }
 
-extension HomeVC: HomeTableViewCellDelegate{
+extension HomeVC: HomeTableViewCellDelegate {
     
     func didTapSeeAllButton(in cell: HomeTableViewCell) {
         let vc = SeeAllVC()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
 }
-
-
 
 extension HomeVC: UITableViewDelegate{
 
@@ -164,20 +108,12 @@ extension HomeVC: UITableViewDataSource{
         return 262// Hücre yüksekliği
     }
 
-    
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 10 // Her bölümün üst tarafına 10 birim boşluk ekleyin
-//    }
-
-    
-    
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 52 // Her bölümün alt tarafına 10 birim boşluk ekleyin
-//    }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -185,71 +121,36 @@ extension HomeVC: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
         cell.delegate = self
         
+//        switch indexPath.section {
+//        case 0:
+//            let data = homeViewModel.popularPlacesArray[indexPath.row]
+//            print("Data-------:\(data)")
+//            cell.configure(with: data)
+//        case 1:
+//            let data = homeViewModel.lastPlacesArray[indexPath.row]
+//            cell.configure(with: data)
+//        case 2:
+//            let data = homeViewModel.lastPlacesArray[indexPath.row]
+//            cell.configure(with: data)
+//        default:
+//            break
+//        }
+        
+        switch indexPath.section {
+        case 0:
+            let data = serviceDataArray[indexPath.row]
+            cell.configure(with: data)
+
+        case 1:
+            let data = serviceDataArray[indexPath.row]
+            cell.configure(with: data)
+  
+        default:
+            break
+        }
+        
         return cell
     }
     
     
 }
-
-
-
-// HomeTableViewCellDelegate işlevi
-
-
-//extension HomeVC: UICollectionViewDelegateFlowLayout{
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let size = CGSize(width: 278, height: 178)
-//        return size
-//    }
-//
-//
-//}
-//
-//extension HomeVC: UICollectionViewDataSource{
-//
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//            return 3
-//    }
-//
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-//
-//                return cell
-//    }
-//
-//
-//
-//}
-
-
-
-//extension HomeVC: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let size = CGSize(width: 278, height: 178)
-//        return size
-//    }
-//
-//}
-//
-//
-//extension HomeVC: UICollectionViewDataSource{
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//
-//        return 3
-//    }
-//
-//
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-//
-//        return cell
-//    }
-//
-//
-//}

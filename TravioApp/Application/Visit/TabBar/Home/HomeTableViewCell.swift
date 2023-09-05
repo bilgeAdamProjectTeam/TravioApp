@@ -5,9 +5,6 @@
 //  Created by Şevval Çakıroğlu on 30.08.2023.
 //
 
-
-
-
 import UIKit
 import SnapKit
 
@@ -15,9 +12,11 @@ protocol HomeTableViewCellDelegate: AnyObject {
     func didTapSeeAllButton(in cell: HomeTableViewCell)
 }
 
-class HomeTableViewCell: UITableViewCell{
+class HomeTableViewCell: UITableViewCell {
     
     weak var delegate: HomeTableViewCellDelegate?
+    let homeViewModel = HomeViewModel()
+    var serviceDataArrayPlace: [HomePlace] = []
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
@@ -25,7 +24,6 @@ class HomeTableViewCell: UITableViewCell{
         lbl.font = Font.medium(size: 20).font
         return lbl
     }()
-    
     
     private lazy var customView: UIView = {
         let view = UIView()
@@ -70,12 +68,14 @@ class HomeTableViewCell: UITableViewCell{
         return cv
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //super.init(style: <#T##UITableViewCell.CellStyle#>, reuseIdentifier: <#T##String?#>)
+        
+        configureVM()
         
         setupView()
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -95,8 +95,12 @@ class HomeTableViewCell: UITableViewCell{
     func setupView(){
         
         backgroundColor = Color.lightGray.color
-        contentView.addSubviews(headerStack,collectionView)
+        
+        contentView.addSubviews(headerStack,
+                                collectionView)
+        
         headerStack.addArrangedSubview(title)
+        
         headerStack.addArrangedSubview(detailBtn)
         
         setupLayout()
@@ -116,11 +120,26 @@ class HomeTableViewCell: UITableViewCell{
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-            
         })
-        
-        
     }
+    
+    func configureVM() {
+//        homeViewModel.getPopulerPlaces { HomeResponse in
+//            self.collectionView.reloadData()
+//        }
+//        homeViewModel.getLastPlaces { HomeResponse in
+//            self.collectionView.reloadData()
+//        }
+//        homeViewModel.fetchHomeData { [self] in
+//            //print(homeViewModel.serviceDataArray)
+//        }
+    }
+    
+    func configure(with data: [HomePlace]) {
+        self.serviceDataArrayPlace = data
+        //print(serviceDataArrayPlace)
+    }
+    
     
     
 }
@@ -137,11 +156,18 @@ extension HomeTableViewCell: UICollectionViewDelegateFlowLayout {
 extension HomeTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return homeViewModel.popularPlacesArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! HomeCollectionViewCell
+        
+        //let array = homeViewModel.serviceDataArray[indexPath.section].data.places[indexPath.row]
+
+        
+
+        
+        
         return cell
     }
 }
