@@ -128,6 +128,10 @@
 		E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9A92AA6138C00515F40 /* SettingsViewModel.swift */; };
 		E160F9AD2AA6B6DF00515F40 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */; };
 		E160F9AF2AA6C05500515F40 /* CustomSwitchLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */; };
+		E160F9B12AA7080D00515F40 /* SecuritySettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B02AA7080D00515F40 /* SecuritySettingsModel.swift */; };
+		E160F9B32AA7121700515F40 /* SecuritySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B22AA7121700515F40 /* SecuritySettingsViewModel.swift */; };
+		E160F9B62AA7126600515F40 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */; };
+		E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B72AA7127600515F40 /* PrivacyCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +213,10 @@
 		E160F9A92AA6138C00515F40 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
 		E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitchLabelView.swift; sourceTree = "<group>"; };
+		E160F9B02AA7080D00515F40 /* SecuritySettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsModel.swift; sourceTree = "<group>"; };
+		E160F9B22AA7121700515F40 /* SecuritySettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewModel.swift; sourceTree = "<group>"; };
+		E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
+		E160F9B72AA7127600515F40 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -464,9 +472,21 @@
 		E160F9AB2AA6B6B400515F40 /* Settings Details */ = {
 			isa = PBXGroup;
 			children = (
-				E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */,
+				E160F9B42AA7124300515F40 /* SecuritySettings */,
 			);
 			path = "Settings Details";
+			sourceTree = "<group>";
+		};
+		E160F9B42AA7124300515F40 /* SecuritySettings */ = {
+			isa = PBXGroup;
+			children = (
+				E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */,
+				E160F9B72AA7127600515F40 /* PrivacyCell.swift */,
+				E160F9B22AA7121700515F40 /* SecuritySettingsViewModel.swift */,
+				E160F9B02AA7080D00515F40 /* SecuritySettingsModel.swift */,
+				E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */,
+			);
+			path = SecuritySettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -630,6 +650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E160F9B12AA7080D00515F40 /* SecuritySettingsModel.swift in Sources */,
 				E109777B2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */,
 				E10977B32A9D4C910058DA0B /* VisitsModel.swift in Sources */,
 				E10977FC2A9FA5360058DA0B /* SeeAllViewModel.swift in Sources */,
@@ -657,7 +678,9 @@
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E160F9A82AA5D6C700515F40 /* SettingsModel.swift in Sources */,
 				E10977422A9D35C20058DA0B /* CustomView.swift in Sources */,
+				E160F9B62AA7126600515F40 /* ChangePasswordCell.swift in Sources */,
 				E10977462A9D35ED0058DA0B /* CustomTextView.swift in Sources */,
+				E160F9B32AA7121700515F40 /* SecuritySettingsViewModel.swift in Sources */,
 				E10977FE2A9FA5450058DA0B /* SeeAllModel.swift in Sources */,
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
@@ -676,6 +699,7 @@
 				E10977442A9D35DB0058DA0B /* CustomTextField.swift in Sources */,
 				E10977BF2A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
 				E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */,
+				E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */,
 				E10977A02A9D479B0058DA0B /* SettingsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

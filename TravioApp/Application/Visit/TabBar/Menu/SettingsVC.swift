@@ -11,6 +11,8 @@ import SnapKit
 class SettingsVC: UIViewController {
     
     var viewModel = SettingsViewModel()
+    let pageTypes: [UIViewController.Type] = [SecuritySettingsVC.self]
+
     
     
     private lazy var retangle: UIView = {
@@ -104,12 +106,12 @@ class SettingsVC: UIViewController {
     func setupLayout(){
         
         settingTitle.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.leading.equalToSuperview().offset(20)
         })
         
         retangle.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
+            make.top.equalToSuperview().offset(125)
             make.leading.trailing.bottom.equalToSuperview().offset(0)
         })
         
@@ -156,6 +158,17 @@ extension SettingsVC: UICollectionViewDelegateFlowLayout{
         //let size = CGSize(width: collectionView.frame.width * 0.91, height: collectionView.frame.height)
             return size
      }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        let selectedPageType = pageTypes[indexPath.row]
+        
+        // Seçilen sayfa türüne göre bir sayfa örneği oluşturun
+        let pageInstance = selectedPageType.init()
+        pageInstance.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(pageInstance, animated: true)
+    }
+
     
     
 }

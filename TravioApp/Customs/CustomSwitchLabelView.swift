@@ -27,9 +27,10 @@ class CustomSwitchLabelView: UIView {
         return label
     }()
     
-    private lazy var toggleSwitch: UISwitch = {
+    lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch()
         toggle.onTintColor = .systemGreen
+        toggle.isOn = false
         return toggle
     }()
     
