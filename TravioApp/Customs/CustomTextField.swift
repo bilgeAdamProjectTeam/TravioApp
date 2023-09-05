@@ -33,8 +33,8 @@ class CustomTextField: UIView {
    private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Label"
-       label.font =  Font.medium(size: 14).font
-        
+        label.font =  Font.medium(size: 14).font
+       label.textColor = Color.darkGray.color
         return label
     }()
     
@@ -44,7 +44,7 @@ class CustomTextField: UIView {
         txt.font = Font.light(size: 12).font
         txt.autocorrectionType = .no
         txt.autocapitalizationType = .none
-        
+        txt.textColor = Color.darkGray.color
         
         return txt
     }()

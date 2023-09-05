@@ -17,7 +17,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     private lazy var icon: UIImageView = {
         let icon = UIImageView()
         //icon.image = UIImage(named: "miniVector")
-        icon.backgroundColor = Color.lightGray.color
+        icon.backgroundColor = .white
         return icon
     }()
     
@@ -87,8 +87,8 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         nextVector.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(19)
             make.leading.equalTo(label.snp.trailing).offset(39.18)
-            make.trailing.equalToSuperview().offset(-19.37)
-            make.bottom.equalToSuperview().offset(-16)
+            make.trailing.equalToSuperview().offset(-16.42)
+            make.bottom.equalToSuperview().offset(-19.37)
         })
         
         

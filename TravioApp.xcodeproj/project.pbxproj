@@ -126,6 +126,8 @@
 		E160F9A62AA5D46E00515F40 /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9A52AA5D46E00515F40 /* SettingsCollectionViewCell.swift */; };
 		E160F9A82AA5D6C700515F40 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9A72AA5D6C700515F40 /* SettingsModel.swift */; };
 		E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9A92AA6138C00515F40 /* SettingsViewModel.swift */; };
+		E160F9AD2AA6B6DF00515F40 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */; };
+		E160F9AF2AA6C05500515F40 /* CustomSwitchLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +207,8 @@
 		E160F9A52AA5D46E00515F40 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		E160F9A72AA5D6C700515F40 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		E160F9A92AA6138C00515F40 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
+		E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitchLabelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +302,7 @@
 				E10977432A9D35DB0058DA0B /* CustomTextField.swift */,
 				E10977452A9D35ED0058DA0B /* CustomTextView.swift */,
 				E10977472A9D35FE0058DA0B /* CustomButton.swift */,
+				E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -451,8 +456,17 @@
 				E160F9A52AA5D46E00515F40 /* SettingsCollectionViewCell.swift */,
 				E160F9A72AA5D6C700515F40 /* SettingsModel.swift */,
 				E160F9A92AA6138C00515F40 /* SettingsViewModel.swift */,
+				E160F9AB2AA6B6B400515F40 /* Settings Details */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		E160F9AB2AA6B6B400515F40 /* Settings Details */ = {
+			isa = PBXGroup;
+			children = (
+				E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */,
+			);
+			path = "Settings Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -635,6 +649,7 @@
 				E10977772A9D39C00058DA0B /* NetworkingHelper.swift in Sources */,
 				E10978072AA1FC5E0058DA0B /* HomeVC.swift in Sources */,
 				E109778B2A9D41B90058DA0B /* LoginViewModel.swift in Sources */,
+				E160F9AD2AA6B6DF00515F40 /* SecuritySettingsVC.swift in Sources */,
 				E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
@@ -650,6 +665,7 @@
 				E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */,
 				E10977592A9D37660058DA0B /* DesignSystem.swift in Sources */,
 				E10977482A9D35FE0058DA0B /* CustomButton.swift in Sources */,
+				E160F9AF2AA6C05500515F40 /* CustomSwitchLabelView.swift in Sources */,
 				E10977E52A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift in Sources */,
 				E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */,
 				E10977CF2A9DC7890058DA0B /* AddNewPlaceVC.swift in Sources */,
