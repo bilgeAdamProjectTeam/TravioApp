@@ -16,7 +16,7 @@ class HomeTableViewCell: UITableViewCell {
     
     weak var delegate: HomeTableViewCellDelegate?
     let homeViewModel = HomeViewModel()
-    var serviceDataArrayPlace: [HomePlace] = []
+    var serviceDataArray: [HomePlace] = []
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
@@ -64,18 +64,13 @@ class HomeTableViewCell: UITableViewCell {
         cv.delegate = self
         cv.dataSource = self
         cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
-        
         return cv
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        configureVM()
-        
         setupView()
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -86,12 +81,6 @@ class HomeTableViewCell: UITableViewCell {
         delegate?.didTapSeeAllButton(in: self)
     }
 
-//    @objc func seeAllPage(){
-//        let vc = SeeAllVC()
-//        self.navigationController?.pushViewController(vc, animated: true)
-//    }
-
-    
     func setupView(){
         
         backgroundColor = Color.lightGray.color
@@ -123,29 +112,14 @@ class HomeTableViewCell: UITableViewCell {
         })
     }
     
-    func configureVM() {
-//        homeViewModel.getPopulerPlaces { HomeResponse in
-//            self.collectionView.reloadData()
-//        }
-//        homeViewModel.getLastPlaces { HomeResponse in
-//            self.collectionView.reloadData()
-//        }
-//        homeViewModel.fetchHomeData { [self] in
-//            //print(homeViewModel.serviceDataArray)
-//        }
+    func configureTableViewCell(with data: [HomePlace]) {
+        self.serviceDataArray = data
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
-    
-    func configure(with data: [HomePlace]) {
-        self.serviceDataArrayPlace = data
-        //print(serviceDataArrayPlace)
-    }
-    
-    
-    
 }
 
-
-//0.71
 extension HomeTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: collectionView.frame.width * 0.71, height: collectionView.frame.height - 52)
@@ -156,17 +130,24 @@ extension HomeTableViewCell: UICollectionViewDelegateFlowLayout {
 extension HomeTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homeViewModel.popularPlacesArray.count
+        return serviceDataArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! HomeCollectionViewCell
         
-        //let array = homeViewModel.serviceDataArray[indexPath.section].data.places[indexPath.row]
-
-        
-
-        
+        switch indexPath.section {
+        case 0:
+            var data = serviceDataArray[indexPath.row]
+            cell.configureCollectionViewCell(with: data)
+            
+        case 1:
+            var data = serviceDataArray[indexPath.row]
+            cell.configureCollectionViewCell(with: data)
+  
+        default:
+            break
+        }
         
         return cell
     }

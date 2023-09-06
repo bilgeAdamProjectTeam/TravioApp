@@ -12,7 +12,10 @@ import SnapKit
 class HomeVC: UIViewController {
     
     let homeViewModel = HomeViewModel()
-    var serviceDataArray: [[HomePlace]] = [[]]
+    var popularPlacesArray: [HomePlace] = []
+    var lastPlacesArray: [HomePlace] = []
+    
+    let dispatchGroup = DispatchGroup()
     
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -42,12 +45,9 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        homeViewModel.fetchHomeData { result in
-            self.serviceDataArray = result
-        }
+        getServiceData()
         
         setupView()
-        
     }
     
     func setupView(){
@@ -87,6 +87,25 @@ class HomeVC: UIViewController {
 
         })
     }
+    
+    func getServiceData() {
+        
+        dispatchGroup.enter()
+        homeViewModel.getPopulerPlaces { result in
+            self.popularPlacesArray = result.data.places
+            self.dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        homeViewModel.getLastPlaces { result in
+            self.lastPlacesArray = result.data.places
+            self.dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            self.tableView.reloadData()
+        }
+    }
 }
 
 extension HomeVC: HomeTableViewCellDelegate {
@@ -97,12 +116,7 @@ extension HomeVC: HomeTableViewCellDelegate {
     }
 }
 
-extension HomeVC: UITableViewDelegate{
-
-    
-}
-
-extension HomeVC: UITableViewDataSource{
+extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 262// Hücre yüksekliği
@@ -121,36 +135,19 @@ extension HomeVC: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
         cell.delegate = self
         
-//        switch indexPath.section {
-//        case 0:
-//            let data = homeViewModel.popularPlacesArray[indexPath.row]
-//            print("Data-------:\(data)")
-//            cell.configure(with: data)
-//        case 1:
-//            let data = homeViewModel.lastPlacesArray[indexPath.row]
-//            cell.configure(with: data)
-//        case 2:
-//            let data = homeViewModel.lastPlacesArray[indexPath.row]
-//            cell.configure(with: data)
-//        default:
-//            break
-//        }
-        
         switch indexPath.section {
         case 0:
-            let data = serviceDataArray[indexPath.row]
-            cell.configure(with: data)
-
+            let data = popularPlacesArray
+            cell.configureTableViewCell(with: data)
+            
         case 1:
-            let data = serviceDataArray[indexPath.row]
-            cell.configure(with: data)
-  
+            let data = lastPlacesArray
+            cell.configureTableViewCell(with: data)
+            
         default:
             break
         }
         
         return cell
     }
-    
-    
 }

@@ -147,6 +147,7 @@ enum MyAPIRouter: URLRequestConvertible {
     public func asURLRequest() throws -> URLRequest {
         let url = baseURL.appendingPathComponent(path)
         var request = URLRequest(url: url)
+        request.timeoutInterval = 10000
         request.httpMethod = method.rawValue
         request.headers = headers
         

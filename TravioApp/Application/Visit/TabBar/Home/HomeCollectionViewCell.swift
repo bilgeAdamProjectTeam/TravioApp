@@ -79,8 +79,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
             make.top.equalToSuperview().offset(116)
             make.bottom.equalToSuperview().offset(-26)
             make.leading.equalToSuperview().offset(16)
-            //make.trailing.equalToSuperview().offset(-132)
-
         })
         
         vectorIcon.snp.makeConstraints({make in
@@ -94,28 +92,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
             make.top.equalToSuperview().offset(152)
             make.bottom.equalToSuperview().offset(-5)
             make.leading.equalToSuperview().offset(31)
-            //make.trailing.equalToSuperview().offset(-207)
         })
-        
     }
     
-    func configureCC(with place: HomePlace) {
+    func configureCollectionViewCell(with place: HomePlace) {
         placeName.text = place.title
         cityName.text = place.place
         images.kf.setImage(with: URL(string: place.cover_image_url))
     }
-    
-//    func configure(with data: Any) {
-//        if let homeResponse = data as? HomeResponse {
-//            guard let places = homeResponse.data.places.first else { return }
-//            placeName.text = homeResponse.data.places.first?.title
-//            cityName.text = homeResponse.data.places.first?.place
-//            images.kf.setImage(with: URL(string: places.cover_image_url))
-//        } else if let visitResponse = data as? VisitResponse {
-//            placeName.text = visitResponse.data.place.title
-//            cityName.text = visitResponse.data.place.place
-//            images.kf.setImage(with: URL(string: visitResponse.data.place.cover_image_url))
-//        }
-//    }
 }
 
