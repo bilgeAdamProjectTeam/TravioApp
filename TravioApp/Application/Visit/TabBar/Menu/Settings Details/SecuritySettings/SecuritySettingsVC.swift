@@ -7,11 +7,22 @@
 
 import UIKit
 import SnapKit
+import Photos
+import CoreLocation
+import AVFoundation
+
+protocol isOnSwitchDelegate: AnyObject {
+    func switchValueChanged(isOn: Bool,sender:UISwitch)
+}
 
 class SecuritySettingsVC: UIViewController {
     
-    var viewModel = SecuritySettingsViewModel()
+    let viewModel = SecuritySettingsViewModel()
     var sectionArray = ["Change Password","Privacy"]
+    var privacyArr:[PrivacyInfo]?
+    var cameraSwitch: Bool?
+    var photoLibrarySwitch: Bool?
+    var locationServicesSwitch: Bool?
     //let cellTypes: [UITableViewCell.Type] = [ChangePasswordCell.self,PrivacyCell.self]
     
     private lazy var retangle: UIView = {
@@ -54,6 +65,7 @@ class SecuritySettingsVC: UIViewController {
     private lazy var saveButton: CustomButton = {
         let btn = CustomButton()
         btn.labelText = "Save"
+        btn.addTarget(self, action: #selector(updatePermissions), for: .touchUpInside)
         return btn
     }()
 
@@ -62,6 +74,34 @@ class SecuritySettingsVC: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        privacyArr = viewModel.privacyInfo
+
+        
+    }
+    
+    @objc func updatePermissions(index: Int){
+
+//        guard let privacyArr = privacyArr else { return }
+//        
+//        switch index {
+//        case 0:
+//            cameraSwitch = privacyArr[0].switchCheck
+//        case 1:
+//            photoLibrarySwitch = privacyArr[1].switchCheck
+//        case 2:
+//            locationServicesSwitch = privacyArr[2].switchCheck
+//        default:
+//            break
+//        }
+//        
+//        
+//        guard let cameraSwitch = cameraSwitch, let photoLibrarySwitch = photoLibrarySwitch, let locationServicesSwitch = locationServicesSwitch else { return }
+//        
+//        UserDefaults.standard.set(cameraSwitch, forKey: "CameraPermission")
+//        UserDefaults.standard.set(photoLibrarySwitch, forKey: "PhotoLibraryPermission")
+//        UserDefaults.standard.set(locationServicesSwitch, forKey: "LocationServicesPermission")
+//        UserDefaults.standard.synchronize()
+        print("tıklandı")
     }
     
     @objc func backTapped(){
@@ -130,7 +170,7 @@ extension SecuritySettingsVC: UITableViewDelegate{
             let headerView = UIView()
             
         let label = UILabel()
-        label.textColor = Color.turquoise.color// Başlık metin rengi
+        label.textColor = Color.turquoise.color
         label.font = Font.semiBold(size: 16).font
                 
                 if section == 0 {
@@ -189,15 +229,82 @@ extension SecuritySettingsVC: UITableViewDataSource{
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PrivacyCell", for: indexPath) as! PrivacyCell
             let array = viewModel.privacyInfo[indexPath.row]
-            cell.configure(data: array)
-            
+            cell.configure(data: array, index: indexPath.row)
+            cell.delegate = self
             return cell
         }
     }
     
 }
     
-    
-    
-    
+extension SecuritySettingsVC: isOnSwitchDelegate {
+    func switchValueChanged(isOn: Bool, sender:UISwitch) {
+        
+        let toggle = sender.tag
+        var photoStatus = PHPhotoLibrary.authorizationStatus()
+        var cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        var locationStatus = CLLocationManager.authorizationStatus()
+       
+        if isOn {
+            
+            if sender.tag == 0 {
+                //camera
+                cameraStatus = .authorized
 
+            }else if sender.tag == 1{
+                //Photo library
+                photoStatus = .authorized
+                
+            }else if sender.tag == 2{
+                //Location
+                locationStatus = .authorizedAlways
+            }
+           
+        }
+        else{
+            if sender.tag == 0 {
+                //camera
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }else if sender.tag == 1{
+                //Photo library
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+                
+            }else if sender.tag == 2{
+                //Location
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
+            
+        }
+//        print("isOn---: \(isOn)--------\(index)")
+//        updatePermissions(index: 0)
+    }
+    
+//
+//    func openGallery() {
+//        let status = PHPhotoLibrary.authorizationStatus()
+//
+//        if status == .authorized {
+//
+//        } else if status == .denied || status == .restricted {
+//            // Eğer izin reddedilmiş veya sınırlı ise, kullanıcıyı ayarlara yönlendir
+//            if let url = URL(string: UIApplication.openSettingsURLString) {
+//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//            }
+//        } else {
+//            // Eğer izin verilmemişse, izin isteği gönder
+//            PHPhotoLibrary.requestAuthorization { (newStatus) in
+//                if newStatus == .authorized {
+//
+//                }
+//            }
+//        }
+//    }
+    
+    
+}

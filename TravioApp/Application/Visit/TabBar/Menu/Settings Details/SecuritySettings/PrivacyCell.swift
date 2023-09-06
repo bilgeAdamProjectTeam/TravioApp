@@ -13,11 +13,14 @@ import SnapKit
 
 class PrivacyCell: UITableViewCell{
     
+    weak var delegate: isOnSwitchDelegate?
+    var index = 0
     
     private lazy var privacyView: CustomSwitchLabelView = {
         let customView = CustomSwitchLabelView()
         customView.labelText = "Camera"
         customView.backgroundColor = .white
+        customView.toggleSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
         return customView
     }()
     
@@ -36,6 +39,11 @@ class PrivacyCell: UITableViewCell{
 //        contentView.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
     }
     
+    @objc private func switchTapped(sender:UISwitch) {
+        guard let delegate = delegate else { return }
+        delegate.switchValueChanged(isOn: sender.isOn, sender: sender)
+    }
+    
     func setupView(){
         backgroundColor = .clear
         contentView.backgroundColor = .clear
@@ -44,6 +52,7 @@ class PrivacyCell: UITableViewCell{
         setupLayout()
         
     }
+    
     
     func setupLayout(){
         privacyView.snp.makeConstraints({make in
@@ -55,10 +64,18 @@ class PrivacyCell: UITableViewCell{
         })
         
     }
-    func configure(data:PrivacyInfo){
+    
+    func configure(data:PrivacyInfo, index: Int){
         
         privacyView.labelText = data.labelName
-        privacyView.toggleSwitch.isOn = data.switchCheck
+       
+        
+        privacyView.toggleSwitch.tag = index
+//        if privacyView.toggleSwitch.isOn {
+//            self.delegate?.switchValueChanged(isOn: true, index: index)
+//        } else {
+//            self.delegate?.switchValueChanged(isOn: false, index: index)
+//        }
         
     }
     

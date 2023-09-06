@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Alamofire
+import Photos
+
 
 class AddNewPlaceVC: UIViewController {
     
@@ -102,6 +104,7 @@ class AddNewPlaceVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
         
         view.backgroundColor = Color.lightGray.color
         
@@ -146,14 +149,65 @@ class AddNewPlaceVC: UIViewController {
             
             
 
-    
+//
+//    func requestPhotoLibraryPermission() {
+//        PHPhotoLibrary.requestAuthorization { status in
+//            switch status {
+//            case .authorized:
+//                // Kullanıcı izin verdi.
+//                print("Fotoğraf galerisi izni verildi.")
+//            case .denied, .restricted:
+//                // Kullanıcı izni reddetti veya sınırlı izin verildi.
+//                print("Fotoğraf galerisi izni reddedildi.")
+//            case .notDetermined:
+//                // Kullanıcı henüz bir seçim yapmadı.
+//                print("Fotoğraf galerisi izni henüz belirlenmedi.")
+//            @unknown default:
+//                break
+//            }
+//        }
+//    }
+
     
     @objc func openGallery() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        let status = PHPhotoLibrary.authorizationStatus()
+
+        if status == .authorized {
+            // Eğer izin verilmişse, fotoğraf galerisini aç
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            present(imagePicker, animated: true, completion: nil)
+        } else if status == .denied || status == .restricted {
+            // Eğer izin reddedilmiş veya sınırlı ise, kullanıcıyı ayarlara yönlendir
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        } else {
+            // Eğer izin verilmemişse, izin isteği gönder
+            PHPhotoLibrary.requestAuthorization { (newStatus) in
+                if newStatus == .authorized {
+                    // İzin verildikten sonra fotoğraf galerisini aç
+                    DispatchQueue.main.async {
+                        let imagePicker = UIImagePickerController()
+                        imagePicker.sourceType = .photoLibrary
+                        imagePicker.delegate = self
+                        self.present(imagePicker, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
+    
+    
+//    @objc func openGallery() {
+//
+//        let imagePicker = UIImagePickerController()
+//
+//        imagePicker.sourceType = .photoLibrary
+//        imagePicker.delegate = self
+//        present(imagePicker, animated: true, completion: nil)
+//    }
     
     
     func getLocation(){
@@ -239,11 +293,12 @@ extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath // Seçilen hücrenin indeksini kaydedin
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
+        openGallery() // fotoğraf galerisi açma izni
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.delegate = self
+//        imagePicker.sourceType = .photoLibrary
+//
+//        present(imagePicker, animated: true, completion: nil)
     }
     
 }

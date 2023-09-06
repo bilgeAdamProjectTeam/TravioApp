@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Uygulama fotoğraflara erişim izni istiyor.</string>
+	<string>Bu uygulama kameraya erişim istiyor.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Bu uygulama konumunuzu her zaman kullanmak istiyor.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Bu uygulama kameraya erişim istiyor.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Bold.ttf</string>

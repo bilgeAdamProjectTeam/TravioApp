@@ -14,13 +14,11 @@ struct Settings {
 
 
 struct UserResponse: Codable {
-    var id: String
-    var full_name: String
-    var email: String
-    var role: String
-    var created_at: String
-    var updated_at: String
-    
+    let full_name: String
+    let email: String
+    let role: String
+    let pp_url: String
+    let created_at: String
 }
 
 
