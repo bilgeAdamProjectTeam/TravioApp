@@ -96,6 +96,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCollectionViewCell(with place: HomePlace) {
+        
         placeName.text = place.title
         cityName.text = place.place
         images.kf.setImage(with: URL(string: place.cover_image_url))

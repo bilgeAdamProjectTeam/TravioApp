@@ -138,11 +138,11 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let data = popularPlacesArray
-            cell.configureTableViewCell(with: data)
+            cell.configureTableViewCell(with: data, title: "PopularPlaces")
             
         case 1:
             let data = lastPlacesArray
-            cell.configureTableViewCell(with: data)
+            cell.configureTableViewCell(with: data, title: "New Places")
             
         default:
             break

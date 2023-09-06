@@ -20,7 +20,7 @@ class HomeTableViewCell: UITableViewCell {
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Popular Places"
+        //lbl.text = "Popular Places"
         lbl.font = Font.medium(size: 20).font
         return lbl
     }()
@@ -112,10 +112,12 @@ class HomeTableViewCell: UITableViewCell {
         })
     }
     
-    func configureTableViewCell(with data: [HomePlace]) {
+    func configureTableViewCell(with data: [HomePlace], title: String) {
         self.serviceDataArray = data
+        self.title.text = title
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            print(self.serviceDataArray)
         }
     }
 }
@@ -136,18 +138,8 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! HomeCollectionViewCell
         
-        switch indexPath.section {
-        case 0:
-            var data = serviceDataArray[indexPath.row]
-            cell.configureCollectionViewCell(with: data)
-            
-        case 1:
-            var data = serviceDataArray[indexPath.row]
-            cell.configureCollectionViewCell(with: data)
-  
-        default:
-            break
-        }
+        var data = serviceDataArray[indexPath.row]
+        cell.configureCollectionViewCell(with: data)
         
         return cell
     }
