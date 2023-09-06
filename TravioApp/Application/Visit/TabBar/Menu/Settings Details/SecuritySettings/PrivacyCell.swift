@@ -68,7 +68,7 @@ class PrivacyCell: UITableViewCell{
     func configure(data:PrivacyInfo, index: Int){
         
         privacyView.labelText = data.labelName
-       
+        privacyView.toggleSwitch.isOn = data.switchCheck
         
         privacyView.toggleSwitch.tag = index
 //        if privacyView.toggleSwitch.isOn {

@@ -24,6 +24,9 @@ import Foundation
 //                       PrivacyInfo(labelName: "Location", switchCheck: locationServicesPermission ?? false)]
 //
 //}
+import Photos
+import AVFoundation
+import CoreLocation
 
 class SecuritySettingsViewModel {
     
@@ -32,10 +35,22 @@ class SecuritySettingsViewModel {
     var locationServicesPermission: Bool?
     
     init() {
-        // UserDefaults'tan izin durumlarını alırken opsiyonel değerleri çıkarıyoruz.
-        self.cameraPermission = UserDefaults.standard.bool(forKey: "CameraPermission")
-        self.photoLibraryPermission = UserDefaults.standard.bool(forKey: "PhotoLibraryPermission")
-        self.locationServicesPermission = UserDefaults.standard.bool(forKey: "LocationServicesPermission")
+        
+        let photoStatus = PHPhotoLibrary.authorizationStatus()
+        let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        let locationStatus = CLLocationManager.authorizationStatus()
+        
+        
+        if photoStatus == .authorized || cameraStatus == .authorized || locationStatus == .authorizedAlways{
+            cameraPermission = true
+            photoLibraryPermission = true
+            locationServicesPermission = true
+        }else{
+            cameraPermission = false
+            photoLibraryPermission = false
+            locationServicesPermission = false
+        }
+        
     }
     
     var changePassWordInfo = [ChangePassword(labelName: "New Password"),
