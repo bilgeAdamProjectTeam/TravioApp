@@ -80,27 +80,6 @@ class SecuritySettingsVC: UIViewController {
     }
     
     @objc func updatePermissions(index: Int){
-
-//        guard let privacyArr = privacyArr else { return }
-//        
-//        switch index {
-//        case 0:
-//            cameraSwitch = privacyArr[0].switchCheck
-//        case 1:
-//            photoLibrarySwitch = privacyArr[1].switchCheck
-//        case 2:
-//            locationServicesSwitch = privacyArr[2].switchCheck
-//        default:
-//            break
-//        }
-//        
-//        
-//        guard let cameraSwitch = cameraSwitch, let photoLibrarySwitch = photoLibrarySwitch, let locationServicesSwitch = locationServicesSwitch else { return }
-//        
-//        UserDefaults.standard.set(cameraSwitch, forKey: "CameraPermission")
-//        UserDefaults.standard.set(photoLibrarySwitch, forKey: "PhotoLibraryPermission")
-//        UserDefaults.standard.set(locationServicesSwitch, forKey: "LocationServicesPermission")
-//        UserDefaults.standard.synchronize()
         print("tıklandı")
     }
     

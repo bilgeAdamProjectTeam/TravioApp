@@ -132,6 +132,7 @@
 		E160F9B32AA7121700515F40 /* SecuritySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B22AA7121700515F40 /* SecuritySettingsViewModel.swift */; };
 		E160F9B62AA7126600515F40 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */; };
 		E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B72AA7127600515F40 /* PrivacyCell.swift */; };
+		E160F9BB2AA8B49B00515F40 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +218,7 @@
 		E160F9B22AA7121700515F40 /* SecuritySettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsViewModel.swift; sourceTree = "<group>"; };
 		E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
 		E160F9B72AA7127600515F40 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
+		E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -473,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				E160F9B42AA7124300515F40 /* SecuritySettings */,
+				E160F9B92AA8B43F00515F40 /* EditProfile */,
 			);
 			path = "Settings Details";
 			sourceTree = "<group>";
@@ -487,6 +490,14 @@
 				E160F9AC2AA6B6DF00515F40 /* SecuritySettingsVC.swift */,
 			);
 			path = SecuritySettings;
+			sourceTree = "<group>";
+		};
+		E160F9B92AA8B43F00515F40 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -688,6 +699,7 @@
 				E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */,
 				E10977592A9D37660058DA0B /* DesignSystem.swift in Sources */,
 				E10977482A9D35FE0058DA0B /* CustomButton.swift in Sources */,
+				E160F9BB2AA8B49B00515F40 /* EditProfileVC.swift in Sources */,
 				E160F9AF2AA6C05500515F40 /* CustomSwitchLabelView.swift in Sources */,
 				E10977E52A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift in Sources */,
 				E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */,
