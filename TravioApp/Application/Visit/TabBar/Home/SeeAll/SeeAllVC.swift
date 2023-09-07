@@ -10,21 +10,16 @@ import SnapKit
 
 class SeeAllVC: UIViewController {
     
-    
-    
-
     private lazy var retangle: UIView = {
         let view = CustomView()
-        
         return view
     }()
     
     private lazy var backButton: UIButton = {
-        let image = UIButton()
-        image.setImage(UIImage(named: "back"), for: .normal)
-        image.addTarget(self, action: #selector(backVectorTapped), for: .touchUpInside)
-        
-        return image
+        let button = UIButton()
+        button.setImage(UIImage(named: "back"), for: .normal)
+        button.addTarget(self, action: #selector(backVectorTapped), for: .touchUpInside)
+        return button
     }()
     
     private lazy var header: UILabel = {
@@ -35,15 +30,33 @@ class SeeAllVC: UIViewController {
         return label
     }()
     
+    private lazy var stackViewSortIcon: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.alignment = .center
+        sv.distribution = .fillEqually
+        sv.spacing = 20
+        return sv
+    }()
+    
+    private lazy var sortDownButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "sortDownIcon"), for: .normal)
+        return button
+    }()
+    
+    private lazy var sortUpButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "sortUpIcon"), for: .normal)
+        return button
+    }()
     
     private lazy var collectionView:UICollectionView = {
-        
-        //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 70, left: 24, bottom: 0, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -52,6 +65,7 @@ class SeeAllVC: UIViewController {
         cv.contentInsetAdjustmentBehavior = .never
         cv.showsHorizontalScrollIndicator = false
         cv.isPagingEnabled = true
+        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         
         return cv
@@ -59,11 +73,8 @@ class SeeAllVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       
-        
-        setupView()
 
+        setupView()
     }
     
     @objc func backVectorTapped(){
@@ -74,11 +85,18 @@ class SeeAllVC: UIViewController {
     func setupView(){
         
         navigationController?.navigationBar.isHidden = true
+        
         view.backgroundColor = Color.turquoise.color
         
-        view.addSubviews(backButton,header,retangle)
+        view.addSubviews(backButton,
+                         header,
+                         retangle)
         
-        retangle.addSubviews(collectionView)
+        stackViewSortIcon.addArrangedSubviews(sortDownButton,
+                                              sortUpButton)
+        
+        retangle.addSubviews(stackViewSortIcon,
+                             collectionView)
         
         setupLayout()
     }
@@ -103,20 +121,16 @@ class SeeAllVC: UIViewController {
             make.leading.equalTo(backButton.snp.trailing).offset(24)
         })
         
-        collectionView.snp.makeConstraints({make in
-//            make.edges.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-
-        })
+        stackViewSortIcon.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(24)
+            make.leading.equalToSuperview().offset(296)
+        }
         
+        collectionView.snp.makeConstraints({make in
+            make.top.equalTo(stackViewSortIcon.snp.bottom).offset(24)
+            make.leading.trailing.bottom.equalToSuperview()
+        })
     }
-    
-
-
-
 }
 
 
@@ -126,27 +140,17 @@ extension SeeAllVC: UICollectionViewDelegateFlowLayout{
         let size = CGSize(width: 342, height: 89)
         return size
     }
-    
 }
 
-
-
 extension SeeAllVC: UICollectionViewDataSource{
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
-    
-    
-    
+  
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }
-    
-    
-    
-    
 }
