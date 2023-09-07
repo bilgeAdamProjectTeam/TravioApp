@@ -45,12 +45,14 @@ class SeeAllVC: UIViewController {
     private lazy var sortDownButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "sortDownIcon"), for: .normal)
+        button.addTarget(self, action: #selector(sortDownButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var sortUpButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "sortUpIcon"), for: .normal)
+        button.addTarget(self, action: #selector(sortUpButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -72,6 +74,32 @@ class SeeAllVC: UIViewController {
         
         return cv
     }()
+    
+    
+    @objc func backVectorTapped(){
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func sortDownButtonTapped() {
+        placesData.sort { (place1, place2) -> Bool in
+            return place1.title < place2.title
+        }
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    @objc func sortUpButtonTapped() {
+        placesData.sort { (place1, place2) -> Bool in
+            return place1.title > place2.title
+        }
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,11 +108,6 @@ class SeeAllVC: UIViewController {
         getServiceData(placeType: placeType)
         
         setupView()
-    }
-    
-    @objc func backVectorTapped(){
-        
-        navigationController?.popViewController(animated: true)
     }
     
     func setupView(){
