@@ -59,6 +59,7 @@ enum MyAPIRouter: URLRequestConvertible {
     case getVisits(parameters: Parameters)
     case getVisitByID(visitId : String)
     case getProfile
+    case putProfile(parameters: Parameters)
     
     
     
@@ -87,6 +88,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/visits\(visitId)"
         case .getProfile:
             return "/v1/me"
+        case .putProfile:
+            return "/v1/edit-profile"
 //        case .postUpload(_):
 //            return "/upload"
         }
@@ -99,13 +102,15 @@ enum MyAPIRouter: URLRequestConvertible {
             return .post
         case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getProfile:
             return .get
+        case .putProfile:
+            return .put
         }
     }
     
     //
     var parameters: Parameters? {
         switch self {
-        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters) :
+        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .putProfile(let parameters) :
             return parameters
         default:
             return [:]
@@ -118,7 +123,7 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn, .postRegister, .getAllPlaces, .getPlaceByID, .getAllImagesbyPlaceID:
             return [:]
-        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile:
+        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile, .putProfile:
             return ["Authorization" : "Bearer \(token)"]
         case .postUpload:
             return ["Content-Type": "multipart/form-data"]

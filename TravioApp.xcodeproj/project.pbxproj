@@ -133,6 +133,9 @@
 		E160F9B62AA7126600515F40 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */; };
 		E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9B72AA7127600515F40 /* PrivacyCell.swift */; };
 		E160F9BB2AA8B49B00515F40 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */; };
+		E1902E5B2AA9B55E0055305D /* CustomImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */; };
+		E1902E5D2AA9E4750055305D /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5C2AA9E4750055305D /* EditProfileViewModel.swift */; };
+		E1902E5F2AA9E4840055305D /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5E2AA9E4840055305D /* EditProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +222,9 @@
 		E160F9B52AA7126600515F40 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
 		E160F9B72AA7127600515F40 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
 		E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageLabelView.swift; sourceTree = "<group>"; };
+		E1902E5C2AA9E4750055305D /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
+		E1902E5E2AA9E4840055305D /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +319,7 @@
 				E10977452A9D35ED0058DA0B /* CustomTextView.swift */,
 				E10977472A9D35FE0058DA0B /* CustomButton.swift */,
 				E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */,
+				E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -496,6 +503,8 @@
 			isa = PBXGroup;
 			children = (
 				E160F9BA2AA8B49B00515F40 /* EditProfileVC.swift */,
+				E1902E5C2AA9E4750055305D /* EditProfileViewModel.swift */,
+				E1902E5E2AA9E4840055305D /* EditProfileModel.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -685,6 +694,7 @@
 				E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
+				E1902E5D2AA9E4750055305D /* EditProfileViewModel.swift in Sources */,
 				E10977CB2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E160F9A82AA5D6C700515F40 /* SettingsModel.swift in Sources */,
@@ -696,6 +706,7 @@
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E109778F2A9D41CD0058DA0B /* LoginModel.swift in Sources */,
+				E1902E5B2AA9B55E0055305D /* CustomImageLabelView.swift in Sources */,
 				E10977D72A9DC7F10058DA0B /* MapModel.swift in Sources */,
 				E10977592A9D37660058DA0B /* DesignSystem.swift in Sources */,
 				E10977482A9D35FE0058DA0B /* CustomButton.swift in Sources */,
@@ -705,6 +716,7 @@
 				E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */,
 				E10977CF2A9DC7890058DA0B /* AddNewPlaceVC.swift in Sources */,
 				E10978082AA1FC5E0058DA0B /* HomeCollectionViewCell.swift in Sources */,
+				E1902E5F2AA9E4840055305D /* EditProfileModel.swift in Sources */,
 				E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */,
 				E160F9A62AA5D46E00515F40 /* SettingsCollectionViewCell.swift in Sources */,
 				E10978052AA1FC5E0058DA0B /* HomeViewModel.swift in Sources */,

@@ -162,9 +162,7 @@ class SignUpVC: UIViewController {
     }
     
     @objc func registerButtonTapped() {
-        guard let username = username.txtField.text else { return }
-        guard let email = mail.txtField.text else { return }
-        guard let password = password.txtField.text else { return }
+        guard let username = username.txtField.text, let email = mail.txtField.text, let password = password.txtField.text else { return }
         
         let data = RegisterInfo(full_name: username, email: email, password: password)
         

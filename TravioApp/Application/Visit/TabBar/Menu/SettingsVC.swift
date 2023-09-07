@@ -50,6 +50,7 @@ class SettingsVC: UIViewController {
         btn.setTitle("Edit Profile", for: .normal)
         btn.setTitleColor(.systemBlue, for: .normal)
         btn.titleLabel?.font = Font.regular(size: 12).font
+        btn.addTarget(self, action: #selector(showEditProfile), for: .touchUpInside)
         return btn
     }()
     
@@ -81,6 +82,14 @@ class SettingsVC: UIViewController {
         
         setupView()
         getUser()
+        
+    }
+    
+    @objc func showEditProfile(){
+        let fullScreenVC = EditProfileVC()
+        fullScreenVC.modalPresentationStyle = .fullScreen 
+        present(fullScreenVC, animated: true, completion: nil)
+
         
     }
     
