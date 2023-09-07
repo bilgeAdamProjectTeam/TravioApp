@@ -15,20 +15,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private lazy var images : UIImageView = {
         let img = UIImageView()
         img.backgroundColor = .darkGray
-        img.layer.shadowColor = Color.darkGray.color.cgColor
-        img.layer.shadowOffset = CGSize(width: 0, height: 0)
-        img.layer.shadowOpacity = 0.15
-        img.layer.shadowRadius = 4
-        img.clipsToBounds = false
-        img.layer.cornerRadius = 16
-        img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
         img.contentMode = .scaleAspectFill
         return img
     }()
     
     private lazy var placeName: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Süleymaniye Cami"
         lbl.font = Font.semiBold(size: 24).font
         lbl.textColor = Color.lightGray.color
         return lbl
@@ -36,7 +28,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var cityName: UILabel = {
         let lbl = UILabel()
-        lbl.text = "İstanbul"
         lbl.font = Font.light(size: 14).font
         lbl.textColor = Color.lightGray.color
         return lbl
@@ -51,8 +42,11 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
+        self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
+        
         setupView()
     }
+   
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

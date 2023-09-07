@@ -10,6 +10,8 @@ import SnapKit
 
 class SeeAllVC: UIViewController {
     
+    
+    
 
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -19,7 +21,7 @@ class SeeAllVC: UIViewController {
     
     private lazy var backButton: UIButton = {
         let image = UIButton()
-        image.setImage(UIImage(named: "Vector"), for: .normal)
+        image.setImage(UIImage(named: "back"), for: .normal)
         image.addTarget(self, action: #selector(backVectorTapped), for: .touchUpInside)
         
         return image
@@ -43,7 +45,6 @@ class SeeAllVC: UIViewController {
         layout.scrollDirection = .vertical
         layout.sectionInset = UIEdgeInsets(top: 70, left: 24, bottom: 0, right: 24)
 
-        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -80,26 +81,25 @@ class SeeAllVC: UIViewController {
         retangle.addSubviews(collectionView)
         
         setupLayout()
-        
     }
     
     
     func setupLayout(){
         
         retangle.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
-            make.leading.trailing.bottom.equalToSuperview().offset(0)
+            make.top.equalToSuperview().offset(125)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(32)
+            make.centerY.equalTo(header)
             make.leading.equalToSuperview().offset(24)
             make.height.equalTo(21.39)
             make.width.equalTo(24)
         })
         
         header.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(19)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.leading.equalTo(backButton.snp.trailing).offset(24)
         })
         

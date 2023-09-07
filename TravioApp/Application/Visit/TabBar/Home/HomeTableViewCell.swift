@@ -15,12 +15,12 @@ protocol HomeTableViewCellDelegate: AnyObject {
 class HomeTableViewCell: UITableViewCell {
     
     weak var delegate: HomeTableViewCellDelegate?
+    
     let homeViewModel = HomeViewModel()
     var serviceDataArray: [HomePlace] = []
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
-        //lbl.text = "Popular Places"
         lbl.font = Font.medium(size: 20).font
         return lbl
     }()
@@ -89,7 +89,6 @@ class HomeTableViewCell: UITableViewCell {
                                 collectionView)
         
         headerStack.addArrangedSubview(title)
-        
         headerStack.addArrangedSubview(detailBtn)
         
         setupLayout()
@@ -117,12 +116,12 @@ class HomeTableViewCell: UITableViewCell {
         self.title.text = title
         DispatchQueue.main.async {
             self.collectionView.reloadData()
-            print(self.serviceDataArray)
         }
     }
 }
 
 extension HomeTableViewCell: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: collectionView.frame.width * 0.71, height: collectionView.frame.height - 52)
             return size

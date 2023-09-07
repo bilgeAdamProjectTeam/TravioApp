@@ -14,7 +14,6 @@ class HomeVC: UIViewController {
     let homeViewModel = HomeViewModel()
     var popularPlacesArray: [HomePlace] = []
     var lastPlacesArray: [HomePlace] = []
-    
     let dispatchGroup = DispatchGroup()
     
     private lazy var retangle: UIView = {
@@ -68,7 +67,7 @@ class HomeVC: UIViewController {
     func setupLayout(){
         
         logo.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(28)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
             make.leading.equalToSuperview().offset(16)
             make.width.equalTo(170)
             make.height.equalTo(62)
@@ -112,6 +111,7 @@ extension HomeVC: HomeTableViewCellDelegate {
     
     func didTapSeeAllButton(in cell: HomeTableViewCell) {
         let vc = SeeAllVC()
+        
         navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -119,7 +119,7 @@ extension HomeVC: HomeTableViewCellDelegate {
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 262// Hücre yüksekliği
+        return 262
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,12 +133,13 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
+        
         cell.delegate = self
         
         switch indexPath.section {
         case 0:
             let data = popularPlacesArray
-            cell.configureTableViewCell(with: data, title: "PopularPlaces")
+            cell.configureTableViewCell(with: data, title: "Populer Places")
             
         case 1:
             let data = lastPlacesArray
