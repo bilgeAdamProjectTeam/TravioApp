@@ -9,12 +9,18 @@
 import UIKit
 import SnapKit
 
+enum PlaceType {
+    case popularPlaces
+    case lastPlaces
+}
+
 class HomeVC: UIViewController {
     
     let homeViewModel = HomeViewModel()
+    let dispatchGroup = DispatchGroup()
+    
     var popularPlacesArray: [HomePlace] = []
     var lastPlacesArray: [HomePlace] = []
-    let dispatchGroup = DispatchGroup()
     
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -96,13 +102,14 @@ class HomeVC: UIViewController {
     func getServiceData() {
         
         dispatchGroup.enter()
-        homeViewModel.getPopulerPlaces { result in
+        homeViewModel.getPopulerPlaces(limit: 5) { result in
             self.popularPlacesArray = result.data.places
             self.dispatchGroup.leave()
         }
         
+        
         dispatchGroup.enter()
-        homeViewModel.getLastPlaces { result in
+        homeViewModel.getLastPlaces(limit: 5) { result in
             self.lastPlacesArray = result.data.places
             self.dispatchGroup.leave()
         }
@@ -114,12 +121,13 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: HomeTableViewCellDelegate {
-    
-    func didTapSeeAllButton(in cell: HomeTableViewCell) {
+    func didTapSeeAllButton(placeType: PlaceType, in cell: HomeTableViewCell) {
         let vc = SeeAllVC()
-        
+        vc.placeType = placeType
+        vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
     }
+    
 }
 
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
@@ -145,12 +153,12 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let data = popularPlacesArray
-            cell.configureTableViewCell(with: data, title: "Populer Places")
-            
+            cell.configureTableViewCell(with: data, title: "Populer Places", placeType: .popularPlaces)
+
         case 1:
             let data = lastPlacesArray
-            cell.configureTableViewCell(with: data, title: "New Places")
-            
+            cell.configureTableViewCell(with: data, title: "New Places", placeType: .lastPlaces)
+
         default:
             break
         }

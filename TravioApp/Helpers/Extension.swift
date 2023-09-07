@@ -356,7 +356,7 @@ extension UICollectionViewCell {
         rectanglePath.close()
         
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.3
+        layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = 4
         layer.shadowPath = rectanglePath.cgPath

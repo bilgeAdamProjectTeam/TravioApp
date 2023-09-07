@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 
 protocol HomeTableViewCellDelegate: AnyObject {
-    func didTapSeeAllButton(in cell: HomeTableViewCell)
+    func didTapSeeAllButton(placeType: PlaceType, in cell: HomeTableViewCell)
 }
 
 class HomeTableViewCell: UITableViewCell {
     
-    weak var delegate: HomeTableViewCellDelegate?
-    
     let homeViewModel = HomeViewModel()
+    weak var delegate: HomeTableViewCellDelegate?
+    var placeType: PlaceType?
     var serviceDataArray: [HomePlace] = []
     
     private lazy var title: UILabel = {
@@ -78,7 +78,8 @@ class HomeTableViewCell: UITableViewCell {
     }
     
     @objc func seeAllPage() {
-        delegate?.didTapSeeAllButton(in: self)
+        guard let placeType = placeType else { return }
+        delegate?.didTapSeeAllButton(placeType: placeType, in: self)
     }
 
     func setupView(){
@@ -111,9 +112,11 @@ class HomeTableViewCell: UITableViewCell {
         })
     }
     
-    func configureTableViewCell(with data: [HomePlace], title: String) {
+    func configureTableViewCell(with data: [HomePlace], title: String, placeType: PlaceType) {
         self.serviceDataArray = data
         self.title.text = title
+        self.placeType = placeType
+        
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -124,7 +127,7 @@ extension HomeTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: collectionView.frame.width * 0.71, height: collectionView.frame.height - 52)
-            return size
+        return size
      }
 }
 
@@ -135,7 +138,7 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! HomeCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
         var data = serviceDataArray[indexPath.row]
         cell.configureCollectionViewCell(with: data)

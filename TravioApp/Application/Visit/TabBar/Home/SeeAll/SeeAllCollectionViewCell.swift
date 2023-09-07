@@ -21,13 +21,11 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
     private lazy var image: UIImageView = {
         let img = UIImageView()
         img.backgroundColor = Color.darkGray.color
-        img.image = UIImage(named: "istanbul")
         return img
     }()
     
     private lazy var placeName: UILabel = {
         let lbl = UILabel()
-        lbl.text = "Süleymaniye Cami"
         lbl.font = Font.semiBold(size: 24).font
         lbl.textColor = Color.darkGray.color
         return lbl
@@ -35,7 +33,6 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
     
     private lazy var cityName: UILabel = {
         let lbl = UILabel()
-        lbl.text = "İstanbul"
         lbl.font = Font.light(size: 14).font
         lbl.textColor = Color.darkGray.color
         return lbl
@@ -51,7 +48,6 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
    
     override init(frame: CGRect) {
         super .init(frame: frame)
-        
         
         self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
         
@@ -104,6 +100,12 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(vectorIcon.snp.trailing).offset(6)
             make.bottom.equalToSuperview().offset(-16)
         })
+    }
+    
+    func configure(data: HomePlace) {
+        image.kf.setImage(with: URL(string: data.cover_image_url))
+        placeName.text = data.title
+        cityName.text = data.place
     }
 }
 

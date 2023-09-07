@@ -10,6 +10,10 @@ import SnapKit
 
 class SeeAllVC: UIViewController {
     
+    var placeType: PlaceType?
+    var placesData: [HomePlace] = []
+    let viewModel = HomeViewModel()
+    
     private lazy var retangle: UIView = {
         let view = CustomView()
         return view
@@ -24,7 +28,6 @@ class SeeAllVC: UIViewController {
     
     private lazy var header: UILabel = {
         let label = UILabel()
-        label.text = "Popular Places" // dinamik olarak değişecek
         label.font = Font.semiBold(size: 32).font
         label.textColor = .white
         return label
@@ -56,7 +59,7 @@ class SeeAllVC: UIViewController {
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 24, bottom: 0, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 24, bottom: 15, right: 24)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -65,7 +68,6 @@ class SeeAllVC: UIViewController {
         cv.contentInsetAdjustmentBehavior = .never
         cv.showsHorizontalScrollIndicator = false
         cv.isPagingEnabled = true
-        cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         cv.register(SeeAllCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         
         return cv
@@ -73,7 +75,10 @@ class SeeAllVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        guard let placeType = placeType else { return }
+        getServiceData(placeType: placeType)
+        
         setupView()
     }
     
@@ -86,9 +91,9 @@ class SeeAllVC: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         
-        view.backgroundColor = Color.turquoise.color
+        self.view.backgroundColor = Color.turquoise.color
         
-        view.addSubviews(backButton,
+        self.view.addSubviews(backButton,
                          header,
                          retangle)
         
@@ -128,16 +133,39 @@ class SeeAllVC: UIViewController {
         
         collectionView.snp.makeConstraints({make in
             make.top.equalTo(stackViewSortIcon.snp.bottom).offset(24)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+            make.bottom.equalToSuperview()
         })
     }
+    
+    func getServiceData(placeType: PlaceType) {
+        
+        switch placeType {
+        case .popularPlaces:
+            viewModel.getPopulerPlaces(limit: 20) { result in
+                self.placesData = result.data.places
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        case .lastPlaces:
+            viewModel.getLastPlaces(limit: 20) { result in
+                self.placesData = result.data.places
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        default:
+            break
+        }
+    }
 }
-
 
 extension SeeAllVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: 342, height: 89)
+        let size = CGSize(width: collectionView.frame.width - 5, height: collectionView.frame.height * 0.123)
         return size
     }
 }
@@ -145,12 +173,25 @@ extension SeeAllVC: UICollectionViewDelegateFlowLayout{
 extension SeeAllVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        
+        return placesData.count
     }
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? SeeAllCollectionViewCell else { return UICollectionViewCell() }
-        
+
+        switch placeType {
+        case .popularPlaces:
+            self.header.text = "Popular Places"
+            let data = placesData[indexPath.row]
+            cell.configure(data: data)
+        case .lastPlaces:
+            self.header.text = "New Places"
+            let data = placesData[indexPath.row]
+            cell.configure(data: data)
+        default:
+            break
+        }
         return cell
     }
 }

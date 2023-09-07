@@ -13,9 +13,9 @@ class HomeViewModel {
     var popularPlaces: HomeResponse?
     var lastPlaces: HomeResponse?
     
-    func getPopulerPlaces(callback: @escaping (HomeResponse) -> Void) {
+    func getPopulerPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
         
-        let params = ["limit":5]
+        let params = ["limit":limit]
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getPopularPlaces(parameters: params), callback: { (result: Result<HomeResponse, Error>) in
             switch result {
@@ -29,9 +29,9 @@ class HomeViewModel {
 
     }
     
-    func getLastPlaces(callback: @escaping (HomeResponse) -> Void) {
+    func getLastPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
         
-        let params = ["limit":5]
+        let params = ["limit":limit]
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getLastPlaces(parameters: params), callback: { (result: Result<HomeResponse, Error>) in
             switch result {
