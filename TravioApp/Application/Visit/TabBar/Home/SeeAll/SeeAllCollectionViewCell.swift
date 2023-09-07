@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import SDWebImage
+import Kingfisher
 
 class SeeAllCollectionViewCell: UICollectionViewCell {
     
@@ -21,6 +21,7 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
     private lazy var image: UIImageView = {
         let img = UIImageView()
         img.backgroundColor = Color.darkGray.color
+        img.contentMode = .scaleToFill
         return img
     }()
     
@@ -81,7 +82,7 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
         
         image.snp.makeConstraints({make in
             make.top.leading.bottom.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-252)
+            make.trailing.equalTo(placeName.snp.leading).offset(-8)
         })
         
         placeName.snp.makeConstraints({make in
@@ -92,13 +93,11 @@ class SeeAllCollectionViewCell: UICollectionViewCell {
         vectorIcon.snp.makeConstraints({make in
             make.top.equalTo(placeName.snp.bottom).offset(3)
             make.leading.equalTo(placeName.snp.leading)
-            make.bottom.equalToSuperview().offset(-22)
         })
         
         cityName.snp.makeConstraints({make in
             make.top.equalTo(placeName.snp.bottom)
             make.leading.equalTo(vectorIcon.snp.trailing).offset(6)
-            make.bottom.equalToSuperview().offset(-16)
         })
     }
     

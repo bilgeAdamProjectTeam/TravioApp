@@ -232,7 +232,6 @@ class VisitsDetailVC: UIViewController {
         buttonBack.snp.makeConstraints { make in
             make.top.equalTo(buttonAddPhoto.snp.top)
             make.leading.equalToSuperview().offset(24)
-            make.trailing.equalTo(buttonAddPhoto.snp.leading).offset(-260)
         }
         
         pageControl.snp.makeConstraints { make in

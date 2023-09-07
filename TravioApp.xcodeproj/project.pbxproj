@@ -116,7 +116,6 @@
 		E10977E82A9DEA470058DA0B /* AddNewPlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977E22A9DE6FE0058DA0B /* AddNewPlaceModel.swift */; };
 		E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977F72A9FA5000058DA0B /* SeeAllVC.swift */; };
 		E10977FA2A9FA5230058DA0B /* SeeAllCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */; };
-		E10977FE2A9FA5450058DA0B /* SeeAllModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */; };
 		E10978042AA1FC5E0058DA0B /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977FF2AA1FC5E0058DA0B /* HomeModel.swift */; };
 		E10978052AA1FC5E0058DA0B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10978002AA1FC5E0058DA0B /* HomeViewModel.swift */; };
 		E10978062AA1FC5E0058DA0B /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10978012AA1FC5E0058DA0B /* HomeTableViewCell.swift */; };
@@ -191,7 +190,6 @@
 		E10977E42A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceViewModel.swift; sourceTree = "<group>"; };
 		E10977F72A9FA5000058DA0B /* SeeAllVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllVC.swift; sourceTree = "<group>"; };
 		E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllCollectionViewCell.swift; sourceTree = "<group>"; };
-		E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllModel.swift; sourceTree = "<group>"; };
 		E10977FF2AA1FC5E0058DA0B /* HomeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		E10978002AA1FC5E0058DA0B /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E10978012AA1FC5E0058DA0B /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
@@ -430,7 +428,6 @@
 			children = (
 				E10977F72A9FA5000058DA0B /* SeeAllVC.swift */,
 				E10977F92A9FA5230058DA0B /* SeeAllCollectionViewCell.swift */,
-				E10977FD2A9FA5450058DA0B /* SeeAllModel.swift */,
 			);
 			path = SeeAll;
 			sourceTree = "<group>";
@@ -621,7 +618,6 @@
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E10977422A9D35C20058DA0B /* CustomView.swift in Sources */,
 				E10977462A9D35ED0058DA0B /* CustomTextView.swift in Sources */,
-				E10977FE2A9FA5450058DA0B /* SeeAllModel.swift in Sources */,
 				E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */,
 				E10977D32A9DC79F0058DA0B /* AddNewPlaceCVC.swift in Sources */,
 				E109778F2A9D41CD0058DA0B /* LoginModel.swift in Sources */,

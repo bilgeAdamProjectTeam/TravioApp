@@ -61,7 +61,7 @@ class SeeAllVC: UIViewController {
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 24, bottom: 15, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 15, right: 0)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -156,8 +156,8 @@ class SeeAllVC: UIViewController {
         
         collectionView.snp.makeConstraints({make in
             make.top.equalTo(stackViewSortIcon.snp.bottom).offset(24)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         })
     }
@@ -188,7 +188,7 @@ class SeeAllVC: UIViewController {
 extension SeeAllVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: collectionView.frame.width - 5, height: collectionView.frame.height * 0.123)
+        let size = CGSize(width: collectionView.frame.width * 0.876, height: collectionView.frame.height * 0.1428)
         return size
     }
 }

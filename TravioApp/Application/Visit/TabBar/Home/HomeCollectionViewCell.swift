@@ -76,10 +76,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
         })
         
         vectorIcon.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(155)
+            make.top.equalTo(placeName.snp.bottom).offset(3)
             make.bottom.equalToSuperview().offset(-11)
             make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-254)
         })
 
         cityName.snp.makeConstraints({make in
