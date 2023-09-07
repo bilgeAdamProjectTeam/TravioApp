@@ -56,7 +56,7 @@ class SeeAllVC: UIViewController {
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 24, bottom: 0, right: 24)
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -66,7 +66,7 @@ class SeeAllVC: UIViewController {
         cv.showsHorizontalScrollIndicator = false
         cv.isPagingEnabled = true
         cv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        cv.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
+        cv.register(SeeAllCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         
         return cv
     }()
@@ -149,7 +149,7 @@ extension SeeAllVC: UICollectionViewDataSource{
     }
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? SeeAllCollectionViewCell else { return UICollectionViewCell() }
         
         return cell
     }

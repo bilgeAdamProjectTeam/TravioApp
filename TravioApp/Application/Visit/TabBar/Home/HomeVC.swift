@@ -49,6 +49,12 @@ class HomeVC: UIViewController {
         setupView()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     func setupView(){
         
         view.backgroundColor = Color.turquoise.color
