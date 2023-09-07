@@ -136,6 +136,7 @@
 		E1902E5B2AA9B55E0055305D /* CustomImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */; };
 		E1902E5D2AA9E4750055305D /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5C2AA9E4750055305D /* EditProfileViewModel.swift */; };
 		E1902E5F2AA9E4840055305D /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5E2AA9E4840055305D /* EditProfileModel.swift */; };
+		E1902E612AAA5C960055305D /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E602AAA5C960055305D /* CustomAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,6 +226,7 @@
 		E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageLabelView.swift; sourceTree = "<group>"; };
 		E1902E5C2AA9E4750055305D /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		E1902E5E2AA9E4840055305D /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
+		E1902E602AAA5C960055305D /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +322,7 @@
 				E10977472A9D35FE0058DA0B /* CustomButton.swift */,
 				E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */,
 				E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */,
+				E1902E602AAA5C960055305D /* CustomAlert.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -725,6 +728,7 @@
 				E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */,
 				E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */,
 				E10977A02A9D479B0058DA0B /* SettingsVC.swift in Sources */,
+				E1902E612AAA5C960055305D /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

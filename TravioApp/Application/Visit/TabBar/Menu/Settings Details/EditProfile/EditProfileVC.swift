@@ -136,7 +136,7 @@ class EditProfileVC: UIViewController {
             self.userName.text = data.full_name
             self.birthday.label.text = data.created_at
 //            dateFormatter(createDate: data.created_at, label: self.birthday.label.text)
-//            self.birthday.label.text = self.convertDateString(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
+            self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
             self.userRole.label.text = data.role
             self.fullName.placeholderName = data.full_name
             self.mail.placeholderName = data.email
@@ -144,16 +144,18 @@ class EditProfileVC: UIViewController {
         
     }
 
-        
-//    func dateFormatter(createDate: String, label: String?){
-//
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-//        if let date = dateFormatter.date(from: createDate) {
-//            dateFormatter.dateFormat = "dd-MMMM-yyyy" // Ayın tam adını yazdırmak için
-//            dateFormatter.string(from: date)
-//        }
-//    }
+    func convertDateFormat(inputDateString: String, outputDateFormat: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ" // Gelen tarih formatı
+        if let date = dateFormatter.date(from: inputDateString) {
+            dateFormatter.dateFormat = outputDateFormat // Çıktı tarih formatı
+            let result = dateFormatter.string(from: date)
+            return result
+        } else {
+            return nil // Tarih dönüşümü başarısız olduysa nil döner
+        }
+    }
+    
     
     
     @objc func editProfile() {

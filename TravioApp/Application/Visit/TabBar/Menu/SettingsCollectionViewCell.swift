@@ -18,6 +18,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         let icon = UIImageView()
         //icon.image = UIImage(named: "miniVector")
         icon.backgroundColor = .white
+        icon.contentMode = .scaleAspectFit
         return icon
     }()
     

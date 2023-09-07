@@ -14,7 +14,7 @@ class MapViewModel{
     
     func getAllPlace(callback: @escaping (PlaceResponse) -> Void){
         
-        let params = ["page":1, "limit":10]
+        let params = ["page":1, "limit":50]
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllPlaces(parameters: params)){ (result: Result<PlaceResponse, Error>) in
             switch result {

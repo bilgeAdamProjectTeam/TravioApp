@@ -15,6 +15,7 @@ class CustomImageLabelView: UIView {
     lazy var icon: UIImageView = {
         let icon = UIImageView()
         icon.image = UIImage(named: "userRole")
+        icon.contentMode = .scaleAspectFit
         return icon
     }()
 
@@ -55,12 +56,10 @@ class CustomImageLabelView: UIView {
         icon.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(20)
             make.leading.equalToSuperview().offset(16)
-            //make.trailing.equalToSuperview().offset(-127)
             make.bottom.equalToSuperview().offset(-20)
         })
         
         label.snp.makeConstraints({make in
-            //make.top.equalToSuperview().offset(18)
             make.centerY.equalTo(icon)
             make.leading.equalTo(icon.snp.trailing).offset(8)
             
