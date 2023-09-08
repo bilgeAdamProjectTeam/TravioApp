@@ -51,6 +51,8 @@ enum MyAPIRouter: URLRequestConvertible {
     case getAllPlaces(parameters: Parameters)
     case getPlaceByID(placeId: String)
     case getAllPlacesForUser(parameters: Parameters)
+    case getPopularPlaces(parameters: Parameters)
+    case getLastPlaces(parameters: Parameters)
     //Gallery
     case postImage(parameters: Parameters)
     case getAllImagesbyPlaceID(placeId: String)
@@ -92,6 +94,10 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/edit-profile"
 //        case .postUpload(_):
 //            return "/upload"
+        case .getPopularPlaces:
+            return "/v1/places/popular"
+        case .getLastPlaces:
+            return "/v1/places/last"
         }
     }
     
@@ -101,6 +107,7 @@ enum MyAPIRouter: URLRequestConvertible {
         case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit, .postUpload:
             return .post
         case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getProfile:
+        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getPopularPlaces, .getLastPlaces:
             return .get
         case .putProfile:
             return .put
@@ -111,6 +118,7 @@ enum MyAPIRouter: URLRequestConvertible {
     var parameters: Parameters? {
         switch self {
         case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .putProfile(let parameters) :
+        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .getPopularPlaces(let parameters), .getLastPlaces(let parameters) :
             return parameters
         default:
             return [:]
@@ -121,7 +129,7 @@ enum MyAPIRouter: URLRequestConvertible {
     //Headers değişkeni case'lere göre değerleri belirleniyor
     var headers: HTTPHeaders {
         switch self {
-        case .postLogIn, .postRegister, .getAllPlaces, .getPlaceByID, .getAllImagesbyPlaceID:
+        case .postLogIn, .postRegister, .getAllPlaces, .getPlaceByID, .getAllImagesbyPlaceID, .getPopularPlaces, .getLastPlaces:
             return [:]
         case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile, .putProfile:
             return ["Authorization" : "Bearer \(token)"]
@@ -151,6 +159,7 @@ enum MyAPIRouter: URLRequestConvertible {
     public func asURLRequest() throws -> URLRequest {
         let url = baseURL.appendingPathComponent(path)
         var request = URLRequest(url: url)
+        request.timeoutInterval = 10000
         request.httpMethod = method.rawValue
         request.headers = headers
         

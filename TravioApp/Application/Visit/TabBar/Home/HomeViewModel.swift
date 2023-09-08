@@ -6,3 +6,44 @@
 //
 
 import Foundation
+import Alamofire
+
+class HomeViewModel {
+    
+    var popularPlaces: HomeResponse?
+    var lastPlaces: HomeResponse?
+    
+    func getPopulerPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
+        
+        let params = ["limit":limit]
+        
+        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getPopularPlaces(parameters: params), callback: { (result: Result<HomeResponse, Error>) in
+            switch result {
+            case .success(let popularPlaces):
+                self.popularPlaces = popularPlaces
+                callback(popularPlaces)
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        })
+
+    }
+    
+    func getLastPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
+        
+        let params = ["limit":limit]
+        
+        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getLastPlaces(parameters: params), callback: { (result: Result<HomeResponse, Error>) in
+            switch result {
+            case .success(let lastPlaces):
+                self.lastPlaces = lastPlaces
+                callback(lastPlaces)
+            case .failure(let error):
+                print("Error:", error.localizedDescription)
+            }
+        })
+        
+    }
+    
+}
+

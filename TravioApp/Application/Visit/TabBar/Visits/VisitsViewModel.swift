@@ -10,19 +10,19 @@ import Alamofire
 
 class VisitsViewModel {
     
-    var visits: VisitsResponse?
+    var visits: VisitResponse?
     var placeId: String?
     var images: ImageResponse?
     var isLoading: Bool?
     var isLoadingDidChange: ((Bool) -> Void)?
     
     
-    func getVisits(callback: @escaping (VisitsResponse) -> Void){
+    func getVisits(callback: @escaping (VisitResponse) -> Void){
         
         let params = ["page":1,"limit":10]
         
         
-        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getVisits(parameters: params), callback: { (result: Result<VisitsResponse, Error>) in
+        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getVisits(parameters: params), callback: { (result: Result<VisitResponse, Error>) in
             switch result {
             case .success(let visits):
                 self.visits = visits
