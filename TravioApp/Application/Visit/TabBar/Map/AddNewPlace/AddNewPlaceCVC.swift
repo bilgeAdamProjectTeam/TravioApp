@@ -15,16 +15,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
     lazy var images : UIImageView = {
         let img = UIImageView()
         img.backgroundColor = .white
-        img.layer.shadowColor = Color.darkGray.color.cgColor
-        img.layer.shadowOffset = CGSize(width: 0, height: 0)
-        img.layer.shadowOpacity = 0.15
-        img.layer.shadowRadius = 4
-        img.clipsToBounds = false
-        img.layer.cornerRadius = 16
-        img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
         img.contentMode = .scaleAspectFill
-        
-        
         return img
     }()
     
@@ -62,6 +53,8 @@ class AddNewPlaceCVC: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
+        images.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
+        self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
         setupView()
     }
     

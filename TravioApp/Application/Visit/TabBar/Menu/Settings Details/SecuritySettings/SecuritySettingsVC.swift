@@ -220,7 +220,7 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
     func switchValueChanged(isOn: Bool, sender:UISwitch) {
         
         let toggle = sender.tag
-//        var photoStatus = PHPhotoLibrary.authorizationStatus()
+        var photoStatus = PHPhotoLibrary.authorizationStatus()
 //        var cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
 //        var locationStatus = CLLocationManager.authorizationStatus()
        
@@ -229,6 +229,16 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
             if sender.tag == 0 {
                 //camera
 //                cameraStatus = .authorized
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    if granted {
+                        // Kamera izni verildi
+                        print("Kamera izni verildi.")
+                    } else {
+                        // Kullanıcı kamera iznini reddetti veya sınırladı
+                        print("Kullanıcı kamera iznini reddetti.")
+                    }
+                }
+
             }else if sender.tag == 1{
                 //Photo library
 //                photoStatus = .authorized

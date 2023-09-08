@@ -381,8 +381,8 @@ extension UICollectionViewCell {
         let rectanglePath = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), byRoundingCorners: corners, cornerRadii: CGSize(width: 16, height: 16))
         rectanglePath.close()
         
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.2
+        layer.shadowColor = Color.darkGray.color.cgColor
+        layer.shadowOpacity = 0.15
         layer.shadowOffset = CGSize(width: 0, height: 0)
         layer.shadowRadius = 4
         layer.shadowPath = rectanglePath.cgPath

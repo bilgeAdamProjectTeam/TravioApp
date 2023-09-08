@@ -312,7 +312,7 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
             cell.images.image = nil
         }
         
-        cell.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
+        //cell.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         return cell
     }
     
