@@ -49,7 +49,10 @@ class VisitsCVC: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
+        self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
+        
         setupViews()
+        
         
 //        if traitCollection.userInterfaceStyle == .dark {
 //            // Dark mode ise
@@ -69,12 +72,12 @@ class VisitsCVC: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let maskPath = UIBezierPath(roundedRect: bounds,
-                                    byRoundingCorners: [.topLeft, .topRight, .bottomLeft],
-                                    cornerRadii: CGSize(width: 16, height: 16))
-        let shape = CAShapeLayer()
-        shape.path = maskPath.cgPath
-        layer.mask = shape
+//        let maskPath = UIBezierPath(roundedRect: bounds,
+//                                    byRoundingCorners: [.topLeft, .topRight, .bottomLeft],
+//                                    cornerRadii: CGSize(width: 16, height: 16))
+//        let shape = CAShapeLayer()
+//        shape.path = maskPath.cgPath
+//        layer.mask = shape
     }
     
     func setupViews() {
