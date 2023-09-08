@@ -10,13 +10,34 @@ import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+//        removeLaunchScreen()
+//        
+//        let mainViewController = LoginVC()
+//                
+//                window = UIWindow(frame: UIScreen.main.bounds)
+//                window?.rootViewController = mainViewController
+//                window?.makeKeyAndVisible()
 
           IQKeyboardManager.shared.enable = true
 
           return true
         }
+    
+//    func removeLaunchScreen() {
+//        if let launchScreenView = UIApplication.shared.keyWindow?.subviews.first {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                launchScreenView.alpha = 0.0
+//            }) { (_) in
+//                launchScreenView.removeFromSuperview()
+//            }
+//        }
+//    }
+
 
 //
 //    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
