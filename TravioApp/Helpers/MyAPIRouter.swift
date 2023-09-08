@@ -106,8 +106,7 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn, .postRegister, .postPlace, .postImage, .postVisit, .postUpload:
             return .post
-        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getProfile:
-        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getPopularPlaces, .getLastPlaces:
+        case .getAllPlaces, .getPlaceByID, .getAllPlacesForUser, .getAllImagesbyPlaceID, .getVisits, .getVisitByID, .getProfile, .getPopularPlaces, .getLastPlaces:
             return .get
         case .putProfile:
             return .put
@@ -117,8 +116,7 @@ enum MyAPIRouter: URLRequestConvertible {
     //
     var parameters: Parameters? {
         switch self {
-        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .putProfile(let parameters) :
-        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .getPopularPlaces(let parameters), .getLastPlaces(let parameters) :
+        case .postLogIn(let parameters), .postRegister(let parameters), .postPlace(let parameters), .postImage(let parameters), .postVisit(let parameters), .getAllPlaces(let parameters), .getVisits(let parameters), .getAllPlacesForUser(let parameters), .putProfile(let parameters), .getPopularPlaces(let parameters), .getLastPlaces(let parameters) :
             return parameters
         default:
             return [:]
