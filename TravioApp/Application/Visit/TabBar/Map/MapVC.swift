@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import SnapKit
+import CoreLocation
 
 class MapVC: UIViewController /*, MKMapViewDelegate */ {
     

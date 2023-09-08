@@ -40,17 +40,32 @@ class SecuritySettingsViewModel {
         let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
         let locationStatus = CLLocationManager.authorizationStatus()
         
-        
-        if photoStatus == .authorized || cameraStatus == .authorized || locationStatus == .authorizedAlways{
-            cameraPermission = true
+        switch photoStatus {
+        case .authorized:
             photoLibraryPermission = true
-            locationServicesPermission = true
-        }else{
-            cameraPermission = false
+        case .denied, .restricted, .notDetermined, .limited :
             photoLibraryPermission = false
-            locationServicesPermission = false
+        @unknown default:
+            photoLibraryPermission = false
         }
         
+        switch cameraStatus {
+        case .authorized:
+            cameraPermission = true
+        case .denied, .restricted, .notDetermined:
+            cameraPermission = false
+        @unknown default:
+            cameraPermission = false
+        }
+        
+        switch locationStatus {
+        case .authorizedAlways:
+            locationServicesPermission = true
+        case .authorizedWhenInUse, .notDetermined, .restricted, .denied:
+            locationServicesPermission = false
+        @unknown default:
+            locationServicesPermission = false
+        }
     }
     
     var changePassWordInfo = [ChangePassword(labelName: "New Password"),
@@ -58,9 +73,9 @@ class SecuritySettingsViewModel {
 
     var privacyInfo: [PrivacyInfo] {
         return [
-            PrivacyInfo(labelName: "Camera", switchCheck: cameraPermission ?? false),
-            PrivacyInfo(labelName: "Photo Library", switchCheck: photoLibraryPermission ?? false),
-            PrivacyInfo(labelName: "Location", switchCheck: locationServicesPermission ?? false)
+            PrivacyInfo(labelName: "Camera", switchCheck: cameraPermission ?? true),
+            PrivacyInfo(labelName: "Photo Library", switchCheck: photoLibraryPermission ?? true),
+            PrivacyInfo(labelName: "Location", switchCheck: locationServicesPermission ?? true)
         ]
     }
 }

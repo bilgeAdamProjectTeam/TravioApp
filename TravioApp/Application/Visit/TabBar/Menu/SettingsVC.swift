@@ -172,7 +172,7 @@ extension SettingsVC: UICollectionViewDelegateFlowLayout{
 
         let selectedPageType = pageTypes[indexPath.row]
         
-        // Seçilen sayfa türüne göre bir sayfa örneği oluşturun
+
         let pageInstance = selectedPageType.init()
         pageInstance.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(pageInstance, animated: true)

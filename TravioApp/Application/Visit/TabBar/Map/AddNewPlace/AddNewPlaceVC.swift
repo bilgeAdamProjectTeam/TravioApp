@@ -135,11 +135,11 @@ class AddNewPlaceVC: UIViewController {
         self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
                 
                     guard let url = urls.first else { return }
-//                    let params = PlaceInfo(place:place, title: title, description: desc, cover_image_url: url, latitude: latitude, longitude: longitude)
-                    let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude]
+
+            let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
                     
             viewModel.postPlace( params: params) {
-                dismiss(animated: true, completion: {
+                self.dismiss(animated: true, completion: {
                     self.completionHandler?() // completionHandler'ı çağır
                 })
             }
@@ -179,6 +179,8 @@ class AddNewPlaceVC: UIViewController {
             imagePicker.delegate = self
             present(imagePicker, animated: true, completion: nil)
         } else if status == .denied || status == .restricted {
+            
+            
             // Eğer izin reddedilmiş veya sınırlı ise, kullanıcıyı ayarlara yönlendir
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -200,14 +202,6 @@ class AddNewPlaceVC: UIViewController {
     }
     
     
-//    @objc func openGallery() {
-//
-//        let imagePicker = UIImagePickerController()
-//
-//        imagePicker.sourceType = .photoLibrary
-//        imagePicker.delegate = self
-//        present(imagePicker, animated: true, completion: nil)
-//    }
     
     
     func getLocation(){
@@ -294,11 +288,6 @@ extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
         selectedIndexPath = indexPath // Seçilen hücrenin indeksini kaydedin
         
         openGallery() // fotoğraf galerisi açma izni
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.delegate = self
-//        imagePicker.sourceType = .photoLibrary
-//
-//        present(imagePicker, animated: true, completion: nil)
     }
     
 }

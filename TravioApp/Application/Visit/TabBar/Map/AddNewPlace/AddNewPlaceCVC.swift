@@ -11,7 +11,6 @@ import SnapKit
 
 class AddNewPlaceCVC: UICollectionViewCell {
     
-//    var selectedImage: UIImage?
     
     lazy var images : UIImageView = {
         let img = UIImageView()

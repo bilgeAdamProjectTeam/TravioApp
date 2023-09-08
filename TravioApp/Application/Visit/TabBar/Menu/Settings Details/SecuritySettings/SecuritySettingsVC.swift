@@ -220,23 +220,22 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
     func switchValueChanged(isOn: Bool, sender:UISwitch) {
         
         let toggle = sender.tag
-        var photoStatus = PHPhotoLibrary.authorizationStatus()
-        var cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        var locationStatus = CLLocationManager.authorizationStatus()
+//        var photoStatus = PHPhotoLibrary.authorizationStatus()
+//        var cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
+//        var locationStatus = CLLocationManager.authorizationStatus()
        
         if isOn {
             
             if sender.tag == 0 {
                 //camera
-                cameraStatus = .authorized
-
+//                cameraStatus = .authorized
             }else if sender.tag == 1{
                 //Photo library
-                photoStatus = .authorized
+//                photoStatus = .authorized
                 
             }else if sender.tag == 2{
                 //Location
-                locationStatus = .authorizedAlways
+//                locationStatus = .authorizedAlways
             }
            
         }
@@ -260,30 +259,8 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
             }
             
         }
-//        print("isOn---: \(isOn)--------\(index)")
-//        updatePermissions(index: 0)
     }
     
-//
-//    func openGallery() {
-//        let status = PHPhotoLibrary.authorizationStatus()
-//
-//        if status == .authorized {
-//
-//        } else if status == .denied || status == .restricted {
-//            // Eğer izin reddedilmiş veya sınırlı ise, kullanıcıyı ayarlara yönlendir
-//            if let url = URL(string: UIApplication.openSettingsURLString) {
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            }
-//        } else {
-//            // Eğer izin verilmemişse, izin isteği gönder
-//            PHPhotoLibrary.requestAuthorization { (newStatus) in
-//                if newStatus == .authorized {
-//
-//                }
-//            }
-//        }
-//    }
     
     
 }
