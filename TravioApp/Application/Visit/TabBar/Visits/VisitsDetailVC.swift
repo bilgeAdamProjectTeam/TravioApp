@@ -77,7 +77,7 @@ class VisitsDetailVC: UIViewController {
     
     private lazy var dateLabel:UILabel = {
         let label = UILabel()
-        label.text = "5 Şubat 1998"
+        label.text = detailVisit?.created_at
         label.textColor = Color.darkGray.color
         label.font = Font.regular(size: 14).font
         return label
