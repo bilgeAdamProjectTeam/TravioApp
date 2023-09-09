@@ -17,7 +17,6 @@ class AddNewPlaceViewModel {
     var urls: [String] = []
     var image: [UIImage] = []
 
-//    input: PlaceInfo
     func postPlace(params:Parameters, callback: @escaping () -> Void){
         
         
@@ -66,38 +65,6 @@ class AddNewPlaceViewModel {
         
     }
     
-    
-    //PostPlace parameters
-    //{
-    //      "place": "Nevşehir, Türkiye",
-    //      "title": "Kapadokya",
-    //      "description": "Kapadokya, adeta peri masallarının gerçeğe dönüştüğü büyülü bir dünyadır.",
-    //      "cover_image_url": "https://iosclass.ams3.digitaloceanspaces.com/1692817007606598873.png",
-    //      "latitude": 38.6431,
-    //      "longitude": 34.8287
-    //}
-    
-    
-    
-    
-    
-//    func postUpload(imageData: Data, callback: @escaping (UploadResponse) -> Void){
-//        NetworkingHelper.shared. objectRequestRouter(request: MyAPIRouter.postUpload(imageData: imageData)) {(result: Result<UploadResponse, Error>) in
-//            switch result {
-//            case .success(let response):
-//                if let urls = response["urls"]?.first {
-//                    .success(urls)
-//                } else {
-//                    .failure(Error.invalidResponse)
-//                }
-//            case .failure(let error):
-//                .failure(error)
-//            }
-//        }
-//    }
-//
-//
-
     
 }
 

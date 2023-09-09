@@ -14,7 +14,6 @@ import Photos
 class AddNewPlaceVC: UIViewController {
     
     var placeCoordinate: String?
-    //    var selectedImage: UIImage?
     var selectedIndexPath: IndexPath?
     var cellImages: [UIImage?] = []
     var dataImage: [Data?] = []
@@ -36,7 +35,6 @@ class AddNewPlaceVC: UIViewController {
         view.placeholderName = "Please write a place name"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "Place Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-        view.txtField.delegate = self
         
         return view
     }()
@@ -89,9 +87,6 @@ class AddNewPlaceVC: UIViewController {
         btn.labelText = "Add Place"
         btn.backgroundColor = Color.turquoise.color
         btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
-        //btn.backgroundColor = Color.darkGray.color
-        //btn.isEnabled = false
-        //btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
         
         return btn
     }()
@@ -113,9 +108,7 @@ class AddNewPlaceVC: UIViewController {
         getLocation()
         
         cellImages = [UIImage?](repeating: nil, count: 3)
-        
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openGallery))
-        //                yourImageView.addGestureRecognizer(tapGesture)
+
         
     }
     
@@ -127,9 +120,6 @@ class AddNewPlaceVC: UIViewController {
               let desc = visitDescription.txtView.text,
               let latitude = latitude,
               let longitude = longitude else { return }
-
-              //let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first,
-              //let selectedImage = s
               
 
         self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
@@ -147,26 +137,6 @@ class AddNewPlaceVC: UIViewController {
             
             }
             
-            
-
-//
-//    func requestPhotoLibraryPermission() {
-//        PHPhotoLibrary.requestAuthorization { status in
-//            switch status {
-//            case .authorized:
-//                // Kullanıcı izin verdi.
-//                print("Fotoğraf galerisi izni verildi.")
-//            case .denied, .restricted:
-//                // Kullanıcı izni reddetti veya sınırlı izin verildi.
-//                print("Fotoğraf galerisi izni reddedildi.")
-//            case .notDetermined:
-//                // Kullanıcı henüz bir seçim yapmadı.
-//                print("Fotoğraf galerisi izni henüz belirlenmedi.")
-//            @unknown default:
-//                break
-//            }
-//        }
-//    }
 
     
     @objc func openGallery() {
@@ -217,14 +187,9 @@ class AddNewPlaceVC: UIViewController {
                          visitDescription,
                          country,
                          addPlaceBtn,collectionView)
-        
-        
-        
-        
+
         setupLayout()
-        
-        
-        
+ 
     }
     
     func setupLayout(){
@@ -240,20 +205,18 @@ class AddNewPlaceVC: UIViewController {
             make.top.equalTo(rectangle.snp.bottom).offset(22)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-646)
         })
         
         visitDescription.snp.makeConstraints({make in
             make.top.equalTo(placeName.snp.bottom).offset(16)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-415)
+            make.leading.equalTo(placeName.snp.leading)
+            make.trailing.equalTo(placeName.snp.trailing)
         })
         
         country.snp.makeConstraints({make in
             make.top.equalTo(visitDescription.snp.bottom).offset(16)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
+            make.leading.equalTo(visitDescription.snp.leading)
+            make.trailing.equalTo(visitDescription.snp.trailing)
             make.bottom.equalToSuperview().offset(-325)
         })
         
@@ -312,7 +275,6 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
             cell.images.image = nil
         }
         
-        //cell.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         return cell
     }
     
@@ -349,22 +311,6 @@ extension AddNewPlaceVC: UINavigationControllerDelegate{
     
 }
 
-extension AddNewPlaceVC: UITextFieldDelegate{
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-}
-
-extension UIViewController {
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
-    }
-}
 
 
 

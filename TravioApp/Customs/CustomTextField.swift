@@ -24,12 +24,6 @@ class CustomTextField: UIView {
         }
     }
     
-//    var keyboardType:Bool = false {
-//        didSet {
-//            txtField.isSecureTextEntry = true
-//        }
-//    }
-    
    private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Label"
