@@ -39,6 +39,10 @@ struct VisitPlace: Codable {
     var updated_at: String
 }
 
+struct VisitPostResponse: Codable {
+    var message: String
+    var status: String
+}
 
 
 struct ImageResponse: Codable {

@@ -14,26 +14,11 @@ class MapCollectionViewCell: UICollectionViewCell {
     private lazy var images : UIImageView = {
         let img = UIImageView()
         img.backgroundColor = Color.darkGray.color
-        img.layer.shadowColor = Color.darkGray.color.cgColor
-        img.layer.shadowOffset = CGSize(width: 0, height: 0)
-        img.layer.shadowOpacity = 0.15
-        img.layer.shadowRadius = 4
-        img.clipsToBounds = false
-//        img.layer.cornerRadius = 16
-        img.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
+        img.kf.indicatorType = .activity
         img.contentMode = .scaleAspectFill
-        
-        
         return img
     }()
     
-    private lazy var icon : UIButton = {
-        let btn = UIButton()
-        let image = UIImage(named: "isVisitMark")
-        btn.setImage(image, for: .normal)
-        
-        return btn
-    }()
     
     private lazy var placeName: UILabel = {
         let lbl = UILabel()
@@ -54,7 +39,6 @@ class MapCollectionViewCell: UICollectionViewCell {
     private lazy var vectorIcon: UIImageView = {
         let icon = UIImageView()
         icon.image = UIImage(named: "miniVector")
-        //icon.frame = CGRect(x: 0, y: 0, width: 9, height: 12)
         return icon
     }()
     
@@ -81,8 +65,9 @@ class MapCollectionViewCell: UICollectionViewCell {
     
     func setupView(){
         
+        images.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         addSubviews(images)
-        images.addSubviews(icon,placeName,vectorIcon,cityName)
+        images.addSubviews(placeName,vectorIcon,cityName)
 
         setupLayout()
     }
@@ -93,32 +78,23 @@ class MapCollectionViewCell: UICollectionViewCell {
             make.edges.equalToSuperview()
         })
         
-        icon.snp.makeConstraints({make in
-            make.leading.equalToSuperview().offset(264)
-            make.bottom.equalToSuperview().offset(-138)
-           
-        })
-        
         placeName.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(113)
-            make.bottom.equalToSuperview().offset(-29)
             make.leading.equalToSuperview().offset(22)
-            make.trailing.equalToSuperview().offset(-48)
+            make.bottom.equalToSuperview().offset(-29)
 
         })
         
         vectorIcon.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(152)
+            make.top.equalTo(placeName.snp.bottom).offset(3)
+            make.leading.equalTo(placeName.snp.leading)
             make.bottom.equalToSuperview().offset(-14)
-            make.leading.equalToSuperview().offset(22)
-            make.trailing.equalToSuperview().offset(-278)
         })
 
         cityName.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(149)
+            make.top.equalTo(placeName.snp.bottom)
+            make.leading.equalTo(vectorIcon.snp.trailing).offset(6)
             make.bottom.equalToSuperview().offset(-8)
-            make.leading.equalToSuperview().offset(37)
-            //make.trailing.equalToSuperview().offset(-216)
         })
         
     }

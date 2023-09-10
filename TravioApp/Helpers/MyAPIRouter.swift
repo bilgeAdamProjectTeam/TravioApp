@@ -60,6 +60,7 @@ enum MyAPIRouter: URLRequestConvertible {
     case postVisit(parameters: Parameters)
     case getVisits(parameters: Parameters)
     case getVisitByID(visitId : String)
+    case deleteVisitByID(placeId: String)
     case getProfile
     case putProfile(parameters: Parameters)
     
@@ -98,6 +99,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return "/v1/places/popular"
         case .getLastPlaces:
             return "/v1/places/last"
+        case .deleteVisitByID(let placeId):
+            return "/v1/visits/\(placeId)"
         }
     }
     
@@ -110,6 +113,8 @@ enum MyAPIRouter: URLRequestConvertible {
             return .get
         case .putProfile:
             return .put
+        case .deleteVisitByID:
+            return .delete
         }
     }
     
@@ -129,7 +134,7 @@ enum MyAPIRouter: URLRequestConvertible {
         switch self {
         case .postLogIn, .postRegister, .getAllPlaces, .getPlaceByID, .getAllImagesbyPlaceID, .getPopularPlaces, .getLastPlaces:
             return [:]
-        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile, .putProfile:
+        case .postPlace, .getAllPlacesForUser, .postImage, .postVisit, .getVisits, .getVisitByID, .getProfile, .putProfile, .deleteVisitByID:
             return ["Authorization" : "Bearer \(token)"]
         case .postUpload:
             return ["Content-Type": "multipart/form-data"]

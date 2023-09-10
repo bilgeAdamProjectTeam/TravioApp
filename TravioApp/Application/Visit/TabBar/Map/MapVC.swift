@@ -196,7 +196,8 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
 extension MapVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: 309, height: 178)
+        let size = CGSize(width: view.frame.width * 0.79, height: view.frame.height * 0.21)
+    //width: view.frame.width * 0.79 - 18, height: collectionView.frame.height * 0.21
         return size
     }
     
@@ -222,6 +223,21 @@ extension MapVC: UICollectionViewDataSource{
         cell.roundCorners(corners: [.topLeft, .topRight, .bottomLeft], radius: 16)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let data = allPlaces else { return }
+        var visitData = data[indexPath.row]
+        var placeId = visitData.id
+        //print(placeId)
+        //visitsViewModel.getImages(id: travelId, callback: <#T##(ImageResponse) -> Void#>)
+        
+        let vc = VisitsDetailVC()
+        guard let placeId = placeId else { return }
+        vc.placeId = placeId
+        vc.allPlaces = visitData
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
     
     

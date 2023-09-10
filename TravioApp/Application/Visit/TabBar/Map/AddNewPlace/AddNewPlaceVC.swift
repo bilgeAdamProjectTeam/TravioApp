@@ -130,7 +130,7 @@ class AddNewPlaceVC: UIViewController {
                     
             viewModel.postPlace( params: params) {
                 self.dismiss(animated: true, completion: {
-                    self.completionHandler?() // completionHandler'ı çağır
+                    self.completionHandler?()  // completionHandler'ı çağır
                 })
             }
                 })

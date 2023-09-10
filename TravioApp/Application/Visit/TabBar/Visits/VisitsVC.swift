@@ -29,7 +29,7 @@ class VisitsVC: UIViewController {
         return label
     }()
     
-    private lazy var MyCollection: UICollectionView = {
+     lazy var MyCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 45, left: 0, bottom: 0, right: 0)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)

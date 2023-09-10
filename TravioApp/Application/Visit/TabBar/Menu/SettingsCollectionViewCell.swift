@@ -48,10 +48,10 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     func setupView(){
 
 
-        
+        radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
         backgroundColor = .white
         
-        addSubviews(icon,label,nextVector)
+        self.contentView.addSubviews(icon,label,nextVector)
         
         setupLayout()
         

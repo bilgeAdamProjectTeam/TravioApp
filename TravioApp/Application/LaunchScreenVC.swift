@@ -22,7 +22,7 @@ class LaunchScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() +  3.0){
+        DispatchQueue.main.asyncAfter(deadline: .now() +  1.0){
             self.goToLoginPage()
         }
 
