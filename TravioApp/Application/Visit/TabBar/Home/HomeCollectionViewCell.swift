@@ -42,8 +42,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
-        self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
-        
         setupView()
     }
    
@@ -53,6 +51,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func setupView(){
+        
+        self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
 
         self.contentView.addSubviews(images)
         
@@ -89,7 +89,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCollectionViewCell(with place: HomePlace) {
-        
         placeName.text = place.title
         cityName.text = place.place
         images.kf.setImage(with: URL(string: place.cover_image_url))

@@ -10,8 +10,6 @@ import SnapKit
 
 class VisitsDetailCell: UICollectionViewCell {
     
-  //var viewModel = VisitsViewModel()
-    
     private lazy var images : UIImageView = {
         let img = UIImageView()
         return img
@@ -19,13 +17,13 @@ class VisitsDetailCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func configure(with photos: Image){
 
@@ -35,9 +33,10 @@ class VisitsDetailCell: UICollectionViewCell {
         } 
     }
         
-    //view.frame = CGRect(x: 0, y: 0, width: 390, height: 249)
     func setupView(){
+        
         addSubviews(images)
+        
         setupLayout()
     }
     
@@ -46,8 +45,5 @@ class VisitsDetailCell: UICollectionViewCell {
         images.snp.makeConstraints({make in
             make.edges.equalToSuperview()
         })
-        
-    }
-        
-        
+    }     
 }
