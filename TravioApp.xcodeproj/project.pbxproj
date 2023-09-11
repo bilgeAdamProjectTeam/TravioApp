@@ -10,7 +10,6 @@
 		E06FEEA62AA0CE6C00D68E93 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA12AA0CE6C00D68E93 /* Poppins-Regular.ttf */; };
 		E06FEEA72AA0CE6C00D68E93 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA12AA0CE6C00D68E93 /* Poppins-Regular.ttf */; };
 		E06FEEA82AA0CE6C00D68E93 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA12AA0CE6C00D68E93 /* Poppins-Regular.ttf */; };
-		E06FEEA92AA0CE6C00D68E93 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA22AA0CE6C00D68E93 /* Poppins-Medium.ttf */; };
 		E06FEEAA2AA0CE6C00D68E93 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA22AA0CE6C00D68E93 /* Poppins-Medium.ttf */; };
 		E06FEEAB2AA0CE6C00D68E93 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA22AA0CE6C00D68E93 /* Poppins-Medium.ttf */; };
 		E06FEEAC2AA0CE6C00D68E93 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA32AA0CE6C00D68E93 /* Poppins-Light.ttf */; };
@@ -23,6 +22,7 @@
 		E06FEEB32AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB42AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB72AA20E8100D68E93 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E06FEEB62AA20E8100D68E93 /* Kingfisher */; };
+		E0E194FE2AAEF32C00D5E4F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0E194FD2AAEF32C00D5E4F6 /* Assets.xcassets */; };
 		E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770D2A9D2EEF0058DA0B /* AppDelegate.swift */; };
 		E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770F2A9D2EEF0058DA0B /* SceneDelegate.swift */; };
 		E10977122A9D2EEF0058DA0B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10977112A9D2EEF0058DA0B /* LoginVC.swift */; };
@@ -134,7 +134,6 @@
 		E1902E5F2AA9E4840055305D /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5E2AA9E4840055305D /* EditProfileModel.swift */; };
 		E1902E612AAA5C960055305D /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E602AAA5C960055305D /* CustomAlert.swift */; };
 		E1902E632AAB0D6A0055305D /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E622AAB0D6A0055305D /* LaunchScreenVC.swift */; };
-		E1902E652AAB428A0055305D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1902E642AAB428A0055305D /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +159,7 @@
 		E06FEEA32AA0CE6C00D68E93 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
 		E06FEEA42AA0CE6C00D68E93 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		E0E194FD2AAEF32C00D5E4F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = TravioApp/Assets.xcassets; sourceTree = "<group>"; };
 		E109770A2A9D2EEF0058DA0B /* TravioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E109770D2A9D2EEF0058DA0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E109770F2A9D2EEF0058DA0B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -222,7 +222,6 @@
 		E1902E5E2AA9E4840055305D /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
 		E1902E602AAA5C960055305D /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		E1902E622AAB0D6A0055305D /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
-		E1902E642AAB428A0055305D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +258,7 @@
 		E10977012A9D2EEF0058DA0B = {
 			isa = PBXGroup;
 			children = (
+				E0E194FD2AAEF32C00D5E4F6 /* Assets.xcassets */,
 				E109770C2A9D2EEF0058DA0B /* TravioApp */,
 				E10977232A9D2EF20058DA0B /* TravioAppTests */,
 				E109772D2A9D2EF20058DA0B /* TravioAppUITests */,
@@ -286,7 +286,6 @@
 				E109773F2A9D309F0058DA0B /* Application */,
 				E10977402A9D30BC0058DA0B /* Helpers */,
 				E109771B2A9D2EF20058DA0B /* Info.plist */,
-				E1902E642AAB428A0055305D /* Assets.xcassets */,
 			);
 			path = TravioApp;
 			sourceTree = "<group>";
@@ -626,12 +625,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0E194FE2AAEF32C00D5E4F6 /* Assets.xcassets in Resources */,
 				E06FEEA62AA0CE6C00D68E93 /* Poppins-Regular.ttf in Resources */,
 				E06FEEB22AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */,
 				E06FEEAF2AA0CE6C00D68E93 /* Poppins-Bold.ttf in Resources */,
 				E06FEEAC2AA0CE6C00D68E93 /* Poppins-Light.ttf in Resources */,
-				E1902E652AAB428A0055305D /* Assets.xcassets in Resources */,
-				E06FEEA92AA0CE6C00D68E93 /* Poppins-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
