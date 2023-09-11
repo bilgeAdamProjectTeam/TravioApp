@@ -41,7 +41,6 @@ class VisitsViewModel {
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllImagesbyPlaceID(placeId: placeId), callback: {(result: Result<ImageResponse, Error>) in
             switch result {
             case .success(let images):
-                sleep(3)
                 self.images = images
                 self.isLoadingDidChange?(false)
                 callback(images)

@@ -10,8 +10,17 @@ import Alamofire
 
 class HomeViewModel {
     
-    var popularPlaces: HomeResponse?
+// TODO: --ViewModel-Controller yenilenecek.
+//    var popularPlacesArray: [HomePlace] = []
+//    var popularPlaces: HomeResponse? {
+//        didSet {
+//            guard let popularPlaces = popularPlaces else { return }
+//            popularPlacesArray = popularPlaces.data.places
+//        }
+//    }
+//
     var lastPlaces: HomeResponse?
+    var popularPlaces: HomeResponse?
     
     func getPopulerPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
         

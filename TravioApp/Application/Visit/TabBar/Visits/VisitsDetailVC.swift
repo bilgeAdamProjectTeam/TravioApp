@@ -20,12 +20,11 @@ class VisitsDetailVC: UIViewController {
     private lazy var gradient:UIImageView = {
         let img = UIImageView()
         img.image = UIImage(named: "Rectangle")
-        //darkmode olduğunda diğeri gelecek
-       return img
+        return img
     }()
 
     private lazy var collectionView:UICollectionView = {
-        //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
+        
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 10
@@ -69,7 +68,6 @@ class VisitsDetailVC: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "İstanbul"
         label.textColor = Color.darkGray.color
         label.font = Font.semiBold(size: 30).font
         return label
@@ -87,7 +85,6 @@ class VisitsDetailVC: UIViewController {
         let label = UILabel()
         label.font = Font.regular(size: 10).font
         label.textColor = .systemGray
-        label.text = "added by"
         return label
     }()
     
@@ -101,9 +98,6 @@ class VisitsDetailVC: UIViewController {
     
     private lazy var descriptionLbl: UILabel = {
         let label = UILabel()
-        label.text = """
- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
- """
         label.textColor = Color.darkGray.color
         label.font = Font.regular(size: 12).font
         label.numberOfLines = 0
@@ -299,7 +293,7 @@ class VisitsDetailVC: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         if let date = dateFormatter.date(from: visitDate) {
-            dateFormatter.dateFormat = "dd MMMM yyyy" // Ayın tam adını yazdırmak için
+            dateFormatter.dateFormat = "dd MMMM yyyy"
             label.text = dateFormatter.string(from: date)
         }
     }
