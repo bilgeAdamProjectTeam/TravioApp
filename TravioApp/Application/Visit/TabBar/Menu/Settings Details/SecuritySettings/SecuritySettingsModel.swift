@@ -11,6 +11,7 @@ import Foundation
 
 struct ChangePassword {
     var labelName: String
+    var tag:Int
 }
 
 struct PrivacyInfo {
@@ -18,5 +19,13 @@ struct PrivacyInfo {
     var switchCheck: Bool
 }
 
+struct PasswordRequest:Codable {
+    var new_password: String
+}
+
+struct PasswordResponse: Codable {
+    var message: String
+    var status: String
+}
 
 

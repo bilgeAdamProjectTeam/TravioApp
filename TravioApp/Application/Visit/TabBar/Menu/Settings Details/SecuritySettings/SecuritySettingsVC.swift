@@ -15,6 +15,11 @@ protocol isOnSwitchDelegate: AnyObject {
     func switchValueChanged(isOn: Bool,sender:UISwitch)
 }
 
+protocol ChangePasswordDelegate: AnyObject {
+    typealias ConfirmAlias = (tag:Int, text:String)
+    func passwordTransfer(newPassword: ConfirmAlias)
+}
+
 class SecuritySettingsVC: UIViewController {
     
     let viewModel = SecuritySettingsViewModel()
@@ -23,6 +28,8 @@ class SecuritySettingsVC: UIViewController {
     var cameraSwitch: Bool?
     var photoLibrarySwitch: Bool?
     var locationServicesSwitch: Bool?
+    var newPassword: String?
+    var confirmPassword: String?
     //let cellTypes: [UITableViewCell.Type] = [ChangePasswordCell.self,PrivacyCell.self]
     
     private lazy var retangle: UIView = {
@@ -65,7 +72,7 @@ class SecuritySettingsVC: UIViewController {
     private lazy var saveButton: CustomButton = {
         let btn = CustomButton()
         btn.labelText = "Save"
-        btn.addTarget(self, action: #selector(updatePermissions), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(updatePassword), for: .touchUpInside)
         return btn
     }()
 
@@ -79,8 +86,25 @@ class SecuritySettingsVC: UIViewController {
         
     }
     
-    @objc func updatePermissions(index: Int){
-        print("tıklandı")
+    @objc func updatePassword(){
+        
+        //newPassword, confirmPassword
+        
+        if newPassword == confirmPassword {
+            
+            let param = ["new_password": newPassword]
+            
+            viewModel.changePassword(parameters: param) { result in
+                print(result)
+            }
+            
+        }else {
+            
+            print("şifreler uyuşmuyor") // alert koy
+        }
+        
+
+        
     }
     
     @objc func backTapped(){
@@ -201,9 +225,10 @@ extension SecuritySettingsVC: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ChangePasswordCell", for: indexPath) as! ChangePasswordCell
-            let array = viewModel.changePassWordInfo[indexPath.row]
-            cell.configure(data: array)
+            let object = viewModel.changePassWordInfo[indexPath.row]
             
+            cell.configure(data: object)
+            cell.delegate = self
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PrivacyCell", for: indexPath) as! PrivacyCell
@@ -274,3 +299,25 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
     
     
 }
+
+
+extension SecuritySettingsVC: ChangePasswordDelegate{
+    
+    func passwordTransfer(newPassword: ConfirmAlias) {
+        //self.newPassword = newPassword
+        
+        switch newPassword.tag {
+        case 0:
+            self.newPassword = newPassword.text
+        case 1:
+            self.confirmPassword = newPassword.text
+        default:
+            break
+        }
+        
+
+    }
+    
+}
+
+

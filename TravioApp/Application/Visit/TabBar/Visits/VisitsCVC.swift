@@ -45,13 +45,6 @@ class VisitsCVC: UICollectionViewCell {
         
         setupViews()
         
-//        if traitCollection.userInterfaceStyle == .dark {
-//            // Dark mode ise
-//            gradient.image = UIImage(named: "gradient")
-//        } else {
-//            // Light mode ise
-//            gradient.image = UIImage(named: "Rectangle")
-//        }
         
     }
     

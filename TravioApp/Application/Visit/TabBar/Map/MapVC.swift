@@ -11,7 +11,7 @@ import MapKit
 import SnapKit
 import CoreLocation
 
-class MapVC: UIViewController /*, MKMapViewDelegate */ {
+class MapVC: UIViewController {
     
     var viewModel = MapViewModel()
     var allPlaces: [Place]?
@@ -69,7 +69,6 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
         setupView()
         
         viewModel.getAllPlace(callback: { result in
-            //self.allPlaces?.append(contentsOf: result.data.places)
             self.allPlaces = result.data?.places
             self.collectionView.reloadData()
             self.addPinsToMap()
@@ -197,7 +196,6 @@ extension MapVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = CGSize(width: view.frame.width * 0.79, height: view.frame.height * 0.21)
-    //width: view.frame.width * 0.79 - 18, height: collectionView.frame.height * 0.21
         return size
     }
     
@@ -227,15 +225,12 @@ extension MapVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let data = allPlaces else { return }
-        var visitData = data[indexPath.row]
-        var placeId = visitData.id
-        //print(placeId)
-        //visitsViewModel.getImages(id: travelId, callback: <#T##(ImageResponse) -> Void#>)
+        let visitData = data[indexPath.row]
+        let placeId = visitData.id
         
         let vc = VisitsDetailVC()
         guard let placeId = placeId else { return }
         vc.placeId = placeId
-        vc.allPlaces = visitData
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
