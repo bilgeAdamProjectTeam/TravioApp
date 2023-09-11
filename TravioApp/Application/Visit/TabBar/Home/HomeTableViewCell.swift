@@ -142,7 +142,7 @@ extension HomeTableViewCell: UICollectionViewDataSource {
         
         var data = serviceDataArray[indexPath.row]
         cell.configureCollectionViewCell(with: data)
-        
+
         return cell
     }
 }

@@ -153,9 +153,12 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
                 
                 vc.completionHandler = {
                     self.mapView.addAnnotation(annotation) // Pin ekleme
+                    self.collectionView.reloadData()
                 }
                 
                 self.present(vc, animated: true, completion: nil)
+                
+                
                 
             }
             

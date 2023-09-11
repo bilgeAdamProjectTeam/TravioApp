@@ -47,18 +47,21 @@ class HomeVC: UIViewController {
         return tv
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        getServiceData()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getServiceData()
         
         setupView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
     
     func setupView(){
@@ -154,7 +157,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         case 0:
             let data = popularPlacesArray
             cell.configureTableViewCell(with: data, title: "Populer Places", placeType: .popularPlaces)
-
+         
         case 1:
             let data = lastPlacesArray
             cell.configureTableViewCell(with: data, title: "New Places", placeType: .lastPlaces)
