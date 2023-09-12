@@ -160,14 +160,24 @@ class EditProfileVC: UIViewController {
     
     @objc func editProfile() {
         
-        guard let fullname = fullName.txtField.text, let email = mail.txtField.text  else { return }
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Edit Profile",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: { [self] in
+                guard let fullname = fullName.txtField.text, let email = mail.txtField.text  else { return }
+                
+                let data = EditRequest(full_name: fullname, email: email, pp_url: "https://example.com/deneme.png")
+                
+                viewModel.updateUser(input: data) {
+                      self.dismiss(animated: true, completion: nil)
+                }
+            }
+        )
         
-        let data = EditRequest(full_name: fullname, email: email, pp_url: "https://example.com/deneme.png")
-        
-        viewModel.updateUser(input: data) {
-              self.dismiss(animated: true, completion: nil)
-           // self.navigationController?.popViewController(animated: true)
-        }
+
     }
     
     func setupView(){

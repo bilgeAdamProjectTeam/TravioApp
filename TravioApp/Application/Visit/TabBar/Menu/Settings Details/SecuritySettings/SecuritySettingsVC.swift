@@ -88,19 +88,37 @@ class SecuritySettingsVC: UIViewController {
     
     @objc func updatePassword(){
         
-        //newPassword, confirmPassword
-        
+        guard let newPassword = newPassword, let confirmPassword = confirmPassword else { return }
+                
         if newPassword == confirmPassword {
             
-            let param = ["new_password": newPassword]
-            
-            viewModel.changePassword(parameters: param) { result in
-                print(result)
-            }
+            CustomAlert.showAlert(
+                in: self,
+                title: "Alert",
+                message: "Change Password",
+                okActionTitle: "Ok",
+                cancelActionTitle: "Cancel",
+                okCompletion: { [self] in
+                    let param = ["new_password": newPassword]
+                    
+                    viewModel.changePassword(parameters: param) { result in
+                        CustomAlert.showAlert(in: self,
+                                              title: "Change Password",
+                                              message: "SUCCESS",
+                                              okActionTitle: "Ok")
+                    }
+                    
+                }
+            )
             
         }else {
-            
-            print("şifreler uyuşmuyor") // alert koy
+            CustomAlert.showAlert(
+                in: self,
+                title: "Alert",
+                message: "Şifreler Uyuşmuyor. Yeniden Deneyiniz!",
+                okActionTitle: "Ok"
+            )
+
         }
         
 

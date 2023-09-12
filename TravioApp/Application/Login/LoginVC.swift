@@ -163,16 +163,24 @@ class LoginVC: UIViewController {
     }
     
     @objc func loginButtonTapped() {
+        
         guard let email = txtMailView.txtField.text, let password = txtPasswordView.txtField.text else { return }
 
         
         let data = LoginInfo(email: email, password: password)
        
         LoginViewModelInstance.login(input: data) { error in
+
             if let error = error {
-                let alert = UIAlertController(title: "Hata!", message: "Kullanıcı Adı veya Şifre Hatalı", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Yeniden Dene", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Hata!",
+                    message: "Kullanıcı Adı veya Şifre Hatalı",
+                    okActionTitle: "Tamam",
+                    okCompletion: {
+                        print("Tamam düğmesine tıklandı.")
+                    }
+                )
             } else {
                 let tabBarController = TabBarController()
                 self.navigationController?.pushViewController(tabBarController, animated: true)

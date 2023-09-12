@@ -374,31 +374,52 @@ class VisitsDetailVC: UIViewController {
     }
     
     @objc func deleteVisits(){
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Delete Visit",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: {
+                self.viewModel.deleteVisit(placeId: self.placeId) { result in
+                    print(result)
+                    self.addVisit.isHidden = false
+                    self.deleteVisit.isHidden = true
+                    VisitsVC().MyCollection.reloadData()
+                }
+            }
+        )
         
-        viewModel.deleteVisit(placeId: placeId) { result in
-            print(result)
-            self.addVisit.isHidden = false
-            self.deleteVisit.isHidden = true
-            VisitsVC().MyCollection.reloadData()
-        }
+
 
     }
     
     @objc func addVisits(){
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        let today = Date()
-        let formattedDate = dateFormatter.string(from: today)
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Add Visit",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+                let today = Date()
+                let formattedDate = dateFormatter.string(from: today)
 
 
-        let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
+                let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
+                
+                self.viewModel.postVisit(parameters: param) { result in
+                    self.addVisit.isHidden = true
+                    self.deleteVisit.isHidden = false
+                    VisitsVC().MyCollection.reloadData()
+                }
+            }
+        )
         
-        viewModel.postVisit(parameters: param) { result in
-            self.addVisit.isHidden = true
-            self.deleteVisit.isHidden = false
-            VisitsVC().MyCollection.reloadData()
-        }
+
 
     }
     
