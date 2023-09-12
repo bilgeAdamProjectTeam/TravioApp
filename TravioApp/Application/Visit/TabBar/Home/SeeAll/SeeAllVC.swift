@@ -13,6 +13,7 @@ class SeeAllVC: UIViewController {
     var placeType: PlaceType?
     var placesData: [HomePlace] = []
     let viewModel = HomeViewModel()
+    var ascendingSort = true
     
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -32,27 +33,11 @@ class SeeAllVC: UIViewController {
         label.textColor = .white
         return label
     }()
-    
-    private lazy var stackViewSortIcon: UIStackView = {
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.alignment = .center
-        sv.distribution = .fillEqually
-        sv.spacing = 20
-        return sv
-    }()
-    
-    private lazy var sortDownButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "sortDownIcon"), for: .normal)
-        button.addTarget(self, action: #selector(sortDownButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var sortUpButton: UIButton = {
+
+    private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "sortUpIcon"), for: .normal)
-        button.addTarget(self, action: #selector(sortUpButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -80,20 +65,20 @@ class SeeAllVC: UIViewController {
         
         navigationController?.popViewController(animated: true)
     }
-    
-    @objc func sortDownButtonTapped() {
-        placesData.sort { (place1, place2) -> Bool in
-            return place1.title < place2.title
-        }
+
+    @objc func sortButtonTapped() {
         
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    
-    @objc func sortUpButtonTapped() {
+        ascendingSort.toggle()
+        
         placesData.sort { (place1, place2) -> Bool in
-            return place1.title > place2.title
+            if ascendingSort == true {
+                sortButton.setImage(UIImage(named: "sortUpIcon"), for: .normal)
+                return place1.title < place2.title
+            } else {
+                sortButton.setImage(UIImage(named: "sortDownIcon"), for: .normal)
+                return place1.title > place2.title
+            }
+            
         }
         
         DispatchQueue.main.async {
@@ -119,11 +104,8 @@ class SeeAllVC: UIViewController {
         self.view.addSubviews(backButton,
                          header,
                          retangle)
-        
-        stackViewSortIcon.addArrangedSubviews(sortDownButton,
-                                              sortUpButton)
-        
-        retangle.addSubviews(stackViewSortIcon,
+
+        retangle.addSubviews(sortButton,
                              collectionView)
         
         setupLayout()
@@ -149,13 +131,13 @@ class SeeAllVC: UIViewController {
             make.leading.equalTo(backButton.snp.trailing).offset(24)
         })
         
-        stackViewSortIcon.snp.makeConstraints { make in
+        sortButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(24)
-            make.leading.equalToSuperview().offset(296)
+            make.trailing.equalToSuperview().offset(-24)
         }
         
         collectionView.snp.makeConstraints({make in
-            make.top.equalTo(stackViewSortIcon.snp.bottom).offset(24)
+            make.top.equalTo(sortButton.snp.bottom).offset(24)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -168,6 +150,7 @@ class SeeAllVC: UIViewController {
         case .popularPlaces:
             viewModel.getPopulerPlaces(limit: 20) { result in
                 self.placesData = result.data.places
+                self.sortServiceData()
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -175,12 +158,19 @@ class SeeAllVC: UIViewController {
         case .lastPlaces:
             viewModel.getLastPlaces(limit: 20) { result in
                 self.placesData = result.data.places
+                self.sortServiceData()
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
             }
         default:
             break
+        }
+    }
+    
+    func sortServiceData() {
+        placesData.sort { (place1, place2) -> Bool in
+            return place1.title < place2.title
         }
     }
 }
