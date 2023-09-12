@@ -166,9 +166,19 @@ class SignUpVC: UIViewController {
         
         let data = RegisterInfo(full_name: username, email: email, password: password)
         
-        viewModelInstance.register(input: data) {
+        viewModelInstance.register(input: data) { error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }else {
+                self.navigationController?.popViewController(animated: true)
+            }
             
-            self.navigationController?.popViewController(animated: true)
+           
         }
     }
     

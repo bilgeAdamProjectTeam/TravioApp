@@ -135,10 +135,29 @@ class AddNewPlaceVC: UIViewController {
                     
                     let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
                     
-                    viewModel.postPlace( params: params) {
-                        self.dismiss(animated: true, completion: {
-                            self.completionHandler?()  // completionHandler'ı çağır
-                        })
+                    viewModel.postPlace( params: params) { error in
+                        if let error = error {
+                            CustomAlert.showAlert(
+                                in: self,
+                                title: "Error!",
+                                message: error.localizedDescription,
+                                okActionTitle: "Ok"
+                            )
+                        }else{
+                            self.dismiss(animated: true, completion: {
+                                self.completionHandler?()  // completionHandler'ı çağır
+                            })
+                        }
+                        
+                    }
+                }, errorCallback: {error in
+                    if let error = error {
+                        CustomAlert.showAlert(
+                            in: self,
+                            title: "Error!",
+                            message: error.localizedDescription,
+                            okActionTitle: "Ok"
+                        )
                     }
                 })
             }

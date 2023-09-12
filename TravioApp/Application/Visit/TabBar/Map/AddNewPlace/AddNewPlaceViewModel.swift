@@ -17,7 +17,7 @@ class AddNewPlaceViewModel {
     var urls: [String] = []
     var image: [UIImage] = []
 
-    func postPlace(params:Parameters, callback: @escaping () -> Void){
+    func postPlace(params:Parameters, callback: @escaping (Error?) -> Void){
         
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postPlace(parameters: params)) { (result: Result<PlacesResponse, Error>) in
@@ -26,40 +26,47 @@ class AddNewPlaceViewModel {
                 let id = data.message
                 for url in self.urls{
                     let params = ["place_id": id, "image_url": url]
-                    self.postGallery(params: params)
+                    self.postGallery(params: params, callback: {error in
+                        print(error?.localizedDescription) //düzeltilecek
+                    })
                 }
-                callback()
+                callback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                //print("Hata:", error.localizedDescription)
+                callback(error)
             }
         }
     }
     
     
     
-    func postGallery(params:Parameters){
+    func postGallery(params:Parameters, callback: @escaping (Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postImage(parameters: params)) { (result: Result<GalleryResponse, Error>) in
             switch result {
             case .success(let data):
-                print("Create Gallery: \(data)")
+                callback(nil)
+                //print("Create Gallery: \(data)")
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(error)
+                //print("Hata:", error.localizedDescription)
             }
         }
         
     }
     
     
-    func uploadPhotoAPI(image: [Data?],callback: @escaping ([String]) -> Void){
+    func uploadPhotoAPI(image: [Data?],callback: @escaping ([String]) -> Void, errorCallback: @escaping(Error?) -> Void){
         
         NetworkingHelper.shared.uploadImage(route: MyAPIRouter.postUpload(image: image)) {  (result: Result<UploadResponse, Error>) in
             switch result {
             case .success(let data):
                 self.urls = data.urls
                 callback(data.urls)
+                errorCallback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                errorCallback(error)
+                //print("Hata:", error.localizedDescription)
             }
         }
         

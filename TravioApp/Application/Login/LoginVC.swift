@@ -175,13 +175,14 @@ class LoginVC: UIViewController {
                 CustomAlert.showAlert(
                     in: self,
                     title: "Hata!",
-                    message: "Kullanıcı Adı veya Şifre Hatalı",
+                    message: error.localizedDescription,
                     okActionTitle: "Tamam",
                     okCompletion: {
                         print("Tamam düğmesine tıklandı.")
                     }
                 )
             } else {
+                
                 let tabBarController = TabBarController()
                 self.navigationController?.pushViewController(tabBarController, animated: true)
             }

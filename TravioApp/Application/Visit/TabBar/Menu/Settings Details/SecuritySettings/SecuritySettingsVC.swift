@@ -95,18 +95,22 @@ class SecuritySettingsVC: UIViewController {
             CustomAlert.showAlert(
                 in: self,
                 title: "Alert",
-                message: "Change Password",
+                message: "Change Password?",
                 okActionTitle: "Ok",
                 cancelActionTitle: "Cancel",
                 okCompletion: { [self] in
                     let param = ["new_password": newPassword]
                     
-                    viewModel.changePassword(parameters: param) { result in
-                        CustomAlert.showAlert(in: self,
-                                              title: "Change Password",
-                                              message: "SUCCESS",
-                                              okActionTitle: "Ok")
-                    }
+                    viewModel.changePassword(parameters: param, errorCallback: {error in
+                        if let error = error {
+                            CustomAlert.showAlert(
+                                in: self,
+                                title: "Error!",
+                                message: error.localizedDescription,
+                                okActionTitle: "Ok"
+                            )
+                        }
+                    })
                     
                 }
             )

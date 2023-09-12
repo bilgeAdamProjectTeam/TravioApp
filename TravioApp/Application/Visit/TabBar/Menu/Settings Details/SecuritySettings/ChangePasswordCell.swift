@@ -81,15 +81,3 @@ extension ChangePasswordCell: UITextFieldDelegate{
     
 }
 
-//extension ChangePasswordCell: UITextFieldDelegate{
-//
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if textField == passwordView.txtField {
-//            //guard let passConfirm = passConfirm, let textFieldText = textField.text else { return }
-//            passConfirm.tag = textField.tag
-//            passConfirm?.text = textField.text!
-//            delegate?.passwordTransfer(newPassword: passConfirm!)
-//        }
-////        guard let newPassword = passwordView.txtField.text else { return }
-//    }
-//}

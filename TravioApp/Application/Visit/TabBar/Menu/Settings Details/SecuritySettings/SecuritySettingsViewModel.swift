@@ -70,7 +70,7 @@ class SecuritySettingsViewModel {
     }
     
     var changePassWordInfo = [ChangePassword(labelName: "New Password",tag:0),
-                              ChangePassword(labelName: "New Password Confirm",tag:1)]
+                              ChangePassword(labelName: "New Password Confirm", tag:1)]
 
     var privacyInfo: [PrivacyInfo] {
         return [
@@ -81,13 +81,13 @@ class SecuritySettingsViewModel {
     }
     
     
-    func changePassword(parameters: Parameters, callback: @escaping(PasswordResponse) -> Void){
+    func changePassword(parameters: Parameters, errorCallback: @escaping(Error?) -> Void){
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.putPassword(parameters: parameters), callback: {(result: Result<PasswordResponse, Error>) in
             switch result {
             case .success(let data):
-                callback(data)
+                errorCallback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                errorCallback(error)
             }
         })
     }

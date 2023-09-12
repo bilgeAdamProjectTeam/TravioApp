@@ -9,7 +9,6 @@ import Foundation
 
 class SettingsViewModel{
     
-    var userInf: UserResponse?
     
     var settingsArray = [Settings(icon: "securitySettings", labelName: "Security Settings"),
                      Settings(icon: "appDefaults", labelName: "App Defaults"),
@@ -19,16 +18,16 @@ class SettingsViewModel{
                      Settings(icon: "termsOfUse", labelName: "Terms of Use")]
         
     
-    func getUsername(callback: @escaping (UserResponse) -> Void){
+    func getUsername(callback: @escaping (UserResponse) -> Void, errorCalback: @escaping(Error?) -> Void){
 
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getProfile){ (result: Result<UserResponse, Error>) in
             switch result {
             case .success(let data):
-                self.userInf = data
                 callback(data)
+                errorCalback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                errorCalback(error)
             }
         }
     }

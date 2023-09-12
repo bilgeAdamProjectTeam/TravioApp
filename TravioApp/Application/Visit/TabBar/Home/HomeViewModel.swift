@@ -22,7 +22,7 @@ class HomeViewModel {
     var lastPlaces: HomeResponse?
     var popularPlaces: HomeResponse?
     
-    func getPopulerPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
+    func getPopulerPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void, errorCallback: @escaping (Error?) -> Void) {
         
         let params = ["limit":limit]
         
@@ -31,14 +31,15 @@ class HomeViewModel {
             case .success(let popularPlaces):
                 self.popularPlaces = popularPlaces
                 callback(popularPlaces)
+                errorCallback(nil)
             case .failure(let error):
-                print("Error:", error.localizedDescription)
+                errorCallback(error)
             }
         })
 
     }
     
-    func getLastPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void) {
+    func getLastPlaces(limit: Int, callback: @escaping (HomeResponse) -> Void, errorCallback: @escaping (Error?) -> Void) {
         
         let params = ["limit":limit]
         
@@ -47,8 +48,9 @@ class HomeViewModel {
             case .success(let lastPlaces):
                 self.lastPlaces = lastPlaces
                 callback(lastPlaces)
+                errorCallback(nil)
             case .failure(let error):
-                print("Error:", error.localizedDescription)
+                errorCallback(error)
             }
         })
         

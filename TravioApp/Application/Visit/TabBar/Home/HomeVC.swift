@@ -105,6 +105,15 @@ class HomeVC: UIViewController {
         homeViewModel.getPopulerPlaces(limit: 5) { result in
             self.popularPlacesArray = result.data.places
             self.dispatchGroup.leave()
+        } errorCallback: {error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
         }
         
         
@@ -112,6 +121,15 @@ class HomeVC: UIViewController {
         homeViewModel.getLastPlaces(limit: 5) { result in
             self.lastPlacesArray = result.data.places
             self.dispatchGroup.leave()
+        } errorCallback: {error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
         }
         
         dispatchGroup.notify(queue: .main) {

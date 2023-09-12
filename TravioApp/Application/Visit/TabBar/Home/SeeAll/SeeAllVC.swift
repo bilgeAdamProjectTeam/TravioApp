@@ -171,12 +171,30 @@ class SeeAllVC: UIViewController {
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
+            } errorCallback: {error in
+                if let error = error {
+                    CustomAlert.showAlert(
+                        in: self,
+                        title: "Error!",
+                        message: error.localizedDescription,
+                        okActionTitle: "Ok"
+                    )
+                }
             }
         case .lastPlaces:
             viewModel.getLastPlaces(limit: 20) { result in
                 self.placesData = result.data.places
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
+                }
+            } errorCallback: {error in
+                if let error = error {
+                    CustomAlert.showAlert(
+                        in: self,
+                        title: "Error!",
+                        message: error.localizedDescription,
+                        okActionTitle: "Ok"
+                    )
                 }
             }
         default:

@@ -12,22 +12,22 @@ class EditProfileViewModel{
     
     var userProfile: UserReturn?
     
-    func getUser(callback: @escaping (UserReturn) -> Void){
+    func getUser(callback: @escaping (UserReturn) -> Void, errorCallback: @escaping(Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getProfile){ (result: Result<UserReturn, Error>) in
             switch result {
             case .success(let data):
                 self.userProfile = data
                 callback(data)
+                errorCallback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
-                
+                errorCallback(error)
             }
         }
     }
     
     
-    func updateUser(input: EditRequest, callback: @escaping () -> Void){
+    func updateUser(input: EditRequest, callback: @escaping (Error?) -> Void){
         
         let params = ["full_name": input.full_name,
                       "email": input.email,
@@ -36,9 +36,9 @@ class EditProfileViewModel{
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.putProfile(parameters: params), callback: {(result: Result<EditResponse, Error>) in
             switch result {
             case .success:
-                callback()
+                callback(nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(error)
             }
         })
     }

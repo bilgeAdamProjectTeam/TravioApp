@@ -11,7 +11,7 @@ import Foundation
 class SignUpViewModel {
     
 
-       func register(input: RegisterInfo, callback: @escaping () -> Void) {
+       func register(input: RegisterInfo, callback: @escaping (Error?) -> Void) {
            
            let params = ["full_name": input.full_name,
                          "email": input.email,
@@ -20,7 +20,7 @@ class SignUpViewModel {
            NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postRegister(parameters: params), callback: {(result: Result<RegisterReturn, Error>) in
                switch result {
                case .success:
-                   callback()
+                   callback(nil)
                case .failure(let error):
                    print("Hata:", error.localizedDescription)
                }

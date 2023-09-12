@@ -72,6 +72,15 @@ class MapVC: UIViewController {
             self.allPlaces = result.data?.places
             self.collectionView.reloadData()
             self.addPinsToMap()
+        }, errorCallback: {error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
         })
         
         
