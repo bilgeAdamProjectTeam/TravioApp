@@ -10,25 +10,21 @@ import SnapKit
 
 
 class SignUpVC: UIViewController {
-    // private lazy var ile instance almak
-    private lazy var viewModelInstance: SignUpViewModel = {
+    
+    private lazy var viewModel: SignUpViewModel = {
         let view = SignUpViewModel()
-        
         return view
     }()
    
     private lazy var retangle: UIView = {
         let view = CustomView()
-        
         return view
     }()
     
     private lazy var username: CustomTextField = {
         let tf = CustomTextField()
-        
         tf.labelText = "Username"
         tf.placeholderName = "bilge_adam"
-        
         return tf
     }()
     
@@ -36,25 +32,22 @@ class SignUpVC: UIViewController {
         let tf = CustomTextField()
         tf.labelText = "Email"
         tf.placeholderName = "developer@bilgeadam.com"
-        
         return tf
     }()
     
     private lazy var password: CustomTextField = {
         let tf = CustomTextField()
         tf.labelText = "Password"
-        tf.placeholderName = ""
+        tf.placeholderName = "******"
         tf.txtField.isSecureTextEntry = true
-
         return tf
     }()
     
     private lazy var passwordConfirm: CustomTextField = {
         let tf = CustomTextField()
         tf.labelText = "Password Confirm"
-        tf.placeholderName = ""
+        tf.placeholderName = "******"
         tf.txtField.isSecureTextEntry = true
-        
         return tf
     }()
     
@@ -63,9 +56,7 @@ class SignUpVC: UIViewController {
         btn.labelText = "Register"
         btn.backgroundColor = Color.darkGray.color
         btn.isEnabled = false
-        
         btn.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
-        
         return btn
     }()
     
@@ -73,7 +64,6 @@ class SignUpVC: UIViewController {
         let image = UIButton()
         image.setImage(UIImage(named: "Vector"), for: .normal)
         image.addTarget(self, action: #selector(backVectorTapped), for: .touchUpInside)
-        
         return image
     }()
     
@@ -84,40 +74,70 @@ class SignUpVC: UIViewController {
         label.textColor = .white
         return label
     }()
- 
+    
+    @objc func registerButtonTapped() {
+        
+        guard let username = username.txtField.text,
+              let email = mail.txtField.text,
+              let password = password.txtField.text else { return }
+        
+        let data = RegisterInfo(full_name: username, email: email, password: password)
+        
+        viewModel.register(input: data) {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func backVectorTapped() {
+        
+        navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
+        
         delegates()
     }
 
     func setupViews() {
+        
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = Color.turquoise.color
-        view.addSubview(retangle)
-        view.addSubview(backVector)
-        view.addSubview(header)
-        retangle.addSubview(username)
-        retangle.addSubview(mail)
-        retangle.addSubview(password)
-        retangle.addSubview(passwordConfirm)
-        retangle.addSubview(registerButton)
-        setupLayouts()
+        
+        self.view.backgroundColor = Color.turquoise.color
+        
+        self.view.addSubviews(retangle,
+                              backVector,
+                              header)
+        
+        retangle.addSubviews(username,
+                             mail,
+                             password,
+                             passwordConfirm,
+                             registerButton)
+        
+        setupLayout()
     }
     
-    func delegates() {
-        username.txtField.delegate = self
-        mail.txtField.delegate = self
-        password.txtField.delegate = self
-        passwordConfirm.txtField.delegate = self
-    }
-    
-    func setupLayouts() {
+    func setupLayout() {
+        
         retangle.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(124)
-            make.leading.trailing.bottom.equalToSuperview().offset(0)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(104)
+            make.leading.trailing.bottom.equalToSuperview()
         }
+        
+        backVector.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalTo(header.snp.leading).offset(-72)
+            make.centerY.equalTo(header)
+        }
+        
+        header.snp.makeConstraints { make in
+            make.bottom.equalTo(retangle.snp.top).offset(-50)
+            make.centerX.equalToSuperview()
+        }
+        
         username.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(72)
             make.leading.equalToSuperview().offset(24)
@@ -143,48 +163,30 @@ class SignUpVC: UIViewController {
         }
         
         registerButton.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-23)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-        }
-        
-        backVector.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(32)
-            make.leading.equalToSuperview().offset(24)
-            make.height.equalTo(21.39)
-            make.width.equalTo(24)
-        }
-        
-        header.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
-            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-23)
         }
     }
     
-    @objc func registerButtonTapped() {
-        guard let username = username.txtField.text, let email = mail.txtField.text, let password = password.txtField.text else { return }
+    func delegates() {
         
-        let data = RegisterInfo(full_name: username, email: email, password: password)
-        
-        viewModelInstance.register(input: data) {
-            
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc func backVectorTapped() {
-        navigationController?.popViewController(animated: true)
+        username.txtField.delegate = self
+        mail.txtField.delegate = self
+        password.txtField.delegate = self
+        passwordConfirm.txtField.delegate = self
     }
 }
 
 extension SignUpVC: UITextFieldDelegate {
+    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if (username.txtField.text?.count)! >= 12 &&
             mail.txtField.text?.isEmpty == false &&
             (password.txtField.text?.count)! >= 8 &&
             (passwordConfirm.txtField.text?.count)! >= 8 &&
             password.txtField.text == passwordConfirm.txtField.text &&
-            viewModelInstance.isValidEmail(mail.txtField.text!) == true
+            viewModel.isValidEmail(mail.txtField.text!) == true
         {
             registerButton.backgroundColor = Color.turquoise.color
             registerButton.isEnabled = true
