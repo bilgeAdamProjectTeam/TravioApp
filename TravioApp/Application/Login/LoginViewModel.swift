@@ -14,7 +14,7 @@ class LoginViewModel {
            KeychainHelper.standard.save(data, service: "access-token", account: "ios-class")
        }
        
-       func login(input: LoginInfo) {
+    func login(input: LoginInfo, callback: @escaping (Error?) -> Void) {
            
            let param =  ["email": input.email,
                             "password": input.password]
@@ -24,30 +24,14 @@ class LoginViewModel {
                case .success(let token):
                    let data = Data(token.accessToken.utf8)
                    self.saveToKeychain(data: data)
+                   callback(nil)
                    print(token.accessToken)
                case .failure(let error):
+                   callback(error)
                    print(error)
                }
            })
            
        }
     
-//    func login(input: LoginInfo, callback: @escaping (Error?) -> Void) {
-//
-//        let params = ["email": input.email,
-//                      "password": input.password]
-//
-//        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postLogIn(parameters: params)) { (result: Result<LoginReturn, Error>) in
-//            switch result {
-//            case .success(let data):
-//                _ = KeychainHelper.save(data.accessToken)
-//                callback(nil)
-//                print(data.accessToken)
-//
-//            case .failure(let error):
-//                callback(error)
-//                print("Hata:", error.localizedDescription)
-//            }
-//        }
-//    }
 }

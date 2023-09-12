@@ -51,7 +51,7 @@ class LoginVC: UIViewController {
         let view = CustomTextField()
         view.labelText = "Password"
         view.placeholderName = "*********"
-        view.txtField.text = "12345678"
+        view.txtField.text = "123456789"
         view.txtField.isSecureTextEntry = true
         
         return view
@@ -167,13 +167,17 @@ class LoginVC: UIViewController {
 
         
         let data = LoginInfo(email: email, password: password)
-      
-        LoginViewModelInstance.login(input: data)
-        let tabBarController = TabBarController()
-        self.navigationController?.pushViewController(tabBarController, animated: true)
-
-            
-            
+       
+        LoginViewModelInstance.login(input: data) { error in
+            if let error = error {
+                let alert = UIAlertController(title: "Hata!", message: "Kullanıcı Adı veya Şifre Hatalı", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Yeniden Dene", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            } else {
+                let tabBarController = TabBarController()
+                self.navigationController?.pushViewController(tabBarController, animated: true)
+            }
+        }
         }
        
     }
