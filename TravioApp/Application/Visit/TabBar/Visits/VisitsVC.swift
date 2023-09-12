@@ -61,7 +61,8 @@ class VisitsVC: UIViewController {
     func setupViews() {
         view.backgroundColor =  Color.turquoise.color
         navigationController?.navigationBar.isHidden = true
-        view.addSubviews(retangle, header)
+        view.addSubviews(retangle,
+                         header)
         retangle.addSubviews(MyCollection)
         setupLayouts()
     }

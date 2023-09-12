@@ -39,10 +39,10 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
         
         //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 0
+        layout.minimumLineSpacing = 18
+        //layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
 
         
         
@@ -172,7 +172,12 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
     }
     
     func setupView(){
-        view.addSubviews(mapView,collectionView)
+        
+        navigationController?.isNavigationBarHidden = true
+        
+        view.addSubviews(mapView)
+        
+        mapView.addSubview(collectionView)
         
         setupLayout()
     }
@@ -185,10 +190,10 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
         })
         
         collectionView.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(565)
-            make.bottom.equalToSuperview().offset(-101)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-16)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
+            make.height.equalTo(178)
             
         })
         
@@ -199,8 +204,8 @@ class MapVC: UIViewController /*, MKMapViewDelegate */ {
 extension MapVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: view.frame.width * 0.79, height: view.frame.height * 0.21)
-    //width: view.frame.width * 0.79 - 18, height: collectionView.frame.height * 0.21
+        
+        let size = CGSize(width: collectionView.frame.width * 0.79 , height: collectionView.frame.height )
         return size
     }
     
@@ -223,7 +228,7 @@ extension MapVC: UICollectionViewDataSource{
         let places = allPlaces[indexPath.item]
         
         cell.configure(with: places)
-        cell.roundCorners(corners: [.topLeft, .topRight, .bottomLeft], radius: 16)
+        //cell.roundCorners(corners: [.topLeft, .topRight, .bottomLeft], radius: 16)
         
         return cell
     }

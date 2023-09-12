@@ -12,6 +12,7 @@ class VisitsDetailCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
+        img.contentMode = .scaleAspectFill
         return img
     }()
     

@@ -282,11 +282,10 @@ class VisitsDetailVC: UIViewController {
         }
         
         scrollContentView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.width.equalToSuperview()
+            make.edges.equalToSuperview()
+            make.width.equalTo(self.view)
+            // FIXME: --kontrol edilecek
+            make.bottom.equalTo(descriptionLbl.snp.bottom).offset(15)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -453,7 +452,7 @@ class VisitsDetailVC: UIViewController {
 extension VisitsDetailVC:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: view.frame.width, height: 250)
+        let size = CGSize(width: view.frame.width, height: collectionView.frame.height)
         return size
     }
 }

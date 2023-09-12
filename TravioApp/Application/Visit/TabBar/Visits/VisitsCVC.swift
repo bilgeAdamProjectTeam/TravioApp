@@ -82,7 +82,7 @@ class VisitsCVC: UICollectionViewCell {
         }
         
         labelPlaceName.snp.makeConstraints { make in
-            make.top.equalTo(backgroundImage.snp.top).offset(142)
+            make.top.equalToSuperview().offset(142)
             make.leading.equalToSuperview().offset(8)
         }
         

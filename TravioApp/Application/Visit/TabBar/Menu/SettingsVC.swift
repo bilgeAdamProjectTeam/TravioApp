@@ -163,7 +163,7 @@ class SettingsVC: UIViewController {
 extension SettingsVC: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let size = CGSize(width: collectionView.frame.width-32, height:54)
+        let size = CGSize(width: collectionView.frame.width - 32, height: 54)
         //let size = CGSize(width: collectionView.frame.width * 0.91, height: collectionView.frame.height)
             return size
      }

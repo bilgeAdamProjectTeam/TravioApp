@@ -13,7 +13,7 @@ class MapCollectionViewCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = Color.darkGray.color
+        img.backgroundColor = .clear
         img.kf.indicatorType = .activity
         img.contentMode = .scaleAspectFill
         return img
@@ -42,31 +42,25 @@ class MapCollectionViewCell: UICollectionViewCell {
         return icon
     }()
     
-    
     override init(frame: CGRect) {
         super .init(frame: frame)
         
-        setupView()
+        self.radiusWithShadow(corners: [.bottomLeft,.topLeft,.topRight])
+        self.roundCorners(corners:  [.bottomLeft,.topLeft,.topRight], radius: 16)
+        
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with places: Place){
-            placeName.text = places.title
-            cityName.text = places.place
+    func setupViews(){
         
-        if let imageUrl = URL(string: places.coverImageURL!) {
-            self.images.kf.setImage(with: imageUrl)
-        }
+        self.backgroundColor = .clear
         
-    }
-    
-    func setupView(){
+        self.addSubviews(images)
         
-        images.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
-        addSubviews(images)
         images.addSubviews(placeName,vectorIcon,cityName)
 
         setupLayout()
@@ -97,6 +91,15 @@ class MapCollectionViewCell: UICollectionViewCell {
             make.bottom.equalToSuperview().offset(-8)
         })
         
+    }
+    
+    func configure(with places: Place){
+            placeName.text = places.title
+            cityName.text = places.place
+        
+        if let imageUrl = URL(string: places.coverImageURL!) {
+            self.images.kf.setImage(with: imageUrl)
+        }
     }
 }
 

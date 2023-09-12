@@ -14,7 +14,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
     
     lazy var images : UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .white
+        img.backgroundColor = .clear
         img.contentMode = .scaleAspectFill
         return img
     }()
@@ -42,30 +42,36 @@ class AddNewPlaceCVC: UICollectionViewCell {
         sv.spacing = 10
         sv.distribution = .fill
         sv.alignment = .center
-        
-        
         return sv
     }()
-    
-    
-
     
     override init(frame: CGRect) {
         super .init(frame: frame)
         
         images.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
-        setupView()
+        
+        setupViews()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder : NSCoder) {
+        super.init(coder: coder)
+        
+        self.setupViews()
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func setupView(){
-        addSubviews(images, stackView)
-        stackView.addArrangedSubviews(icon,iconLbl)
+    func setupViews(){
+        
+        self.backgroundColor = .clear
+        
+        self.clipsToBounds = true
+        
+        self.addSubviews(images,
+                         stackView)
+        
+        stackView.addArrangedSubviews(icon,
+                                      iconLbl)
         setupLayout()
     }
     
@@ -78,8 +84,6 @@ class AddNewPlaceCVC: UICollectionViewCell {
         stackView.snp.makeConstraints({make in
             make.centerX.equalTo(images)
             make.centerY.equalTo(images)
-           
-
         })
         
     }
