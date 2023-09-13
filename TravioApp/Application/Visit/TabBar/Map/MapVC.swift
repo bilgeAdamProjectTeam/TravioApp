@@ -236,7 +236,6 @@ extension MapVC: UICollectionViewDataSource{
         let places = allPlaces[indexPath.item]
         
         cell.configure(with: places)
-        //cell.roundCorners(corners: [.topLeft, .topRight, .bottomLeft], radius: 16)
         
         return cell
     }

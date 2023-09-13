@@ -52,6 +52,13 @@ class VisitsVC: UIViewController {
       
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        configureVM()
+//        
+//        DispatchQueue.main.async {
+//            self.MyCollection.reloadData()
+//        }
+//    }
     
     func configureVM() {
         visitsViewModel.getVisits(callback: { result in

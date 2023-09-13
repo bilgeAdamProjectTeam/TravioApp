@@ -10,10 +10,7 @@ import UIKit
 
 class LoginVC: UIViewController {
     
-    private lazy var viewModel: LoginViewModel = {
-        let view = LoginViewModel()
-        return view
-    }()
+    var viewModel = LoginViewModel()
     
     private lazy var logo: UIImageView = {
         let logo = UIImageView()
@@ -51,8 +48,6 @@ class LoginVC: UIViewController {
         view.labelText = "Email"
         view.placeholderName = "bilgeadam@gmail.com"
         view.txtField.text = "sevvalcakiroglu@gmail.com"
-        
-        
         return view
     }()
     
@@ -102,15 +97,29 @@ class LoginVC: UIViewController {
     
     @objc func loginButtonTapped() {
         
-        guard let email = txtMailView.txtField.text,
-              let password = txtPasswordView.txtField.text else { return }
+        guard let email = txtMailView.txtField.text, let password = txtPasswordView.txtField.text else { return }
+        
         
         let data = LoginInfo(email: email, password: password)
         
-        viewModel.login(input: data)
-        
-        let tabBarController = TabBarController()
-        self.navigationController?.pushViewController(tabBarController, animated: true)
+        viewModel.login(input: data) { error in
+            
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Hata!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Tamam",
+                    okCompletion: {
+                        print("Tamam düğmesine tıklandı.")
+                    }
+                )
+            } else {
+                
+                let tabBarController = TabBarController()
+                self.navigationController?.pushViewController(tabBarController, animated: true)
+            }
+        }
     }
     
     
@@ -177,66 +186,29 @@ class LoginVC: UIViewController {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-
+        
         txtPasswordView.snp.makeConstraints { make in
             make.top.equalTo(txtMailView.snp.bottom).offset(24)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-
+        
         loginButton.snp.makeConstraints { make in
             make.top.equalTo(txtPasswordView.snp.bottom).offset(48)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-
+        
         stackViewSignUp.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(141)
             make.leading.equalToSuperview().offset(74)
         }
-            make.height.equalTo(54)
-        }
-        
-        forgotStackView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-21)
-            make.centerX.equalToSuperview()
-        }
-    }
-    
-    @objc func signUpTapped() {
-        let vc = SignUpVC()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    @objc func loginButtonTapped() {
-        
-        guard let email = txtMailView.txtField.text, let password = txtPasswordView.txtField.text else { return }
-
-        
-        let data = LoginInfo(email: email, password: password)
-       
-        LoginViewModelInstance.login(input: data) { error in
-
-            if let error = error {
-                CustomAlert.showAlert(
-                    in: self,
-                    title: "Hata!",
-                    message: error.localizedDescription,
-                    okActionTitle: "Tamam",
-                    okCompletion: {
-                        print("Tamam düğmesine tıklandı.")
-                    }
-                )
-            } else {
-                
-                let tabBarController = TabBarController()
-                self.navigationController?.pushViewController(tabBarController, animated: true)
-            }
-        }
-        }
-       
     }
 }
+
+
+
+
 
 
 

@@ -384,7 +384,10 @@ class VisitsDetailVC: UIViewController {
                     print(result)
                     self.addVisit.isHidden = false
                     self.deleteVisit.isHidden = true
-                    VisitsVC().MyCollection.reloadData()
+                    DispatchQueue.main.async {
+                        VisitsVC().MyCollection.reloadData()
+                    }
+                    
                 }
             }
         )
@@ -413,7 +416,9 @@ class VisitsDetailVC: UIViewController {
                 self.viewModel.postVisit(parameters: param) { result in
                     self.addVisit.isHidden = true
                     self.deleteVisit.isHidden = false
-                    VisitsVC().MyCollection.reloadData()
+                    DispatchQueue.main.async {
+                        VisitsVC().MyCollection.reloadData()
+                    }
                 }
             }
         )
