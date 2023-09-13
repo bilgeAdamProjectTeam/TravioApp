@@ -40,7 +40,6 @@ class MapVC: UIViewController {
         //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 18
-        //layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
 
@@ -52,7 +51,6 @@ class MapVC: UIViewController {
         cv.backgroundColor = .clear
         cv.contentInsetAdjustmentBehavior = .never
         cv.showsHorizontalScrollIndicator = false
-        cv.isPagingEnabled = true
         
         cv.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         
@@ -100,16 +98,6 @@ class MapVC: UIViewController {
         }
         
     }
-    
-
-    func scrollToPlace(_ place: Place) {
-        guard let allPlaces = allPlaces else { return }
-
-        if let index = allPlaces.firstIndex(where: { $0.id == place.id }) {
-            let indexPath = IndexPath(item: index, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        }
-    }
 
     
     @objc func getLocationLongPress(sender: UILongPressGestureRecognizer) /*-> CLLocationCoordinate2D*/{
@@ -133,12 +121,13 @@ class MapVC: UIViewController {
             
             geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                 if let error = error {
-                    print("Hata: \(error)")
+                    CustomAlert.showAlert(in: self, title: "Hata!", message: error.localizedDescription, okActionTitle: "Ok")
                     return
                 }
                 
                 guard let placemark = placemarks?.first else {
-                    print("Yer bulunamadı.")
+                    //print("Yer bulunamadı.")
+                    CustomAlert.showAlert(in: self, title: "Hata!", message: "Yer bulunamadı.", okActionTitle: "Ok")
                     return
                 }
                 
@@ -147,9 +136,8 @@ class MapVC: UIViewController {
                    let city = placemark.administrativeArea,
                    let country = placemark.country {
                     self.address = "\(city),\(country)"
-                    print("Koordinatın Yeri: \(String(describing: self.address))")
                 } else {
-                    print("Yer adı alınamadı.")
+                    CustomAlert.showAlert(in: self, title: "Hata!", message: "Yer bilgileri alınamadı.", okActionTitle: "Ok")
                 }
                 
                 let vc = AddNewPlaceVC()
@@ -165,18 +153,11 @@ class MapVC: UIViewController {
                 }
                 
                 self.present(vc, animated: true, completion: nil)
-                
-                
-                
+   
             }
-            
-           
-            
-           
-        }
-        
 
-        // return coordinate
+        }
+
     }
     
     func setupView(){
@@ -289,12 +270,17 @@ extension MapVC: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Pin tıklandığında yapılacak işlemleri burada gerçekleştirin.
-
         if let annotation = view.annotation as? MKPointAnnotation {
-            if let placeName = annotation.title {
-                if let place = allPlaces?.first(where: { $0.title == placeName }) {
-                    scrollToPlace(place)
-                }
+            let coordinate = annotation.coordinate
+            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            
+            let region = MKCoordinateRegion(center: coordinate, span: span)
+            mapView.setRegion(region, animated: true)
+            
+            guard let allPlaces = allPlaces else { return }
+            if let index = allPlaces.firstIndex(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}) {
+                let indexPath = IndexPath(item: index, section: 0)
+                collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             }
         }
     }
