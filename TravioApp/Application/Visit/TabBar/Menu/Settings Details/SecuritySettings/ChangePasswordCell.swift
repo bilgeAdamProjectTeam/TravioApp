@@ -11,14 +11,18 @@ import SnapKit
 
 
 
-class ChangePasswordCell: UITableViewCell{
+class ChangePasswordCell: UITableViewCell {
     
+    var delegate: ChangePasswordDelegate?
+    
+    var passConfirm: (tag:Int,text:String)?
     
     private lazy var passwordView: CustomTextField = {
         let pw = CustomTextField()
         pw.labelText = ""
         pw.txtField.isSecureTextEntry = true
         pw.txtField.placeholder = ""
+        pw.txtField.delegate = self
         return pw
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -52,9 +56,28 @@ class ChangePasswordCell: UITableViewCell{
     }
     func configure(data: ChangePassword){
         
+        
         passwordView.labelText = data.labelName
+        passwordView.txtField.tag = data.tag
         
     }
     
+
     
 }
+
+
+extension ChangePasswordCell: UITextFieldDelegate{
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == passwordView.txtField {
+            if let text = textField.text {
+                tag = textField.tag
+                passConfirm = (tag: tag, text: text)
+                delegate?.passwordTransfer(newPassword: passConfirm!)
+            }
+        }
+    }
+    
+}
+

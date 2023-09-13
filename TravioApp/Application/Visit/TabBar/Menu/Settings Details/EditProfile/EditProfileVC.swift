@@ -140,6 +140,17 @@ class EditProfileVC: UIViewController {
             self.userRole.label.text = data.role
             self.fullName.placeholderName = data.full_name
             self.mail.placeholderName = data.email
+        } errorCallback: { error in
+            
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
+            
         }
         
     }
@@ -160,14 +171,33 @@ class EditProfileVC: UIViewController {
     
     @objc func editProfile() {
         
-        guard let fullname = fullName.txtField.text, let email = mail.txtField.text  else { return }
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Edit Profile",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: { [self] in
+                guard let fullname = fullName.txtField.text, let email = mail.txtField.text  else { return }
+                
+                let data = EditRequest(full_name: fullname, email: email, pp_url: "https://example.com/deneme.png")
+                
+                viewModel.updateUser(input: data) { error in
+                    if let error = error {
+                        CustomAlert.showAlert(
+                            in: self,
+                            title: "Error!",
+                            message: error.localizedDescription,
+                            okActionTitle: "Ok"
+                        )
+                    }else{
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+        )
         
-        let data = EditRequest(full_name: fullname, email: email, pp_url: "https://example.com/deneme.png")
-        
-        viewModel.updateUser(input: data) {
-              self.dismiss(animated: true, completion: nil)
-           // self.navigationController?.popViewController(animated: true)
-        }
+
     }
     
     func setupView(){

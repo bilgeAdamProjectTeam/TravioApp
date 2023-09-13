@@ -115,29 +115,59 @@ class AddNewPlaceVC: UIViewController {
 
     @objc func addPlaceButtonTapped() {
         
-        guard let place = country.txtField.text,
-              let title = placeName.txtField.text,
-              let desc = visitDescription.txtView.text,
-              let latitude = latitude,
-              let longitude = longitude else { return }
-              
-
-        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Add New Place",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: { [self] in
+                guard let place = country.txtField.text,
+                      let title = placeName.txtField.text,
+                      let desc = visitDescription.txtView.text,
+                      let latitude = latitude,
+                      let longitude = longitude else { return }
                 
-                    guard let url = urls.first else { return }
-
-            let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
+                
+                self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
                     
-            viewModel.postPlace( params: params) {
-                self.dismiss(animated: true, completion: {
-                    self.completionHandler?()  // completionHandler'ı çağır
+                    guard let url = urls.first else { return }
+                    
+                    let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
+                    
+                    viewModel.postPlace( params: params) { error in
+                        if let error = error {
+                            CustomAlert.showAlert(
+                                in: self,
+                                title: "Error!",
+                                message: error.localizedDescription,
+                                okActionTitle: "Ok"
+                            )
+                        }else{
+                            self.dismiss(animated: true, completion: {
+                                self.completionHandler?()  // completionHandler'ı çağır
+                            })
+                        }
+                        
+                    }
+                }, errorCallback: {error in
+                    if let error = error {
+                        CustomAlert.showAlert(
+                            in: self,
+                            title: "Error!",
+                            message: error.localizedDescription,
+                            okActionTitle: "Ok"
+                        )
+                    }
                 })
             }
-                })
-            
-            }
-            
-
+        )
+        
+        
+        
+    }
+    
+    
     
     @objc func openGallery() {
         let status = PHPhotoLibrary.authorizationStatus()

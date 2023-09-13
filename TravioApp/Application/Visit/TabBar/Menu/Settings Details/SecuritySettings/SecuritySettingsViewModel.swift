@@ -27,6 +27,7 @@ import Foundation
 import Photos
 import AVFoundation
 import CoreLocation
+import Alamofire
 
 class SecuritySettingsViewModel {
     
@@ -68,8 +69,8 @@ class SecuritySettingsViewModel {
         }
     }
     
-    var changePassWordInfo = [ChangePassword(labelName: "New Password"),
-                              ChangePassword(labelName: "New Password Confirm")]
+    var changePassWordInfo = [ChangePassword(labelName: "New Password",tag:0),
+                              ChangePassword(labelName: "New Password Confirm", tag:1)]
 
     var privacyInfo: [PrivacyInfo] {
         return [
@@ -78,5 +79,20 @@ class SecuritySettingsViewModel {
             PrivacyInfo(labelName: "Location", switchCheck: locationServicesPermission ?? true)
         ]
     }
+    
+    
+    func changePassword(parameters: Parameters, errorCallback: @escaping(Error?) -> Void){
+        NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.putPassword(parameters: parameters), callback: {(result: Result<PasswordResponse, Error>) in
+            switch result {
+            case .success(let data):
+                errorCallback(nil)
+            case .failure(let error):
+                errorCallback(error)
+            }
+        })
+    }
+    
+
 }
+
 

@@ -47,7 +47,6 @@ class PrivacyCell: UITableViewCell{
     func setupView(){
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        //privacyView.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         contentView.addSubviews(privacyView)
         setupLayout()
         

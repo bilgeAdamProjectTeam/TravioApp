@@ -12,6 +12,7 @@ import UIKit
 
 class VisitsVC: UIViewController {
     
+    var viewModel = MapViewModel()
     let visitsViewModel = VisitsViewModel()
     var visits: [Visit] = []
 
@@ -50,6 +51,7 @@ class VisitsVC: UIViewController {
         configureVM()
       
     }
+    
     
     func configureVM() {
         visitsViewModel.getVisits(callback: { result in
@@ -104,15 +106,14 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let data = visitsViewModel.visits?.data else { return }
-        var visitData = data.visits[indexPath.row]
+        
+        guard let visits = visitsViewModel.visits?.data else { return }
+        var visitData = visits.visits[indexPath.row]
         var placeId = visitData.place_id
-        print(placeId)
-        //visitsViewModel.getImages(id: travelId, callback: <#T##(ImageResponse) -> Void#>)
         
         let vc = VisitsDetailVC()
         vc.placeId = placeId
-        vc.detailVisit = visitData
+        
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

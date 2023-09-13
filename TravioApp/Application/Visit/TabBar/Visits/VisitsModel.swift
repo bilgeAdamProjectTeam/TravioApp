@@ -62,3 +62,21 @@ struct Image: Codable {
     var created_at: String
     var updated_at: String
 }
+
+
+struct PlaceResponseNew: Codable {
+    var data: PlaceDataNew
+    var status: String
+}
+
+struct PlaceDataNew: Codable {
+    var place: PlaceNew
+}
+
+struct PlaceNew: Codable {
+    var id, creator, place, title: String
+    var description: String
+    var cover_image_url: String
+    var latitude, longitude: Double
+    var created_at, updated_at: String
+}

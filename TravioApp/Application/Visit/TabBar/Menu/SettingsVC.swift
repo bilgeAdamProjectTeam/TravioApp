@@ -97,8 +97,18 @@ class SettingsVC: UIViewController {
         
         viewModel.getUsername { result in
             self.userName.text = result.full_name
+        } errorCalback: { error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
         }
     }
+    
     
     func setupView(){
         self.view.backgroundColor = Color.turquoise.color

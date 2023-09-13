@@ -14,7 +14,7 @@ class LaunchScreenVC: UIViewController {
     private lazy var logo: UIImageView = {
         let logo = UIImageView()
         logo.image = UIImage(named: "launchScreen")
-        logo.contentMode = .scaleAspectFit
+        logo.contentMode = .scaleAspectFill
         return logo
     }()
 

@@ -12,7 +12,6 @@ import SnapKit
 
 class VisitsDetailVC: UIViewController {
     
-    var allPlaces : Place?
     var viewModel = VisitsViewModel()
     var placeId = ""
     var visitImages : [Image]?
@@ -106,18 +105,6 @@ class VisitsDetailVC: UIViewController {
         return label
     }()
     
-//    private lazy var buttonAddPhoto: UIButton = {
-//        let button = UIButton()
-//        button.titleLabel?.font = Font.light(size: 10).font
-//        button.backgroundColor = Color.turquoise.color
-//        button.setTitle("Add", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.setImage(UIImage(named: "AddPhotoIcon"), for: .normal)
-//        button.centerTextAndImage(imageAboveText: true, spacing: 2)
-//        button.addTarget(self, action: #selector(buttonAddPhotoTapped), for: .touchUpInside)
-//        return button
-//    }()
-    
     private lazy var buttonBack: UIButton = {
         let  button = UIButton()
         button.setImage(UIImage(named: "backButton"), for: .normal)
@@ -170,7 +157,6 @@ class VisitsDetailVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         mapView.roundCorners(corners: [.bottomLeft,.topLeft,.topRight], radius: 16)
-//        buttonAddPhoto.roundCorners(corners: [.bottomLeft,.topLeft,.topRight], radius: 16)
         addVisit.roundCorners(corners: [.bottomLeft,.topLeft,.topRight], radius: 16)
         deleteVisit.roundCorners(corners: [.bottomLeft,.topLeft,.topRight], radius: 16)
     }
@@ -195,6 +181,7 @@ class VisitsDetailVC: UIViewController {
         darkMode()
         
         getTravelDetail()
+        
         getDetail()
       
     }
@@ -241,12 +228,7 @@ class VisitsDetailVC: UIViewController {
             make.height.equalTo(250)
         }
         
-//        buttonAddPhoto.snp.makeConstraints { make in
-//            make.top.equalTo(self.view.safeAreaLayoutGuide)
-//            make.trailing.equalToSuperview().offset(-16)
-//            make.height.equalTo(50)
-//            make.width.equalTo(50)
-//        }
+
         addVisit.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.trailing.equalToSuperview().offset(-16)
@@ -329,21 +311,18 @@ class VisitsDetailVC: UIViewController {
     func dateFormatter(visitDate: String, label: UILabel) {
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ"
         if let date = dateFormatter.date(from: visitDate) {
             dateFormatter.dateFormat = "dd MMMM yyyy"
             label.text = dateFormatter.string(from: date)
         }
     }
     
-    func setMapView(latitude:Double, longitude:Double) {
-        
-        guard let detailVisit = detailVisit else {return}
-        guard let allPlaces = allPlaces else { return }
+    func setMapView(latitude:Double, longitude:Double, title: String) {
         let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let annotation = MKPointAnnotation()
         annotation.coordinate = locationCoordinate
-        annotation.title = allPlaces.title//detailVisit.place.title
+        annotation.title = title
         mapView.addAnnotation(annotation)
         let region = MKCoordinateRegion(center: locationCoordinate, latitudinalMeters: 10000, longitudinalMeters: 10000)
         mapView.setRegion(region, animated: true)
@@ -357,83 +336,89 @@ class VisitsDetailVC: UIViewController {
             self.collectionView.reloadData()
         }
         
-//        guard let detailVisit = detailVisit else { return }
-//        self.titleLabel.text = detailVisit.place.title
-//        dateFormatter(visitDate: detailVisit.visited_at, label: self.dateLabel)
-//        self.descriptionLbl.text = detailVisit.place.description
-//        self.labelAddedBy.text = "Added by \(detailVisit.place.creator)"
-//        self.setMapView(latitude: detailVisit.place.latitude, longitude: detailVisit.place.longitude)
         
     }
     
     func getDetail(){
         
-        viewModel.getVisits { result in
-            self.visits = result.data.visits
-            
-            if let visits = self.visits{
-                visits.forEach{ data in
-                    if data.place_id == self.placeId {
-                        self.deleteVisit.isHidden = false
-                    }else{
-                        self.addVisit.isHidden = false
-                    }
-                }
-            }else{
+        
+        viewModel.checkVisitByID(placeId: placeId) { response in
+            print(self.placeId)
+            if response.status == "success"{
+                self.deleteVisit.isHidden = false
+                print(response.message)
+            }else if response.status == "error"{
                 self.addVisit.isHidden = false
+                print(response.message)
             }
+            
         }
         
-
-//        {
-//            detailVisit.place_id.forEach { id in
-//                if String(id) == placeId {
-//                    deleteVisit.isHidden = false
-//                    print(id)
-//                } else {
-//                    addVisit.isHidden = false
-//                }
-//            }
-//        }
-
+        
+        viewModel.getPlaceById(placeId: placeId) { result in
             
-            guard let allPlaces = allPlaces, let latitudeN = allPlaces.latitude, let longitudeN = allPlaces.longitude else { return }
-            self.titleLabel.text = allPlaces.title
-            //dateFormatter(visitDate: result.createdAt!, label: self.dateLabel)
-            self.descriptionLbl.text = allPlaces.description
-            self.labelAddedBy.text = "Added by \(allPlaces.creator)"
-            self.setMapView(latitude: latitudeN, longitude: longitudeN)
+            let result = result.data.place
+            
+            self.titleLabel.text = result.title
+            self.dateFormatter(visitDate: result.created_at, label: self.dateLabel)
+            self.descriptionLbl.text = result.description
+            self.labelAddedBy.text = "Added by \(result.creator)"
+            self.setMapView(latitude: result.latitude, longitude: result.longitude, title: result.title)
+            
+        }
+        
 
 
         
     }
     
     @objc func deleteVisits(){
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Delete Visit",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: {
+                self.viewModel.deleteVisit(placeId: self.placeId) { result in
+                    print(result)
+                    self.addVisit.isHidden = false
+                    self.deleteVisit.isHidden = true
+                    VisitsVC().MyCollection.reloadData()
+                }
+            }
+        )
         
-        viewModel.deleteVisit(placeId: placeId) { result in
-            print(result)
-            self.addVisit.isHidden = false
-            self.deleteVisit.isHidden = true
-            VisitsVC().MyCollection.reloadData()
-        }
+
 
     }
     
     @objc func addVisits(){
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        let today = Date()
-        let formattedDate = dateFormatter.string(from: today)
+        CustomAlert.showAlert(
+            in: self,
+            title: "Alert",
+            message: "Add Visit",
+            okActionTitle: "Ok",
+            cancelActionTitle: "Cancel",
+            okCompletion: {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+                let today = Date()
+                let formattedDate = dateFormatter.string(from: today)
 
 
-        let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
+                let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
+                
+                self.viewModel.postVisit(parameters: param) { result in
+                    self.addVisit.isHidden = true
+                    self.deleteVisit.isHidden = false
+                    VisitsVC().MyCollection.reloadData()
+                }
+            }
+        )
         
-        viewModel.postVisit(parameters: param) { result in
-            self.addVisit.isHidden = true
-            self.deleteVisit.isHidden = false
-            VisitsVC().MyCollection.reloadData()
-        }
+
 
     }
     

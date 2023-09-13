@@ -50,7 +50,9 @@ class LoginVC: UIViewController {
         let view = CustomTextField()
         view.labelText = "Email"
         view.placeholderName = "bilgeadam@gmail.com"
-        view.txtField.text = "t@gmail.com"
+        view.txtField.text = "sevvalcakiroglu@gmail.com"
+        
+        
         return view
     }()
     
@@ -58,7 +60,7 @@ class LoginVC: UIViewController {
         let view = CustomTextField()
         view.labelText = "Password"
         view.placeholderName = "*********"
-        view.txtField.text = "12345678"
+        view.txtField.text = "123456789"
         view.txtField.isSecureTextEntry = true
         return view
     }()
@@ -192,6 +194,47 @@ class LoginVC: UIViewController {
             make.top.equalTo(loginButton.snp.bottom).offset(141)
             make.leading.equalToSuperview().offset(74)
         }
+            make.height.equalTo(54)
+        }
+        
+        forgotStackView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-21)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    @objc func signUpTapped() {
+        let vc = SignUpVC()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func loginButtonTapped() {
+        
+        guard let email = txtMailView.txtField.text, let password = txtPasswordView.txtField.text else { return }
+
+        
+        let data = LoginInfo(email: email, password: password)
+       
+        LoginViewModelInstance.login(input: data) { error in
+
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Hata!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Tamam",
+                    okCompletion: {
+                        print("Tamam düğmesine tıklandı.")
+                    }
+                )
+            } else {
+                
+                let tabBarController = TabBarController()
+                self.navigationController?.pushViewController(tabBarController, animated: true)
+            }
+        }
+        }
+       
     }
 }
 

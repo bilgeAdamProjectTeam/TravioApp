@@ -175,6 +175,46 @@ class SignUpVC: UIViewController {
         mail.txtField.delegate = self
         password.txtField.delegate = self
         passwordConfirm.txtField.delegate = self
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalToSuperview().offset(-24)
+        }
+        
+        backVector.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(32)
+            make.leading.equalToSuperview().offset(24)
+            make.height.equalTo(21.39)
+            make.width.equalTo(24)
+        }
+        
+        header.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+            make.centerX.equalToSuperview()
+        }
+    }
+    
+    @objc func registerButtonTapped() {
+        guard let username = username.txtField.text, let email = mail.txtField.text, let password = password.txtField.text else { return }
+        
+        let data = RegisterInfo(full_name: username, email: email, password: password)
+        
+        viewModelInstance.register(input: data) { error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }else {
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+           
+        }
+    }
+    
+    @objc func backVectorTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -187,6 +227,7 @@ extension SignUpVC: UITextFieldDelegate {
             (passwordConfirm.txtField.text?.count)! >= 8 &&
             password.txtField.text == passwordConfirm.txtField.text &&
             viewModel.isValidEmail(mail.txtField.text!) == true
+            viewModelInstance.isValidEmail(mail.txtField.text!) == true
         {
             registerButton.backgroundColor = Color.turquoise.color
             registerButton.isEnabled = true
