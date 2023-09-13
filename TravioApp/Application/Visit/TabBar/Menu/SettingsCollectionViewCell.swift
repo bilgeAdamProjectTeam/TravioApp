@@ -11,8 +11,6 @@ import SnapKit
 
 class SettingsCollectionViewCell: UICollectionViewCell {
     
-
-    
     private lazy var icon: UIImageView = {
         let icon = UIImageView()
         icon.backgroundColor = .white
@@ -33,7 +31,6 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         return icon
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -44,17 +41,15 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setupView(){
 
-
-        radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
-        backgroundColor = .white
+        self.roundCornersWithShadow([.bottomLeft,.topLeft,.topRight], radius: 16)
+        
+        self.backgroundColor = .white
         
         self.contentView.addSubviews(icon,label,nextVector)
         
         setupLayout()
-        
     }
     
     func setupLayout(){
@@ -62,30 +57,20 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         icon.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(17)
             make.leading.equalToSuperview().offset(16.51)
-            make.trailing.equalToSuperview().offset(-320.86)
-            make.bottom.equalToSuperview().offset(-17)
         })
         
         label.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(18)
             make.leading.equalTo(icon.snp.trailing).offset(7.86)
-            make.trailing.equalToSuperview().offset(-66)
-            make.bottom.equalToSuperview().offset(-15)
         })
         
         nextVector.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(19)
-            make.leading.equalTo(label.snp.trailing).offset(39.18)
             make.trailing.equalToSuperview().offset(-16.42)
-            make.bottom.equalToSuperview().offset(-19.37)
         })
-        
-        
-        
     }
     
     func configure(data: Settings){
-        
         label.text = data.labelName
         icon.image = UIImage(named: data.icon)
     }

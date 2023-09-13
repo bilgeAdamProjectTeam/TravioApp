@@ -48,8 +48,8 @@ class AddNewPlaceCVC: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
-        images.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
+        self.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         
         setupViews()
     }
@@ -63,7 +63,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
     
     func setupViews(){
         
-        self.backgroundColor = .clear
+        self.backgroundColor = .white
         
         self.clipsToBounds = true
         

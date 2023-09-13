@@ -173,7 +173,7 @@ class LoginVC: UIViewController {
         scrollContentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(self.view)
-            make.bottom.equalTo(stackViewSignUp.snp.bottom).offset(16)
+            make.bottom.equalTo(stackViewSignUp.snp.bottom).offset(5)
         }
         
         welcomeLabel.snp.makeConstraints { make in
@@ -201,7 +201,7 @@ class LoginVC: UIViewController {
         
         stackViewSignUp.snp.makeConstraints { make in
             make.top.equalTo(loginButton.snp.bottom).offset(141)
-            make.leading.equalToSuperview().offset(74)
+            make.centerX.equalToSuperview()
         }
     }
 }
