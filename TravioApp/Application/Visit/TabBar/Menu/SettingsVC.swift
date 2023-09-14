@@ -11,7 +11,9 @@ import SnapKit
 class SettingsVC: UIViewController {
     
     var viewModel = SettingsViewModel()
-    let pageTypes: [UIViewController.Type] = [SecuritySettingsVC.self]
+    let pageTypes: [UIViewController.Type] = [SecuritySettingsVC.self,
+                                              SecuritySettingsVC.self,
+                                              MyAddedPlacesVC.self]
 
     
     

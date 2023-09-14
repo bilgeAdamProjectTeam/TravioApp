@@ -134,6 +134,9 @@
 		E1902E5F2AA9E4840055305D /* EditProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E5E2AA9E4840055305D /* EditProfileModel.swift */; };
 		E1902E612AAA5C960055305D /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E602AAA5C960055305D /* CustomAlert.swift */; };
 		E1902E632AAB0D6A0055305D /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1902E622AAB0D6A0055305D /* LaunchScreenVC.swift */; };
+		E1944FAA2AB1F03600729C17 /* MyAddedPlacesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FA92AB1F03600729C17 /* MyAddedPlacesViewCell.swift */; };
+		E1944FAC2AB1F0AF00729C17 /* MyAddedPlacesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FAB2AB1F0AF00729C17 /* MyAddedPlacesVC.swift */; };
+		E1944FAE2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +225,9 @@
 		E1902E5E2AA9E4840055305D /* EditProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileModel.swift; sourceTree = "<group>"; };
 		E1902E602AAA5C960055305D /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		E1902E622AAB0D6A0055305D /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
+		E1944FA92AB1F03600729C17 /* MyAddedPlacesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesViewCell.swift; sourceTree = "<group>"; };
+		E1944FAB2AB1F0AF00729C17 /* MyAddedPlacesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesVC.swift; sourceTree = "<group>"; };
+		E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,6 +483,7 @@
 		E160F9AB2AA6B6B400515F40 /* Settings Details */ = {
 			isa = PBXGroup;
 			children = (
+				E1944FA82AB1F00A00729C17 /* MyAddedPlaces */,
 				E160F9B42AA7124300515F40 /* SecuritySettings */,
 				E160F9B92AA8B43F00515F40 /* EditProfile */,
 			);
@@ -503,6 +510,16 @@
 				E1902E5E2AA9E4840055305D /* EditProfileModel.swift */,
 			);
 			path = EditProfile;
+			sourceTree = "<group>";
+		};
+		E1944FA82AB1F00A00729C17 /* MyAddedPlaces */ = {
+			isa = PBXGroup;
+			children = (
+				E1944FA92AB1F03600729C17 /* MyAddedPlacesViewCell.swift */,
+				E1944FAB2AB1F0AF00729C17 /* MyAddedPlacesVC.swift */,
+				E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */,
+			);
+			path = MyAddedPlaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -689,6 +706,7 @@
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
 				E1902E5D2AA9E4750055305D /* EditProfileViewModel.swift in Sources */,
+				E1944FAE2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift in Sources */,
 				E10977CB2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,
 				E10977AF2A9D48400058DA0B /* VisitsVC.swift in Sources */,
 				E160F9A82AA5D6C700515F40 /* SettingsModel.swift in Sources */,
@@ -713,9 +731,11 @@
 				E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */,
 				E160F9A62AA5D46E00515F40 /* SettingsCollectionViewCell.swift in Sources */,
 				E10978052AA1FC5E0058DA0B /* HomeViewModel.swift in Sources */,
+				E1944FAA2AB1F03600729C17 /* MyAddedPlacesViewCell.swift in Sources */,
 				E10977442A9D35DB0058DA0B /* CustomTextField.swift in Sources */,
 				E10977BF2A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
 				E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */,
+				E1944FAC2AB1F0AF00729C17 /* MyAddedPlacesVC.swift in Sources */,
 				E160F9B82AA7127600515F40 /* PrivacyCell.swift in Sources */,
 				E10977A02A9D479B0058DA0B /* SettingsVC.swift in Sources */,
 				E1902E612AAA5C960055305D /* CustomAlert.swift in Sources */,
