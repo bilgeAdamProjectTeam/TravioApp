@@ -14,7 +14,9 @@ class SettingsVC: UIViewController {
     let pageTypes: [UIViewController.Type] = [SecuritySettingsVC.self,
                                               SecuritySettingsVC.self,
                                               MyAddedPlacesVC.self,
-                                              HelpAndSupportVC.self]
+                                              HelpAndSupportVC.self,
+                                              AboutUsVC.self,
+                                              TermOfUseVC.self]
 
     
     
