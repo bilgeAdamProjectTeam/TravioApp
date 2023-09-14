@@ -13,7 +13,8 @@ class SettingsVC: UIViewController {
     var viewModel = SettingsViewModel()
     let pageTypes: [UIViewController.Type] = [SecuritySettingsVC.self,
                                               SecuritySettingsVC.self,
-                                              MyAddedPlacesVC.self]
+                                              MyAddedPlacesVC.self,
+                                              HelpAndSupportVC.self]
 
     
     
@@ -63,7 +64,7 @@ class SettingsVC: UIViewController {
         layout.minimumLineSpacing = 8
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        //layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
 
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -139,8 +140,6 @@ class SettingsVC: UIViewController {
         userPhoto.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(24)
             make.centerX.equalToSuperview()
-//            make.leading.equalToSuperview().offset(135)
-//            make.trailing.equalToSuperview().offset(-135)
             make.bottom.equalToSuperview().offset(-575)
             
         })
@@ -148,16 +147,12 @@ class SettingsVC: UIViewController {
         userName.snp.makeConstraints({make in
             make.top.equalTo(userPhoto.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
-//            make.leading.equalToSuperview().offset(150)
-            //make.trailing.equalToSuperview().offset(-150)
             make.bottom.equalToSuperview().offset(-543)
         })
         
         editProfile.snp.makeConstraints({make in
             make.top.equalTo(userName.snp.bottom).offset(0)
             make.centerX.equalToSuperview()
-//            make.leading.equalToSuperview().offset(164)
-            //make.trailing.equalToSuperview().offset(-164)
             make.bottom.equalToSuperview().offset(-525)
         })
         

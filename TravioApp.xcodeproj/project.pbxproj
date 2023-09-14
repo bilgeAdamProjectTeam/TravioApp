@@ -137,6 +137,10 @@
 		E1944FAA2AB1F03600729C17 /* MyAddedPlacesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FA92AB1F03600729C17 /* MyAddedPlacesViewCell.swift */; };
 		E1944FAC2AB1F0AF00729C17 /* MyAddedPlacesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FAB2AB1F0AF00729C17 /* MyAddedPlacesVC.swift */; };
 		E1944FAE2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */; };
+		E1944FB12AB302DD00729C17 /* HelpAndSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FB02AB302DD00729C17 /* HelpAndSupportVC.swift */; };
+		E1944FB32AB302FF00729C17 /* HelpAndSupportCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FB22AB302FF00729C17 /* HelpAndSupportCollectionViewCell.swift */; };
+		E1944FB52AB31CF100729C17 /* HelpsAndSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FB42AB31CF100729C17 /* HelpsAndSupportModel.swift */; };
+		E1944FB72AB31D0000729C17 /* HelpsAndSupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FB62AB31D0000729C17 /* HelpsAndSupportViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -228,6 +232,10 @@
 		E1944FA92AB1F03600729C17 /* MyAddedPlacesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesViewCell.swift; sourceTree = "<group>"; };
 		E1944FAB2AB1F0AF00729C17 /* MyAddedPlacesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesVC.swift; sourceTree = "<group>"; };
 		E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesViewModel.swift; sourceTree = "<group>"; };
+		E1944FB02AB302DD00729C17 /* HelpAndSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpAndSupportVC.swift; sourceTree = "<group>"; };
+		E1944FB22AB302FF00729C17 /* HelpAndSupportCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpAndSupportCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1944FB42AB31CF100729C17 /* HelpsAndSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpsAndSupportModel.swift; sourceTree = "<group>"; };
+		E1944FB62AB31D0000729C17 /* HelpsAndSupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpsAndSupportViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -483,9 +491,10 @@
 		E160F9AB2AA6B6B400515F40 /* Settings Details */ = {
 			isa = PBXGroup;
 			children = (
-				E1944FA82AB1F00A00729C17 /* MyAddedPlaces */,
 				E160F9B42AA7124300515F40 /* SecuritySettings */,
+				E1944FA82AB1F00A00729C17 /* MyAddedPlaces */,
 				E160F9B92AA8B43F00515F40 /* EditProfile */,
+				E1944FAF2AB3029100729C17 /* HelpAndSupport */,
 			);
 			path = "Settings Details";
 			sourceTree = "<group>";
@@ -520,6 +529,17 @@
 				E1944FAD2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift */,
 			);
 			path = MyAddedPlaces;
+			sourceTree = "<group>";
+		};
+		E1944FAF2AB3029100729C17 /* HelpAndSupport */ = {
+			isa = PBXGroup;
+			children = (
+				E1944FB02AB302DD00729C17 /* HelpAndSupportVC.swift */,
+				E1944FB22AB302FF00729C17 /* HelpAndSupportCollectionViewCell.swift */,
+				E1944FB42AB31CF100729C17 /* HelpsAndSupportModel.swift */,
+				E1944FB62AB31D0000729C17 /* HelpsAndSupportViewModel.swift */,
+			);
+			path = HelpAndSupport;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -686,6 +706,7 @@
 				E1902E632AAB0D6A0055305D /* LaunchScreenVC.swift in Sources */,
 				E10977B32A9D4C910058DA0B /* VisitsModel.swift in Sources */,
 				E10977982A9D45520058DA0B /* SignUpViewModel.swift in Sources */,
+				E1944FB52AB31CF100729C17 /* HelpsAndSupportModel.swift in Sources */,
 				E10978042AA1FC5E0058DA0B /* HomeModel.swift in Sources */,
 				E10977942A9D42E10058DA0B /* TabBarController.swift in Sources */,
 				E10978062AA1FC5E0058DA0B /* HomeTableViewCell.swift in Sources */,
@@ -705,6 +726,7 @@
 				E10977E32A9DE6FE0058DA0B /* AddNewPlaceModel.swift in Sources */,
 				E10977C32A9D4CE40058DA0B /* VisitsDetailVC.swift in Sources */,
 				E10977BB2A9D4CC00058DA0B /* VisitsViewModel.swift in Sources */,
+				E1944FB72AB31D0000729C17 /* HelpsAndSupportViewModel.swift in Sources */,
 				E1902E5D2AA9E4750055305D /* EditProfileViewModel.swift in Sources */,
 				E1944FAE2AB1F2FB00729C17 /* MyAddedPlacesViewModel.swift in Sources */,
 				E10977CB2A9DC77A0058DA0B /* MapViewModel.swift in Sources */,
@@ -722,6 +744,7 @@
 				E10977592A9D37660058DA0B /* DesignSystem.swift in Sources */,
 				E10977482A9D35FE0058DA0B /* CustomButton.swift in Sources */,
 				E160F9BB2AA8B49B00515F40 /* EditProfileVC.swift in Sources */,
+				E1944FB32AB302FF00729C17 /* HelpAndSupportCollectionViewCell.swift in Sources */,
 				E160F9AF2AA6C05500515F40 /* CustomSwitchLabelView.swift in Sources */,
 				E10977E52A9DE9BB0058DA0B /* AddNewPlaceViewModel.swift in Sources */,
 				E160F9AA2AA6138C00515F40 /* SettingsViewModel.swift in Sources */,
@@ -733,6 +756,7 @@
 				E10978052AA1FC5E0058DA0B /* HomeViewModel.swift in Sources */,
 				E1944FAA2AB1F03600729C17 /* MyAddedPlacesViewCell.swift in Sources */,
 				E10977442A9D35DB0058DA0B /* CustomTextField.swift in Sources */,
+				E1944FB12AB302DD00729C17 /* HelpAndSupportVC.swift in Sources */,
 				E10977BF2A9D4CD20058DA0B /* VisitsDetailCell.swift in Sources */,
 				E10977F82A9FA5000058DA0B /* SeeAllVC.swift in Sources */,
 				E1944FAC2AB1F0AF00729C17 /* MyAddedPlacesVC.swift in Sources */,
