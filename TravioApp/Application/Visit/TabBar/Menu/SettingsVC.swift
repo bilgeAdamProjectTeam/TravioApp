@@ -173,6 +173,7 @@ class SettingsVC: UIViewController {
         
         viewModel.getUsername { result in
             self.userName.text = result.full_name
+            self.userPhoto.kf.setImage(with: URL(string: result.pp_url))
         } errorCalback: { error in
             if let error = error {
                 CustomAlert.showAlert(

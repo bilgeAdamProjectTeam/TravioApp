@@ -16,8 +16,6 @@ struct UserReturn: Codable {
     var created_at: String
 }
 
-
-
 struct EditRequest: Codable {
     var full_name: String
     var email: String
@@ -29,4 +27,9 @@ struct EditResponse: Codable {
     var status: String
 }
 
+struct ProfileUploadResponse: Codable {
+    let messageType: String
+    let message: String
+    let urls: [String]
+}
 

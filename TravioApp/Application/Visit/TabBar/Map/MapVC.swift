@@ -60,7 +60,11 @@ class MapVC: UIViewController {
     }()
     
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,7 +165,9 @@ class MapVC: UIViewController {
                 
                 vc.completionHandler = {
                     self.mapView.addAnnotation(annotation) // Pin ekleme
-                    self.collectionView.reloadData()
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                 }
                 
                 self.present(vc, animated: true, completion: nil)

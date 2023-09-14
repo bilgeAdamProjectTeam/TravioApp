@@ -22,6 +22,7 @@
 		E06FEEB32AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB42AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA52AA0CE6C00D68E93 /* Poppins-SemiBold.ttf */; };
 		E06FEEB72AA20E8100D68E93 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E06FEEB62AA20E8100D68E93 /* Kingfisher */; };
+		E07947632AB31AD00024AAA1 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06FEEA22AA0CE6C00D68E93 /* Poppins-Medium.ttf */; };
 		E0E194FE2AAEF32C00D5E4F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E0E194FD2AAEF32C00D5E4F6 /* Assets.xcassets */; };
 		E109770E2A9D2EEF0058DA0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770D2A9D2EEF0058DA0B /* AppDelegate.swift */; };
 		E10977102A9D2EEF0058DA0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109770F2A9D2EEF0058DA0B /* SceneDelegate.swift */; };
@@ -625,6 +626,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E07947632AB31AD00024AAA1 /* Poppins-Medium.ttf in Resources */,
 				E0E194FE2AAEF32C00D5E4F6 /* Assets.xcassets in Resources */,
 				E06FEEA62AA0CE6C00D68E93 /* Poppins-Regular.ttf in Resources */,
 				E06FEEB22AA0CE6C00D68E93 /* Poppins-SemiBold.ttf in Resources */,

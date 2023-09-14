@@ -13,10 +13,14 @@ class EditProfileVC: UIViewController {
     
     var viewModel = EditProfileViewModel()
     var userProfile: UserReturn?
+    var profileImage: UIImage?
+    var imageData: [Data?] = []
+    var imageUrl: String?
+    let imagePicker = UIImagePickerController()
+    let dispatchGroup = DispatchGroup()
     
     private lazy var retangle: UIView = {
         let view = CustomView()
-        
         return view
     }()
     
@@ -25,7 +29,6 @@ class EditProfileVC: UIViewController {
         image.setImage(UIImage(named: "exit"), for: .normal)
         image.contentMode = .scaleAspectFit
         image.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        
         return image
     }()
     
@@ -39,9 +42,11 @@ class EditProfileVC: UIViewController {
     
     private lazy var userPhoto: UIImageView = {
         let img = UIImageView()
-        //img.image = UIImage(named: "userPhoto")
-        //img.image = URL
-        img.contentMode = .scaleAspectFit
+        img.contentMode = .scaleAspectFill
+        img.layer.masksToBounds = true
+        img.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        img.layer.cornerRadius = img.frame.size.width / 2
+        img.clipsToBounds = true
         return img
     }()
     
@@ -50,6 +55,7 @@ class EditProfileVC: UIViewController {
         btn.setTitle("Change Photo", for: .normal)
         btn.setTitleColor(.systemBlue, for: .normal)
         btn.titleLabel?.font = Font.regular(size: 12).font
+        btn.addTarget(self, action: #selector(changeButtonTapped), for: .touchUpInside)
         return btn
     }()
     
@@ -57,7 +63,6 @@ class EditProfileVC: UIViewController {
         let lbl = UILabel()
         lbl.textColor = Color.darkGray.color
         lbl.font = Font.semiBold(size: 24).font
-        lbl.text = "Şevval Çakıroğlu"
         lbl.textAlignment = .center
         return lbl
     }()
@@ -69,7 +74,6 @@ class EditProfileVC: UIViewController {
         sv.distribution = .fillEqually
         return sv
     }()
-    
     
     private lazy var birthday: CustomImageLabelView = {
         let view = CustomImageLabelView()
@@ -87,10 +91,8 @@ class EditProfileVC: UIViewController {
     
     private lazy var fullName: CustomTextField = {
         let tf = CustomTextField()
-        
         tf.labelText = "Full Name"
         tf.placeholderName = "bilge_adam"
-        
         return tf
     }()
     
@@ -98,125 +100,88 @@ class EditProfileVC: UIViewController {
         let tf = CustomTextField()
         tf.labelText = "Email"
         tf.placeholderName = "developer@bilgeadam.com"
-        
         return tf
     }()
     
     private lazy var saveButton: CustomButton = {
         let btn = CustomButton()
         btn.labelText = "Save"
-        btn.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return btn
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    @objc func changeButtonTapped() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = .camera
         
-        
-        setupView()
-        getProfileInf()
-        
-
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            CustomAlert.showAlert(in: self,
+                                  title: "Error",
+                                  message: "Camera permission required",
+                                  okActionTitle: "OK")
+        }
     }
     
     @objc func backTapped(){
         self.dismiss(animated: true, completion: nil)
     }
     
-    func getProfileInf(){
+    @objc func saveButtonTapped() {
         
-        viewModel.getUser { [self] data in
-            
-            
-            
-            if let imageURL = URL(string: data.pp_url) {
-                self.userPhoto.kf.setImage(with: imageURL)
-            }
-            
-            self.userName.text = data.full_name
-            self.birthday.label.text = data.created_at
-//            dateFormatter(createDate: data.created_at, label: self.birthday.label.text)
-            self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
-            self.userRole.label.text = data.role
-            self.fullName.placeholderName = data.full_name
-            self.mail.placeholderName = data.email
-        } errorCallback: { error in
-            
-            if let error = error {
-                CustomAlert.showAlert(
-                    in: self,
-                    title: "Error!",
-                    message: error.localizedDescription,
-                    okActionTitle: "Ok"
-                )
-            }
-            
-        }
-        
+        CustomAlert.showAlert(in: self,
+                              title: "Alert",
+                              message: "Are you sure you want to update the profile?",
+                              okActionTitle: "OK",
+                              cancelActionTitle: "Cancel", okCompletion: {
+            self.updateUser()
+        }, cancelCompletion: {
+            self.dismiss(animated: true)
+        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getProfileInf()
     }
 
-    func convertDateFormat(inputDateString: String, outputDateFormat: String) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ" // Gelen tarih formatı
-        if let date = dateFormatter.date(from: inputDateString) {
-            dateFormatter.dateFormat = outputDateFormat // Çıktı tarih formatı
-            let result = dateFormatter.string(from: date)
-            return result
-        } else {
-            return nil // Tarih dönüşümü başarısız olduysa nil döner
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+        setupViews()
+        
+        getProfileInf()
     }
     
-    
-    
-    @objc func editProfile() {
-        
-        CustomAlert.showAlert(
-            in: self,
-            title: "Alert",
-            message: "Edit Profile",
-            okActionTitle: "Ok",
-            cancelActionTitle: "Cancel",
-            okCompletion: { [self] in
-                guard let fullname = fullName.txtField.text, let email = mail.txtField.text  else { return }
-                
-                let data = EditRequest(full_name: fullname, email: email, pp_url: "https://example.com/deneme.png")
-                
-                viewModel.updateUser(input: data) { error in
-                    if let error = error {
-                        CustomAlert.showAlert(
-                            in: self,
-                            title: "Error!",
-                            message: error.localizedDescription,
-                            okActionTitle: "Ok"
-                        )
-                    }else{
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                }
-            }
-        )
-        
-
-    }
-    
-    func setupView(){
+    func setupViews() {
         
         navigationController?.navigationBar.isHidden = true
+        
         view.backgroundColor = Color.turquoise.color
         
-        view.addSubviews(header,exitButton,retangle)
-        retangle.addSubviews(userPhoto,changePhoto,userName,stackView,fullName,mail,saveButton)
-        stackView.addArrangedSubviews(birthday,userRole)
+        view.addSubviews(header,
+                         exitButton,
+                         retangle)
+        
+        retangle.addSubviews(userPhoto,
+                             changePhoto,
+                             userName,
+                             stackView,
+                             fullName,
+                             mail,
+                             saveButton)
+        
+        stackView.addArrangedSubviews(birthday,
+                                      userRole)
         
         setupLayout()
     }
     
-    func setupLayout(){
+    func setupLayout() {
         
         retangle.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(125)
-            make.leading.trailing.bottom.equalToSuperview().offset(0)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         header.snp.makeConstraints({make in
@@ -227,16 +192,13 @@ class EditProfileVC: UIViewController {
         exitButton.snp.makeConstraints({make in
             make.centerY.equalTo(header)
             make.leading.equalTo(header.snp.trailing).offset(152)
-            make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(20)
-            make.width.equalTo(20)
         })
         
         userPhoto.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(24)
-            make.leading.equalToSuperview().offset(135)
-            make.trailing.equalToSuperview().offset(-135)
-            
+            make.centerX.equalToSuperview()
+            make.height.equalTo(100)
+            make.width.equalTo(100)
         })
         
         changePhoto.snp.makeConstraints({make in
@@ -268,16 +230,131 @@ class EditProfileVC: UIViewController {
         })
 
         saveButton.snp.makeConstraints({make in
-            //make.top.equalTo(tableView.snp.bottom)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-18)
         })
-        
-        
-        
     }
-
-
-
+    
+    func getProfileInf() {
+        
+        viewModel.getUser { [self] data in
+            
+            if let imageURL = URL(string: data.pp_url) {
+                self.userPhoto.kf.setImage(with: imageURL)
+            }
+            
+            self.userName.text = data.full_name
+            self.birthday.label.text = data.created_at
+            self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
+            self.userRole.label.text = data.role
+            self.fullName.placeholderName = data.full_name
+            self.mail.placeholderName = data.email
+        } errorCallback: { error in
+            
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok")
+            }
+        }
+    }
+    
+//    func updateUser() {
+//
+//        self.dispatchGroup.enter()
+//        self.viewModel.uploadPhoto(image: self.imageData) { result in
+//            guard let result = result.first else { return }
+//            self.imageUrl = result
+//            self.dispatchGroup.leave()
+//        } errorCallback: { error in
+//            if let error = error {
+//                CustomAlert.showAlert(in: self,
+//                                      title: "Error!",
+//                                      message: error.localizedDescription,
+//                                      okActionTitle: "OK")
+//            } else {
+//                self.dismiss(animated: true)
+//            }
+//        }
+//
+//        self.dispatchGroup.enter()
+//        guard let fullname = self.fullName.txtField.text,
+//              let email = self.mail.txtField.text,
+//              let url = self.imageUrl else { return }
+//
+//        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
+//        self.viewModel.updateUser(input: data) { error in
+//            if let error = error {
+//                CustomAlert.showAlert(in: self,
+//                                      title: "Error!",
+//                                      message: error.localizedDescription,
+//                                      okActionTitle: "OK")
+//            } else {
+//                self.dispatchGroup.leave()
+//                self.dismiss(animated: true)
+//            }
+//
+//        }
+//        self.dispatchGroup.notify(queue: .main) {
+//            print("tamamlandı")
+//        }
+//
+//    }
+    
+    func updateUser() {
+        self.dispatchGroup.enter()
+        self.viewModel.uploadPhoto(image: self.imageData) { result in
+            guard let result = result.first else { return }
+            self.imageUrl = result
+            self.dispatchGroup.leave()
+        }
+        
+        self.dispatchGroup.enter()
+        guard let fullname = self.fullName.txtField.text,
+              let email = self.mail.txtField.text,
+              let url = self.imageUrl else { return }
+        
+        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
+        self.viewModel.updateUser(input: data)
+        self.dispatchGroup.leave()
+        self.dismiss(animated: true)
+        
+        self.dispatchGroup.notify(queue: .main) {
+            print("tamamlandı")
+        }
+    }
+    
+    func convertDateFormat(inputDateString: String, outputDateFormat: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ" // Gelen tarih formatı
+        if let date = dateFormatter.date(from: inputDateString) {
+            dateFormatter.dateFormat = outputDateFormat // Çıktı tarih formatı
+            let result = dateFormatter.string(from: date)
+            return result
+        } else {
+            return nil // Tarih dönüşümü başarısız olduysa nil döner
+        }
+    }
 }
+
+extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+           if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+               
+               let imageToData = image.jpegData(compressionQuality: 0.5)
+               self.imageData.append(imageToData)
+               self.userPhoto.image = image
+               profileImage = image
+           }
+        
+           picker.dismiss(animated: true, completion: nil)
+       }
+       
+       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+           picker.dismiss(animated: true, completion: nil)
+       }
+}
+

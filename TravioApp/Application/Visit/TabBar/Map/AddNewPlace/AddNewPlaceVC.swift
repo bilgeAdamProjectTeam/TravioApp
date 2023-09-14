@@ -91,28 +91,6 @@ class AddNewPlaceVC: UIViewController {
         return btn
     }()
     
-    
-    override func viewDidLayoutSubviews() {
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-       
-        
-        view.backgroundColor = Color.lightGray.color
-        
-        setupView()
-        
-        getLocation()
-        
-        cellImages = [UIImage?](repeating: nil, count: 3)
-
-        
-    }
-    
-
     @objc func addPlaceButtonTapped() {
         
         CustomAlert.showAlert(
@@ -122,52 +100,12 @@ class AddNewPlaceVC: UIViewController {
             okActionTitle: "Ok",
             cancelActionTitle: "Cancel",
             okCompletion: { [self] in
-                guard let place = country.txtField.text,
-                      let title = placeName.txtField.text,
-                      let desc = visitDescription.txtView.text,
-                      let latitude = latitude,
-                      let longitude = longitude else { return }
+                postNewPlace()
                 
                 
-                self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
-                    
-                    guard let url = urls.first else { return }
-                    
-                    let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
-                    
-                    viewModel.postPlace( params: params) { error in
-                        if let error = error {
-                            CustomAlert.showAlert(
-                                in: self,
-                                title: "Error!",
-                                message: error.localizedDescription,
-                                okActionTitle: "Ok"
-                            )
-                        }else{
-                            self.dismiss(animated: true, completion: {
-                                self.completionHandler?()  // completionHandler'ı çağır
-                            })
-                        }
-                        
-                    }
-                }, errorCallback: {error in
-                    if let error = error {
-                        CustomAlert.showAlert(
-                            in: self,
-                            title: "Error!",
-                            message: error.localizedDescription,
-                            okActionTitle: "Ok"
-                        )
-                    }
-                })
             }
         )
-        
-        
-        
     }
-    
-    
     
     @objc func openGallery() {
         let status = PHPhotoLibrary.authorizationStatus()
@@ -201,25 +139,28 @@ class AddNewPlaceVC: UIViewController {
         }
     }
     
-    
-    
-    
-    func getLocation(){
-        guard let placeCoordinate = placeCoordinate else {return}
-        country.txtField.text = placeCoordinate
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = Color.lightGray.color
+        
+        setupViews()
+        
+        getLocation()
+        
+        cellImages = [UIImage?](repeating: nil, count: 3)
     }
     
-    func setupView(){
-        
+    func setupViews(){
         
         view.addSubviews(rectangle,
                          placeName,
                          visitDescription,
                          country,
                          addPlaceBtn,collectionView)
-
+        
         setupLayout()
- 
+        
     }
     
     func setupLayout(){
@@ -263,11 +204,57 @@ class AddNewPlaceVC: UIViewController {
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview().offset(-24)
         })
-        
-        
     }
     
+    func getLocation(){
+        
+        guard let placeCoordinate = placeCoordinate else {return}
+        country.txtField.text = placeCoordinate
+    }
+    
+    func postNewPlace() {
+        
+        guard let place = country.txtField.text,
+              let title = placeName.txtField.text,
+              let desc = visitDescription.txtView.text,
+              let latitude = latitude,
+              let longitude = longitude else { return }
+        
+        
+        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
+            
+            guard let url = urls.first else { return }
+            
+            let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
+            
+            viewModel.postPlace( params: params) { error in
+                if let error = error {
+                    CustomAlert.showAlert(
+                        in: self,
+                        title: "Error!",
+                        message: error.localizedDescription,
+                        okActionTitle: "Ok"
+                    )
+                }else{
+                    self.dismiss(animated: true, completion: {
+                        self.completionHandler?()  // completionHandler'ı çağır
+                    })
+                }
+                
+            }
+        }, errorCallback: {error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+            }
+        })
+    }
 }
+
 extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
