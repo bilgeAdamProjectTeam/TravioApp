@@ -138,7 +138,7 @@ class VisitsDetailVC: UIViewController {
     }()
     
     @objc func buttonBackTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func buttonAddPhotoTapped() {

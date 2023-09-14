@@ -11,13 +11,18 @@ import SnapKit
 protocol HomeTableViewCellDelegate: AnyObject {
     func didTapSeeAllButton(placeType: PlaceType, in cell: HomeTableViewCell)
 }
+protocol HomeDetailDelegate: AnyObject {
+    func placeIdTransfer(placeId:String, in cell: HomeTableViewCell)
+}
 
 class HomeTableViewCell: UITableViewCell {
     
     let homeViewModel = HomeViewModel()
     weak var delegate: HomeTableViewCellDelegate?
+    weak var placeIdDelegate: HomeDetailDelegate?
     var placeType: PlaceType?
     var serviceDataArray: [HomePlace] = []
+    var placeId = ""
     
     private lazy var title: UILabel = {
         let lbl = UILabel()
@@ -144,6 +149,15 @@ extension HomeTableViewCell: UICollectionViewDataSource {
         cell.configureCollectionViewCell(with: data)
 
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let placesData = serviceDataArray[indexPath.row]
+        let placeId = placesData.id
+        placeIdDelegate?.placeIdTransfer(placeId: placeId, in: self)
+        print(placeId)
+        
+        
     }
 }
 

@@ -14,6 +14,7 @@ class SeeAllVC: UIViewController {
     var placesData: [HomePlace] = []
     let viewModel = HomeViewModel()
     var ascendingSort = true
+    var placeId = ""
     
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -224,5 +225,17 @@ extension SeeAllVC: UICollectionViewDataSource{
             break
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let placeData = placesData[indexPath.row]
+        let placeId = placeData.id
+        
+        let vc = VisitsDetailVC()
+        vc.placeId = placeId
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }

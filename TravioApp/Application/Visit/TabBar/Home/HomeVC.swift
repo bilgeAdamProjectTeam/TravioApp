@@ -151,6 +151,14 @@ extension HomeVC: HomeTableViewCellDelegate {
     
 }
 
+extension HomeVC: HomeDetailDelegate {
+    func placeIdTransfer(placeId: String, in cell: HomeTableViewCell) {
+        let vc = VisitsDetailVC()
+        vc.placeId = placeId
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
 extension HomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -170,6 +178,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as! HomeTableViewCell
         
         cell.delegate = self
+        cell.placeIdDelegate = self
         
         switch indexPath.section {
         case 0:
