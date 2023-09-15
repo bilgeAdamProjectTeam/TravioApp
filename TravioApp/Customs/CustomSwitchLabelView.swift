@@ -69,13 +69,11 @@ class CustomSwitchLabelView: UIView {
         switchLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(25.51)
             make.leading.equalToSuperview().offset(16)
-            //make.trailing.equalToSuperview().offset(-267)
             make.bottom.equalToSuperview().offset(-27.49)
         }
         
         toggleSwitch.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(21)
-            //make.leading.equalTo(switchLabel.snp.trailing).offset(200)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.equalToSuperview().offset(-22)
         }

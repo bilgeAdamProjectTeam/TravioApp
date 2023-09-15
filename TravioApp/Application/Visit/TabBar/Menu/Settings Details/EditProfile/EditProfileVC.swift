@@ -268,7 +268,6 @@ class EditProfileVC: UIViewController {
         })
 
         saveButton.snp.makeConstraints({make in
-            //make.top.equalTo(tableView.snp.bottom)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-18)

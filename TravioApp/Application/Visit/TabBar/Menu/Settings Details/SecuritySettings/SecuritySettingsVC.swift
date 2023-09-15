@@ -82,6 +82,11 @@ class SecuritySettingsVC: UIViewController {
         
         setupView()
         privacyArr = viewModel.privacyInfo
+        viewModel.addObserver()
+        viewModel.reloadClosure = {
+            self.tableView.reloadData()
+        }
+        viewModel.updatePermission()
 
         
     }
@@ -267,79 +272,78 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
     func switchValueChanged(isOn: Bool, sender:UISwitch) {
         
         let toggle = sender.tag
-        var photoStatus = PHPhotoLibrary.authorizationStatus()
-//        var cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-//        var locationStatus = CLLocationManager.authorizationStatus()
-       
-        if isOn {
+
+        switch toggle {
+        case 0:
             
-            if sender.tag == 0 {
-                //camera
-//                cameraStatus = .authorized
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+            if isOn{
                 AVCaptureDevice.requestAccess(for: .video) { granted in
                     if granted {
-                        // Kamera izni verildi
-                        print("Kamera izni verildi.")
                     } else {
-                        // Kullanıcı kamera iznini reddetti veya sınırladı
-                        print("Kullanıcı kamera iznini reddetti.")
-                    }
-                }
 
-            }else if sender.tag == 1{
-                //Photo library
-//                photoStatus = .authorized
-                
-            }else if sender.tag == 2{
-                //Location
-//                locationStatus = .authorizedAlways
-            }
-           
-        }
-        else{
-            if sender.tag == 0 {
-                //camera
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-            }else if sender.tag == 1{
-                //Photo library
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
-                
-            }else if sender.tag == 2{
-                //Location
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    }
                 }
             }
             
-        }
-    }
-    
-    
-    
-}
-
-
-extension SecuritySettingsVC: ChangePasswordDelegate{
-    
-    func passwordTransfer(newPassword: ConfirmAlias) {
-        //self.newPassword = newPassword
-        
-        switch newPassword.tag {
-        case 0:
-            self.newPassword = newPassword.text
         case 1:
-            self.confirmPassword = newPassword.text
+            
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+            if isOn{
+                PHPhotoLibrary.requestAuthorization { status in
+                    switch status {
+                    case .authorized: break
+                    case .denied, .restricted: break
+                    case .notDetermined: break
+                    @unknown default: break
+                    }
+                }
+            }
+            
+        case 2:
+            
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+            
+            if isOn{
+                let locationManager = CLLocationManager()
+                
+                locationManager.requestWhenInUseAuthorization()
+                locationManager.requestAlwaysAuthorization()
+            }
+            
         default:
             break
         }
         
-
     }
     
 }
-
+    
+    
+    extension SecuritySettingsVC: ChangePasswordDelegate{
+        
+        func passwordTransfer(newPassword: ConfirmAlias) {
+            
+            switch newPassword.tag {
+            case 0:
+                self.newPassword = newPassword.text
+            case 1:
+                self.confirmPassword = newPassword.text
+            default:
+                break
+            }
+            
+            
+        }
+        
+    }
+    
 

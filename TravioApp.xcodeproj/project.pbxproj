@@ -998,6 +998,7 @@
 				INFOPLIST_FILE = TravioApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Bu uygulama kameraya erişim istiyor.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Bu uygulama konumunuzu her zaman kullanmak istiyor.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bu uygulama kameraya erişim istiyor.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1030,6 +1031,7 @@
 				INFOPLIST_FILE = TravioApp/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Bu uygulama kameraya erişim istiyor.";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Bu uygulama konumunuzu her zaman kullanmak istiyor.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Bu uygulama kameraya erişim istiyor.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

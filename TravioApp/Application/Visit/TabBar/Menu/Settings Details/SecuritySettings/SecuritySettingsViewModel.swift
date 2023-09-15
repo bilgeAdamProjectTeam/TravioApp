@@ -7,39 +7,56 @@
 
 import Foundation
 
-//class SecuritySettingsViewModel{
-//
-//
-//    var cameraPermission = UserDefaults.standard.value(forKey: "CameraPermission") as? Bool
-//    var photoLibraryPermission = UserDefaults.standard.value(forKey: "PhotoLibraryPermission") as? Bool
-//    var locationServicesPermission = UserDefaults.standard.value(forKey: "LocationServicesPermission") as? Bool
-//
-//
-//
-//    var changePassWordInfo = [ChangePassword(labelName: "New Password"),
-//                              ChangePassword(labelName: "New Password Confirm")]
-//
-//    var privacyInfo = [PrivacyInfo(labelName: "Camera", switchCheck: cameraPermission ?? false),
-//                       PrivacyInfo(labelName: "Photo Library", switchCheck: photoLibraryPermission ?? false),
-//                       PrivacyInfo(labelName: "Location", switchCheck: locationServicesPermission ?? false)]
-//
-//}
 import Photos
 import AVFoundation
 import CoreLocation
 import Alamofire
+import UIKit
 
 class SecuritySettingsViewModel {
     
     var cameraPermission: Bool?
     var photoLibraryPermission: Bool?
     var locationServicesPermission: Bool?
+    var reloadClosure: (()->())?
     
     init() {
         
-        let photoStatus = PHPhotoLibrary.authorizationStatus()
+        }
+    
+    func addObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(updatePermission), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,name:UIApplication.didBecomeActiveNotification, object: nil)
+    }
+        
+    @objc func updatePermission(){
+        camPermission()
+        photoPermission()
+        locationPermission()
+        reloadClosure?()
+
+    }
+
+    func camPermission(){
+        
         let cameraStatus = AVCaptureDevice.authorizationStatus(for: .video)
-        let locationStatus = CLLocationManager.authorizationStatus()
+
+        switch cameraStatus {
+        case .authorized:
+            cameraPermission = true
+        case .denied, .restricted, .notDetermined:
+            cameraPermission = false
+        @unknown default:
+            cameraPermission = false
+            
+        }
+    }
+    
+    func photoPermission(){
+        let photoStatus = PHPhotoLibrary.authorizationStatus()
         
         switch photoStatus {
         case .authorized:
@@ -49,24 +66,21 @@ class SecuritySettingsViewModel {
         @unknown default:
             photoLibraryPermission = false
         }
-        
-        switch cameraStatus {
-        case .authorized:
-            cameraPermission = true
-        case .denied, .restricted, .notDetermined:
-            cameraPermission = false
-        @unknown default:
-            cameraPermission = false
-        }
-        
+    }
+    
+    func locationPermission(){
+        let locationStatus = CLLocationManager.authorizationStatus()
+
         switch locationStatus {
-        case .authorizedAlways:
+        case .authorizedAlways, .authorizedWhenInUse:
             locationServicesPermission = true
-        case .authorizedWhenInUse, .notDetermined, .restricted, .denied:
+        case .notDetermined, .restricted, .denied:
             locationServicesPermission = false
         @unknown default:
             locationServicesPermission = false
         }
+    
+        
     }
     
     var changePassWordInfo = [ChangePassword(labelName: "New Password",tag:0),

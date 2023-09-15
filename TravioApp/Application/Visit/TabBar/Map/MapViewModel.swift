@@ -23,7 +23,6 @@ class MapViewModel{
                 callback(places)
                 errorCallback(nil)
             case .failure(let error):
-                //print("Hata:", error.localizedDescription)
                 errorCallback(error)
             }
         }

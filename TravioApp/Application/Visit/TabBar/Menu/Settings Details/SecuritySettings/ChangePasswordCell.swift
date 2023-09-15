@@ -39,14 +39,12 @@ class ChangePasswordCell: UITableViewCell {
     func setupView(){
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        //passwordView.roundCorners(corners: [.topLeft,.topRight,.bottomLeft], radius: 16)
         contentView.addSubviews(passwordView)
         setupLayout()
     }
     
     func setupLayout(){
         passwordView.snp.makeConstraints({make in
-            //make.edges.equalToSuperview()
             make.top.equalToSuperview().offset(4)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)

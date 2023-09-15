@@ -131,20 +131,11 @@ class VisitsDetailVC: UIViewController {
         return button
     }()
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let ac = UIActivityIndicatorView()
-        ac.style =  UIActivityIndicatorView.Style.large//.whiteLarge
-        return ac
-    }()
-    
     @objc func buttonBackTapped() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func buttonAddPhotoTapped() {
-        
-    }
-    
+
     @objc func pageControlValueChanged(){
         let currentPage = pageControl.currentPage
         let indexPath = IndexPath(item: currentPage, section: 0)
@@ -164,17 +155,6 @@ class VisitsDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel.isLoadingDidChange = { [weak self] isLoading in
-            DispatchQueue.main.async {
-                if isLoading {
-                    self?.activityIndicator.startAnimating()
-                    print("indicator çalıştı")
-                } else {
-                    self?.activityIndicator.stopAnimating()
-                    print("indicator durdu")
-                }
-            }
-        }
         
         setupView()
         
@@ -194,11 +174,9 @@ class VisitsDetailVC: UIViewController {
         
         self.view.addSubviews(collectionView,
                               gradient,
-//                              buttonAddPhoto,
                               buttonBack,
                               pageControl,
                               scrollView,
-                              activityIndicator,
                               addVisit,
                               deleteVisit)
         
@@ -297,10 +275,7 @@ class VisitsDetailVC: UIViewController {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
         }
-        
-        activityIndicator.snp.makeConstraints { make in
-            make.center.equalTo(collectionView)
-        }
+
     }
  
     /// Description
@@ -343,13 +318,10 @@ class VisitsDetailVC: UIViewController {
         
         
         viewModel.checkVisitByID(placeId: placeId) { response in
-            print(self.placeId)
             if response.status == "success"{
                 self.deleteVisit.isHidden = false
-                print(response.message)
             }else if response.status == "error"{
                 self.addVisit.isHidden = false
-                print(response.message)
             }
             
         }
@@ -381,7 +353,6 @@ class VisitsDetailVC: UIViewController {
             cancelActionTitle: "Cancel",
             okCompletion: {
                 self.viewModel.deleteVisit(placeId: self.placeId) { result in
-                    print(result)
                     self.addVisit.isHidden = false
                     self.deleteVisit.isHidden = true
                     DispatchQueue.main.async {
