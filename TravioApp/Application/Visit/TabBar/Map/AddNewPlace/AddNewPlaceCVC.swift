@@ -16,6 +16,7 @@ class AddNewPlaceCVC: UICollectionViewCell {
         let img = UIImageView()
         img.backgroundColor = .clear
         img.contentMode = .scaleAspectFill
+        img.roundCorners(corners:[.topLeft,.topRight,.bottomLeft], radius: 16)
         return img
     }()
     
@@ -48,8 +49,8 @@ class AddNewPlaceCVC: UICollectionViewCell {
     override init(frame: CGRect) {
         super .init(frame: frame)
         
-        self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
-        self.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
+       //self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
+        //self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         
         setupViews()
     }
@@ -63,11 +64,13 @@ class AddNewPlaceCVC: UICollectionViewCell {
     
     func setupViews(){
         
-        self.backgroundColor = .white
+        self.contentView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         
-        self.clipsToBounds = true
+        self.contentView.backgroundColor = .white
         
-        self.addSubviews(images,
+        self.contentView.clipsToBounds = true
+        
+        self.contentView.addSubviews(images,
                          stackView)
         
         stackView.addArrangedSubviews(icon,

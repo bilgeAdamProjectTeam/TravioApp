@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import SnapKit
 
+
 class VisitsDetailVC: UIViewController {
     
     var viewModel = VisitsViewModel()
@@ -372,6 +373,7 @@ class VisitsDetailVC: UIViewController {
         
     }
     
+    
     @objc func deleteVisits(){
         CustomAlert.showAlert(
             in: self,
@@ -384,10 +386,9 @@ class VisitsDetailVC: UIViewController {
                     print(result)
                     self.addVisit.isHidden = false
                     self.deleteVisit.isHidden = true
-                    DispatchQueue.main.async {
-                        VisitsVC().MyCollection.reloadData()
-                    }
-                    
+//                    DispatchQueue.main.async {
+//                        VisitsVC().MyCollection.reloadData()
+//                    }
                 }
             }
         )

@@ -104,6 +104,10 @@ class SettingsVC: UIViewController {
         UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getUser()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

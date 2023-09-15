@@ -14,7 +14,11 @@ class VisitsVC: UIViewController {
     
     var viewModel = MapViewModel()
     let visitsViewModel = VisitsViewModel()
-    var visits: [Visit] = []
+    var visits: [Visit] = [] {
+        didSet {
+            self.MyCollection.reloadData()
+        }
+    }
 
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -42,7 +46,7 @@ class VisitsVC: UIViewController {
         
         return cv
     }()
-
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -52,13 +56,14 @@ class VisitsVC: UIViewController {
       
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 //        configureVM()
-//        
-//        DispatchQueue.main.async {
-//            self.MyCollection.reloadData()
-//        }
-//    }
+       
+            self.MyCollection.reloadData()
+        
+    }
+    
+    
     
     func configureVM() {
         visitsViewModel.getVisits(callback: { result in
@@ -105,6 +110,7 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         cell.configure(with: visit)
         
+        
         return cell
     }
 
@@ -120,6 +126,7 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         
         let vc = VisitsDetailVC()
         vc.placeId = placeId
+        
         
         self.navigationController?.pushViewController(vc, animated: true)
         

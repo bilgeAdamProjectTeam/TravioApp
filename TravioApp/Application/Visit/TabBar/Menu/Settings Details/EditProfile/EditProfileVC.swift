@@ -136,13 +136,11 @@ class EditProfileVC: UIViewController {
                               okActionTitle: "OK",
                               cancelActionTitle: "Cancel", okCompletion: {
             self.updateUser()
+            self.dismiss(animated: true)
         }, cancelCompletion: {
             self.dismiss(animated: true)
         })
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getProfileInf()
+        
     }
 
     override func viewDidLoad() {
@@ -304,26 +302,42 @@ class EditProfileVC: UIViewController {
 //
 //    }
     
+//    func updateUser() {
+//        dispatchGroup.enter()
+//        self.viewModel.uploadPhoto(image: self.imageData) { result in
+//            guard let result = result.first else { return }
+//            self.imageUrl = result
+//            self.dispatchGroup.leave()
+//        }
+//
+//        dispatchGroup.enter()
+//        guard let fullname = self.fullName.txtField.text,
+//              let email = self.mail.txtField.text,
+//              let url = self.imageUrl else { return }
+//
+//        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
+//        self.viewModel.updateUser(input: data) {
+//            self.dispatchGroup.leave()
+//        }
+//
+//        self.dispatchGroup.notify(queue: .main) {
+//            self.dismiss(animated: true)
+//        }
+//    }
+    
     func updateUser() {
-        self.dispatchGroup.enter()
+        
         self.viewModel.uploadPhoto(image: self.imageData) { result in
             guard let result = result.first else { return }
             self.imageUrl = result
-            self.dispatchGroup.leave()
-        }
-        
-        self.dispatchGroup.enter()
-        guard let fullname = self.fullName.txtField.text,
-              let email = self.mail.txtField.text,
-              let url = self.imageUrl else { return }
-        
-        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
-        self.viewModel.updateUser(input: data)
-        self.dispatchGroup.leave()
-        self.dismiss(animated: true)
-        
-        self.dispatchGroup.notify(queue: .main) {
-            print("tamamlandı")
+            
+            guard let fullname = self.fullName.txtField.text,
+                  let email = self.mail.txtField.text,
+                  let url = self.imageUrl else { return }
+            
+            let data = EditRequest(full_name: fullname, email: email, pp_url: url)
+            
+            self.viewModel.updateUser(input: data)
         }
     }
     
@@ -346,7 +360,9 @@ extension EditProfileVC: UIImagePickerControllerDelegate, UINavigationController
                
                let imageToData = image.jpegData(compressionQuality: 0.5)
                self.imageData.append(imageToData)
-               self.userPhoto.image = image
+               DispatchQueue.main.async {
+                   self.userPhoto.image = image
+               }
                profileImage = image
            }
         
