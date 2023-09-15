@@ -55,18 +55,9 @@ class CustomTextField: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addShadow() {
-        layer.shadowColor = Color.darkGray.color.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 0)
-        layer.shadowOpacity = 0.15
-        layer.shadowRadius = 4
-        clipsToBounds = false
-        layer.cornerRadius = 16
-        layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMinYCorner]
-    }
     
     func setupViews() {
-        addShadow()
+        roundCornersWithShadow([.bottomLeft,.topLeft,.topRight], radius: 16)
         addSubview(label)
         addSubview(txtField)
         setupLayouts()
