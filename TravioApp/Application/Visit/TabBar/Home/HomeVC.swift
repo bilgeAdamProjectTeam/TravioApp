@@ -183,7 +183,7 @@ extension HomeVC: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             let data = popularPlacesArray
-            cell.configureTableViewCell(with: data, title: "Populer Places", placeType: .popularPlaces)
+            cell.configureTableViewCell(with: data, title: "Popular Places", placeType: .popularPlaces)
          
         case 1:
             let data = lastPlacesArray
