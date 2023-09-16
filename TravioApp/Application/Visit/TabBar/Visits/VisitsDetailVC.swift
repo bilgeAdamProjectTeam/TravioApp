@@ -445,6 +445,36 @@ extension VisitsDetailVC:UICollectionViewDataSource{
 
 extension VisitsDetailVC: MKMapViewDelegate {
 
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let identifier = "locationMarker"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomMapPinView
+        
+        if annotationView == nil {
+            annotationView = CustomMapPinView(annotation: annotation, reuseIdentifier: identifier) // Özel pin oluşturma
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if let pinImage = UIImage(named: "annotation") {
+            let size = CGSize(width: 32, height: 42)
+            
+            UIGraphicsBeginImageContext(size)
+            pinImage.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView?.image = resizedImage
+        }
+        return annotationView
+        
+    }
+
+    
 }
 
 

@@ -144,6 +144,7 @@
 		E1944FB72AB31D0000729C17 /* HelpsAndSupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FB62AB31D0000729C17 /* HelpsAndSupportViewModel.swift */; };
 		E1944FBD2AB3437700729C17 /* TermOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FBC2AB3437700729C17 /* TermOfUseVC.swift */; };
 		E1944FBF2AB3438A00729C17 /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FBE2AB3438A00729C17 /* AboutUsVC.swift */; };
+		E1944FC12AB5E3F900729C17 /* CustomMapPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1944FC02AB5E3F900729C17 /* CustomMapPinView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,6 +242,7 @@
 		E1944FB62AB31D0000729C17 /* HelpsAndSupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpsAndSupportViewModel.swift; sourceTree = "<group>"; };
 		E1944FBC2AB3437700729C17 /* TermOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermOfUseVC.swift; sourceTree = "<group>"; };
 		E1944FBE2AB3438A00729C17 /* AboutUsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsVC.swift; sourceTree = "<group>"; };
+		E1944FC02AB5E3F900729C17 /* CustomMapPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMapPinView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -336,6 +338,7 @@
 				E160F9AE2AA6C05500515F40 /* CustomSwitchLabelView.swift */,
 				E1902E5A2AA9B55E0055305D /* CustomImageLabelView.swift */,
 				E1902E602AAA5C960055305D /* CustomAlert.swift */,
+				E1944FC02AB5E3F900729C17 /* CustomMapPinView.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E160F9B12AA7080D00515F40 /* SecuritySettingsModel.swift in Sources */,
+				E1944FC12AB5E3F900729C17 /* CustomMapPinView.swift in Sources */,
 				E109777B2A9D39D30058DA0B /* MyAPIRouter.swift in Sources */,
 				E1902E632AAB0D6A0055305D /* LaunchScreenVC.swift in Sources */,
 				E10977B32A9D4C910058DA0B /* VisitsModel.swift in Sources */,

@@ -251,10 +251,10 @@ extension MapVC: MKMapViewDelegate{
         }
         
         let identifier = "locationMarker"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomMapPinView
         
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = CustomMapPinView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
         } else {
             annotationView?.annotation = annotation
