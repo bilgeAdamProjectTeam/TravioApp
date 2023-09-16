@@ -22,7 +22,7 @@ class SignUpViewModel {
                case .success:
                    callback(nil)
                case .failure(let error):
-                   print("Hata:", error.localizedDescription)
+                   callback(error)
                }
            })
            

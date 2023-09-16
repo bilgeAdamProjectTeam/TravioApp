@@ -105,11 +105,13 @@ class HomeVC: UIViewController {
     func getServiceData() {
         
         dispatchGroup.enter()
-        homeViewModel.getPopulerPlaces(limit: 5) { result in
-            self.popularPlacesArray = result.data.places
-            self.dispatchGroup.leave()
-        } errorCallback: {error in
-            if let error = error {
+        homeViewModel.getPopulerPlaces(limit: 5) { result, error in
+            if let result = result{
+                self.popularPlacesArray = result.data.places
+                self.dispatchGroup.leave()
+            }
+            
+            if let error = error{
                 CustomAlert.showAlert(
                     in: self,
                     title: "Error!",
@@ -117,15 +119,18 @@ class HomeVC: UIViewController {
                     okActionTitle: "Ok"
                 )
             }
+
         }
         
         
         dispatchGroup.enter()
-        homeViewModel.getLastPlaces(limit: 5) { result in
-            self.lastPlacesArray = result.data.places
-            self.dispatchGroup.leave()
-        } errorCallback: {error in
-            if let error = error {
+        homeViewModel.getLastPlaces(limit: 5) { result, error in
+            if let result = result{
+                self.lastPlacesArray = result.data.places
+                self.dispatchGroup.leave()
+            }
+            
+            if let error = error{
                 CustomAlert.showAlert(
                     in: self,
                     title: "Error!",

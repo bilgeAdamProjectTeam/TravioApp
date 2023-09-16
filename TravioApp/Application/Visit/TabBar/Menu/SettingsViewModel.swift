@@ -18,16 +18,15 @@ class SettingsViewModel{
                      Settings(icon: "termsOfUse", labelName: "Terms of Use")]
         
     
-    func getUsername(callback: @escaping (UserResponse) -> Void, errorCalback: @escaping(Error?) -> Void){
+    func getUsername(callback: @escaping (UserResponse?,Error?) -> Void){
 
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getProfile){ (result: Result<UserResponse, Error>) in
             switch result {
             case .success(let data):
-                callback(data)
-                errorCalback(nil)
+                callback(data,nil)
             case .failure(let error):
-                errorCalback(error)
+                callback(nil,error)
             }
         }
     }

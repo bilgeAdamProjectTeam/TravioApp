@@ -12,15 +12,15 @@ class MyAddedPlacesViewModel{
     
     var myAddedPlaces: HomeResponse?
     
-    func getMyAddedPlaces(callback: @escaping (HomeResponse) -> Void){
+    func getMyAddedPlaces(callback: @escaping (HomeResponse?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllPlacesForUser, callback: { (result: Result<HomeResponse, Error>) in
             switch result {
             case .success(let myAddedPlaces):
                 self.myAddedPlaces = myAddedPlaces
-                callback(myAddedPlaces)
+                callback(myAddedPlaces,nil)
             case .failure(let error):
-                print(error.localizedDescription)
+                callback(nil,error)
             }
         })
         

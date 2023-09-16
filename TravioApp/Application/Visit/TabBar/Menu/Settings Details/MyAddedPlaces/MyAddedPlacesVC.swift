@@ -98,12 +98,22 @@ class MyAddedPlacesVC: UIViewController {
     
     func getMyAddedPlaces(){
         
-        viewModel.getMyAddedPlaces(callback: { [self] result in
-            guard let places = viewModel.myAddedPlaces?.data.places else { return }
-            self.placesData = places
-            self.sortServiceData()
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
+        viewModel.getMyAddedPlaces(callback: { [self] result, error in
+            if let result = result {
+                guard let places = viewModel.myAddedPlaces?.data.places else { return }
+                self.placesData = places
+                self.sortServiceData()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+            
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
+                
             }
         })
     }

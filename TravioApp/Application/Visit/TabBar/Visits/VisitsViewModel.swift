@@ -18,7 +18,7 @@ class VisitsViewModel {
     var places: Place?
     
     
-    func getVisits(callback: @escaping (VisitResponse) -> Void){
+    func getVisits(callback: @escaping (VisitResponse?,Error?) -> Void){
         
         let params = ["page":1,"limit":50]
         
@@ -27,15 +27,15 @@ class VisitsViewModel {
             switch result {
             case .success(let visits):
                 self.visits = visits
-                callback(visits)
+                callback(visits,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         })
     }
     
     
-    func getVisitImage(placeId:String, callback: @escaping (ImageResponse) -> Void) {
+    func getVisitImage(placeId:String, callback: @escaping (ImageResponse?,Error?) -> Void) {
         
         isLoadingDidChange?(true)
         
@@ -44,60 +44,60 @@ class VisitsViewModel {
             case .success(let images):
                 self.images = images
                 self.isLoadingDidChange?(false)
-                callback(images)
+                callback(images,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         })
     }
     
-    func getPlaceById(placeId:String, callback: @escaping(PlaceResponseNew) -> Void){
+    func getPlaceById(placeId:String, callback: @escaping(PlaceResponseNew?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getPlaceByID(placeId: placeId), callback:{(result: Result<PlaceResponseNew, Error>) in
             switch result {
             case .success(let data):
-                callback(data)
+                callback(data,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         })
     }
     
-    func postVisit(parameters: Parameters, callback: @escaping(VisitPostResponse) -> Void){
+    func postVisit(parameters: Parameters, callback: @escaping(VisitPostResponse?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postVisit(parameters: parameters), callback:{(result: Result<VisitPostResponse, Error>) in
             switch result {
             case .success(let data):
-                callback(data)
+                callback(data,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+               callback(nil,error)
             }
             
         })
     }
     
-    func deleteVisit(placeId:String, callback: @escaping(VisitPostResponse) -> Void){
+    func deleteVisit(placeId:String, callback: @escaping(VisitPostResponse?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.deleteVisitByID(placeId: placeId), callback:{(result: Result<VisitPostResponse, Error>) in
             switch result {
             case .success(let data):
-                callback(data)
+                callback(data,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         })
         
     }
     
     
-    func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse) -> Void){
+    func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getCheckVisit(placeId: placeId), callback: {(result: Result<VisitPostResponse, Error>) in
             switch result {
             case .success(let response):
-                callback(response)
+                callback(response,nil)
             case .failure(let error):
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
             
             

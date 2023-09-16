@@ -66,9 +66,19 @@ class VisitsVC: UIViewController {
     
     
     func configureVM() {
-        visitsViewModel.getVisits(callback: { result in
-            self.visits.append(contentsOf: result.data.visits)
-            self.MyCollection.reloadData()
+        visitsViewModel.getVisits(callback: { result, error in
+            if let result = result{
+                self.visits.append(contentsOf: result.data.visits)
+                self.MyCollection.reloadData()
+            }
+            
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
+            }
+            
         })
     }
     

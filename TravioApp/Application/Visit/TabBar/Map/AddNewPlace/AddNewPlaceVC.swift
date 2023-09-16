@@ -221,28 +221,29 @@ class AddNewPlaceVC: UIViewController {
               let longitude = longitude else { return }
         
         
-        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
-            
-            guard let url = urls.first else { return }
-            
-            let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
-            
-            viewModel.postPlace( params: params) { error in
-                if let error = error {
-                    CustomAlert.showAlert(
-                        in: self,
-                        title: "Error!",
-                        message: error.localizedDescription,
-                        okActionTitle: "Ok"
-                    )
-                }else{
-                    self.dismiss(animated: true, completion: {
-                        self.completionHandler?()  // completionHandler'ı çağır
-                    })
-                }
+        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls, error in
+            if let urls = urls{
+                guard let url = urls.first else { return }
                 
+                let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
+                
+                viewModel.postPlace( params: params) { error in
+                    if let error = error {
+                        CustomAlert.showAlert(
+                            in: self,
+                            title: "Error!",
+                            message: error.localizedDescription,
+                            okActionTitle: "Ok"
+                        )
+                    }else{
+                        self.dismiss(animated: true, completion: {
+                            self.completionHandler?()  // completionHandler'ı çağır
+                        })
+                    }
+                    
+                }
             }
-        }, errorCallback: {error in
+            
             if let error = error {
                 CustomAlert.showAlert(
                     in: self,

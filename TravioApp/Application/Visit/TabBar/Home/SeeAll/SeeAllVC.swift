@@ -149,14 +149,16 @@ class SeeAllVC: UIViewController {
         
         switch placeType {
         case .popularPlaces:
-            viewModel.getPopulerPlaces(limit: 20) { result in
-                self.placesData = result.data.places
-                self.sortServiceData()
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+            viewModel.getPopulerPlaces(limit: 20) { result, error in
+                if let result = result{
+                    self.placesData = result.data.places
+                    self.sortServiceData()
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                 }
-            } errorCallback: {error in
-                if let error = error {
+                
+                if let error = error{
                     CustomAlert.showAlert(
                         in: self,
                         title: "Error!",
@@ -166,13 +168,14 @@ class SeeAllVC: UIViewController {
                 }
             }
         case .lastPlaces:
-            viewModel.getLastPlaces(limit: 20) { result in
-                self.placesData = result.data.places
-                self.sortServiceData()
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+            viewModel.getLastPlaces(limit: 20) { result, error in
+                if let result = result{
+                    self.placesData = result.data.places
+                    self.sortServiceData()
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                 }
-            } errorCallback: {error in
                 if let error = error {
                     CustomAlert.showAlert(
                         in: self,

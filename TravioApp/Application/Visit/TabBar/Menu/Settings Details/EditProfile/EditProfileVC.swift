@@ -236,26 +236,27 @@ class EditProfileVC: UIViewController {
     
     func getProfileInf() {
         
-        viewModel.getUser { [self] data in
-            
-            if let imageURL = URL(string: data.pp_url) {
-                self.userPhoto.kf.setImage(with: imageURL)
+        viewModel.getUser { [self] data, error in
+            if let data = data{
+                if let imageURL = URL(string: data.pp_url) {
+                    self.userPhoto.kf.setImage(with: imageURL)
+                }
+                
+                self.userName.text = data.full_name
+                self.birthday.label.text = data.created_at
+                self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
+                self.userRole.label.text = data.role
+                self.fullName.placeholderName = data.full_name
+                self.mail.placeholderName = data.email
             }
             
-            self.userName.text = data.full_name
-            self.birthday.label.text = data.created_at
-            self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
-            self.userRole.label.text = data.role
-            self.fullName.placeholderName = data.full_name
-            self.mail.placeholderName = data.email
-        } errorCallback: { error in
-            
-            if let error = error {
+            if let error = error{
                 CustomAlert.showAlert(
                     in: self,
                     title: "Error!",
                     message: error.localizedDescription,
                     okActionTitle: "Ok")
+                
             }
         }
     }
@@ -327,17 +328,33 @@ class EditProfileVC: UIViewController {
     
     func updateUser() {
         
-        self.viewModel.uploadPhoto(image: self.imageData) { result in
-            guard let result = result.first else { return }
-            self.imageUrl = result
-            
-            guard let fullname = self.fullName.txtField.text,
-                  let email = self.mail.txtField.text,
-                  let url = self.imageUrl else { return }
-            
-            let data = EditRequest(full_name: fullname, email: email, pp_url: url)
-            
-            self.viewModel.updateUser(input: data)
+        self.viewModel.uploadPhoto(image: self.imageData) { result, error in
+            if let result = result{
+                guard let result = result.first else { return }
+                self.imageUrl = result
+                
+                guard let fullname = self.fullName.txtField.text,
+                      let email = self.mail.txtField.text,
+                      let url = self.imageUrl else { return }
+                
+                let data = EditRequest(full_name: fullname, email: email, pp_url: url)
+                
+                self.viewModel.updateUser(input: data, callback: {error in
+                    if let error = error{
+                        CustomAlert.showAlert(in: self,
+                                              title: "Error!",
+                                              message: error.localizedDescription,
+                                              okActionTitle: "Ok")
+                    }
+                })
+            }
+
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
+            }
         }
     }
     

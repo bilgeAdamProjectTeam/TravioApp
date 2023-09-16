@@ -114,6 +114,11 @@ class SecuritySettingsVC: UIViewController {
                                 message: error.localizedDescription,
                                 okActionTitle: "Ok"
                             )
+                        }else{
+                            CustomAlert.showAlert(in: self,
+                                                  title: "Success",
+                                                  message: "Şifre başarıyla değiştirildi",
+                                                  okActionTitle: "Ok")
                         }
                     })
                     

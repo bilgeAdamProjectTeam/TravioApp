@@ -15,22 +15,21 @@ class EditProfileViewModel{
     var url: [String] = []
     var image: [UIImage] = []
     
-    func getUser(callback: @escaping (UserReturn) -> Void, errorCallback: @escaping(Error?) -> Void){
+    func getUser(callback: @escaping (UserReturn?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getProfile){ (result: Result<UserReturn, Error>) in
             switch result {
             case .success(let data):
                 self.userProfile = data
-                callback(data)
-                errorCallback(nil)
+                callback(data,nil)
             case .failure(let error):
-                errorCallback(error)
+                callback(nil,error)
             }
         }
     }
     
     
-    func updateUser(input: EditRequest) /*, callback: @escaping (Error?) -> Void)*/{
+    func updateUser(input: EditRequest, callback: @escaping (Error?) -> Void){
         
         let params = ["full_name": input.full_name,
                       "email": input.email,
@@ -39,26 +38,22 @@ class EditProfileViewModel{
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.putProfile(parameters: params), callback: {(result: Result<EditResponse, Error>) in
             switch result {
             case .success:
-                //callback(nil)
-                print("success")
+                callback(nil)
             case .failure(let error):
-                //callback(error)
-                print(error.localizedDescription)
+                callback(error)
             }
         })
     }
     
-    func uploadPhoto(image: [Data?], callback: @escaping ([String]) -> Void) /*/, errorCallback: @escaping(Error?) -> Void)*/ {
+    func uploadPhoto(image: [Data?], callback: @escaping ([String]?,Error?) -> Void) /*/, errorCallback: @escaping(Error?) -> Void)*/ {
         
         NetworkingHelper.shared.uploadImage(route: MyAPIRouter.postUpload(image: image)) {  (result: Result<ProfileUploadResponse, Error>) in
             switch result {
             case .success(let data):
                 self.url = data.urls
-                callback(self.url)
-                //errorCallback(nil)
+                callback(self.url, nil)
             case .failure(let error):
-                //errorCallback(error)
-                print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         }
         

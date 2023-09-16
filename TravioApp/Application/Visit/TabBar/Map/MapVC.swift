@@ -70,11 +70,12 @@ class MapVC: UIViewController {
     
         setupView()
         
-        viewModel.getAllPlace(callback: { result in
-            self.allPlaces = result.data?.places
-            self.collectionView.reloadData()
-            self.addPinsToMap()
-        }, errorCallback: {error in
+        viewModel.getAllPlace(callback: { result, error in
+            if let result = result{
+                self.allPlaces = result.data?.places
+                self.collectionView.reloadData()
+                self.addPinsToMap()
+            }
             if let error = error {
                 CustomAlert.showAlert(
                     in: self,

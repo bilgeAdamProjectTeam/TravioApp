@@ -306,37 +306,64 @@ class VisitsDetailVC: UIViewController {
 
     func getTravelDetail() {
         
-        viewModel.getVisitImage(placeId: placeId) { result in
-            guard let images = self.viewModel.images else { return }
-            self.visitImages = images.data.images
-            self.collectionView.reloadData()
+        viewModel.getVisitImage(placeId: placeId) { result, error in
+            if let result = result{
+                guard let images = self.viewModel.images else { return }
+                self.visitImages = images.data.images
+                self.collectionView.reloadData()
+            }
+            
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
+            }
+
         }
-        
-        
     }
     
     func getDetail(){
         
         
-        viewModel.checkVisitByID(placeId: placeId) { response in
-            if response.status == "success"{
-                self.deleteVisit.isHidden = false
-            }else if response.status == "error"{
-                self.addVisit.isHidden = false
+        viewModel.checkVisitByID(placeId: placeId) { response, error in
+            if let response = response{
+                if response.status == "success"{
+                    self.deleteVisit.isHidden = false
+                }else if response.status == "error"{
+                    self.addVisit.isHidden = false
+                }
+            }
+            
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
             }
             
         }
         
         
-        viewModel.getPlaceById(placeId: placeId) { result in
+        viewModel.getPlaceById(placeId: placeId) { result, error in
             
-            let result = result.data.place
+            if let result = result{
+                
+                let result = result.data.place
+                
+                self.titleLabel.text = result.title
+                self.dateFormatter(visitDate: result.created_at, label: self.dateLabel)
+                self.descriptionLbl.text = result.description
+                self.labelAddedBy.text = "Added by \(result.creator)"
+                self.setMapView(latitude: result.latitude, longitude: result.longitude, title: result.title)
+            }
             
-            self.titleLabel.text = result.title
-            self.dateFormatter(visitDate: result.created_at, label: self.dateLabel)
-            self.descriptionLbl.text = result.description
-            self.labelAddedBy.text = "Added by \(result.creator)"
-            self.setMapView(latitude: result.latitude, longitude: result.longitude, title: result.title)
+            if let error = error{
+                CustomAlert.showAlert(in: self,
+                                      title: "Error!",
+                                      message: error.localizedDescription,
+                                      okActionTitle: "Ok")
+            }
             
         }
         
@@ -350,22 +377,29 @@ class VisitsDetailVC: UIViewController {
         CustomAlert.showAlert(
             in: self,
             title: "Alert",
-            message: "Delete Visit",
+            message: "Delete Visit?",
             okActionTitle: "Ok",
             cancelActionTitle: "Cancel",
             okCompletion: {
-                self.viewModel.deleteVisit(placeId: self.placeId) { result in
-                    self.addVisit.isHidden = false
-                    self.deleteVisit.isHidden = true
-//                    DispatchQueue.main.async {
-//                        VisitsVC().MyCollection.reloadData()
-//                    }
+                self.viewModel.deleteVisit(placeId: self.placeId) { result, error in
+                    if let result = result{
+                        self.addVisit.isHidden = false
+                        self.deleteVisit.isHidden = true
+                        //                    DispatchQueue.main.async {
+                        //                        VisitsVC().MyCollection.reloadData()
+                        //                    }
+                    }
+                    
+                    if let error = error{
+                        CustomAlert.showAlert(in: self,
+                                              title: "Error!",
+                                              message: error.localizedDescription,
+                                              okActionTitle: "Ok")
+                    }
+                    
                 }
             }
         )
-        
-
-
     }
     
     @objc func addVisits(){
@@ -385,11 +419,20 @@ class VisitsDetailVC: UIViewController {
 
                 let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
                 
-                self.viewModel.postVisit(parameters: param) { result in
-                    self.addVisit.isHidden = true
-                    self.deleteVisit.isHidden = false
-                    DispatchQueue.main.async {
-                        VisitsVC().MyCollection.reloadData()
+                self.viewModel.postVisit(parameters: param) { result, error in
+                    if let result = result{
+                        self.addVisit.isHidden = true
+                        self.deleteVisit.isHidden = false
+                        DispatchQueue.main.async {
+                            VisitsVC().MyCollection.reloadData()
+                        }
+                    }
+                    
+                    if let error{
+                        CustomAlert.showAlert(in: self,
+                                              title: "Error!",
+                                              message: error.localizedDescription,
+                                              okActionTitle: "Ok")
                     }
                 }
             }

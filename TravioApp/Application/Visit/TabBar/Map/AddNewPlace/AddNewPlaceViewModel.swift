@@ -56,17 +56,15 @@ class AddNewPlaceViewModel {
     }
     
     
-    func uploadPhotoAPI(image: [Data?],callback: @escaping ([String]) -> Void, errorCallback: @escaping(Error?) -> Void){
+    func uploadPhotoAPI(image: [Data?],callback: @escaping ([String]?,Error?) -> Void){
         
         NetworkingHelper.shared.uploadImage(route: MyAPIRouter.postUpload(image: image)) {  (result: Result<UploadResponse, Error>) in
             switch result {
             case .success(let data):
                 self.urls = data.urls
-                callback(data.urls)
-                errorCallback(nil)
+                callback(data.urls,nil)
             case .failure(let error):
-                errorCallback(error)
-                //print("Hata:", error.localizedDescription)
+                callback(nil,error)
             }
         }
         
