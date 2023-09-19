@@ -426,6 +426,3 @@ extension VisitsDetailVC:UICollectionViewDataSource{
 extension VisitsDetailVC: MKMapViewDelegate {
 
 }
-
-
-

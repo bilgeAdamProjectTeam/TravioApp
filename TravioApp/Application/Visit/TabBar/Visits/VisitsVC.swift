@@ -13,7 +13,7 @@ import UIKit
 
 class VisitsVC: UIViewController {
     
-    let visitsViewModel = VisitsViewModel()
+    let viewModel = VisitsViewModel()
 
     private lazy var retangle: UIView = {
         let view = CustomView()
@@ -81,7 +81,7 @@ class VisitsVC: UIViewController {
     }
     
     func configureVM() {
-        visitsViewModel.getVisits {
+        viewModel.getVisits {
             DispatchQueue.main.async {
                 self.MyCollection.reloadData()
             }
@@ -92,7 +92,7 @@ class VisitsVC: UIViewController {
 extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        guard let visits = visitsViewModel.visits else { return 0 }
+        guard let visits = viewModel.visits else { return 0 }
         return visits.count
         
     }
@@ -100,7 +100,7 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? VisitsCVC else { return UICollectionViewCell() }
        
-        guard let visits = visitsViewModel.visits else { return UICollectionViewCell() }
+        guard let visits = viewModel.visits else { return UICollectionViewCell() }
         let visit = visits[indexPath.item]
         
         cell.configure(with: visit)
@@ -114,7 +114,7 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let visits = visitsViewModel.visits else { return }
+        guard let visits = viewModel.visits else { return }
         let visitData = visits[indexPath.row]
         let placeId = visitData.place_id
         

@@ -13,7 +13,6 @@ class VisitsViewModel {
     var visits: [Visit]?
     var placeId: String?
     var images: ImageResponse?
-    var isLoading: Bool?
     var isLoadingDidChange: ((Bool) -> Void)?
     var places: Place?
     

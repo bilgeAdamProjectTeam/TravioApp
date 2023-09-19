@@ -10,6 +10,9 @@ import SnapKit
 import Alamofire
 import Photos
 
+protocol AddNewPlaceDelegate: AnyObject {
+    func didAddNewPlace()
+}
 
 class AddNewPlaceVC: UIViewController {
     
@@ -20,7 +23,7 @@ class AddNewPlaceVC: UIViewController {
     var viewModel = AddNewPlaceViewModel()
     var longitude:Double?
     var latitude:Double?
-    var completionHandler: (() -> Void)?
+    weak var delegate: AddNewPlaceDelegate?
     
     private lazy var rectangle: UIView = {
         let line = UIView()
@@ -35,7 +38,6 @@ class AddNewPlaceVC: UIViewController {
         view.placeholderName = "Please write a place name"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "Place Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-        
         return view
     }()
     
@@ -53,8 +55,6 @@ class AddNewPlaceVC: UIViewController {
         view.placeholderName = "Paris, France"
         view.txtField.text = ""
         view.txtField.attributedPlaceholder = NSAttributedString(string: "France, Paris", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
-        
-        
         return view
     }()
     
@@ -66,7 +66,6 @@ class AddNewPlaceVC: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
-        
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -87,7 +86,6 @@ class AddNewPlaceVC: UIViewController {
         btn.labelText = "Add Place"
         btn.backgroundColor = Color.turquoise.color
         btn.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
-        
         return btn
     }()
     
@@ -101,6 +99,7 @@ class AddNewPlaceVC: UIViewController {
             cancelActionTitle: "Cancel",
             okCompletion: { [self] in
                 postNewPlace()
+                
             }
         )
     }
@@ -158,7 +157,6 @@ class AddNewPlaceVC: UIViewController {
                          addPlaceBtn,collectionView)
         
         setupLayout()
-        
     }
     
     func setupLayout(){
@@ -233,10 +231,9 @@ class AddNewPlaceVC: UIViewController {
                         message: error.localizedDescription,
                         okActionTitle: "Ok"
                     )
-                }else{
-                    self.dismiss(animated: true, completion: {
-                        self.completionHandler?()  // completionHandler'ı çağır
-                    })
+                } else {
+                    self.delegate?.didAddNewPlace()
+                    self.dismiss(animated: true)
                 }
                 
             }
@@ -260,16 +257,13 @@ extension AddNewPlaceVC:UICollectionViewDelegateFlowLayout{
         return size
     }
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         selectedIndexPath = indexPath // Seçilen hücrenin indeksini kaydedin
         
         openGallery() // fotoğraf galerisi açma izni
     }
-    
 }
-
 
 extension AddNewPlaceVC:UICollectionViewDataSource{
     
@@ -277,8 +271,6 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? AddNewPlaceCVC else { return UICollectionViewCell() }
@@ -292,11 +284,7 @@ extension AddNewPlaceVC:UICollectionViewDataSource{
         
         return cell
     }
-    
-
 }
-
-
 
 extension AddNewPlaceVC: UIImagePickerControllerDelegate{
     
@@ -316,14 +304,9 @@ extension AddNewPlaceVC: UIImagePickerControllerDelegate{
         
         selectedIndexPath = nil
     }
-    
 }
 
-
-
-extension AddNewPlaceVC: UINavigationControllerDelegate{
-    
-    
+extension AddNewPlaceVC: UINavigationControllerDelegate {
 }
 
 
