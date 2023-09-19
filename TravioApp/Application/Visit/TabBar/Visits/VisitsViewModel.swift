@@ -10,7 +10,7 @@ import Alamofire
 
 class VisitsViewModel {
     
-    var visits: VisitResponse?
+    var visits: [Visit]?
     var placeId: String?
     var images: ImageResponse?
     var isLoading: Bool?
@@ -18,7 +18,7 @@ class VisitsViewModel {
     var places: Place?
     
     
-    func getVisits(callback: @escaping (VisitResponse) -> Void){
+    func getVisits(callback: @escaping () -> Void){
         
         let params = ["page":1,"limit":50]
         
@@ -26,8 +26,8 @@ class VisitsViewModel {
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getVisits(parameters: params), callback: { (result: Result<VisitResponse, Error>) in
             switch result {
             case .success(let visits):
-                self.visits = visits
-                callback(visits)
+                self.visits = visits.data.visits
+                callback()
             case .failure(let error):
                 print("Hata:", error.localizedDescription)
             }
@@ -86,9 +86,7 @@ class VisitsViewModel {
                 print("Hata:", error.localizedDescription)
             }
         })
-        
     }
-    
     
     func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse) -> Void){
         
@@ -99,11 +97,6 @@ class VisitsViewModel {
             case .failure(let error):
                 print("Hata:", error.localizedDescription)
             }
-            
-            
         })
-        
     }
-    
-    
 }

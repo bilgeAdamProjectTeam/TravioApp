@@ -101,8 +101,6 @@ class AddNewPlaceVC: UIViewController {
             cancelActionTitle: "Cancel",
             okCompletion: { [self] in
                 postNewPlace()
-                
-                
             }
         )
     }

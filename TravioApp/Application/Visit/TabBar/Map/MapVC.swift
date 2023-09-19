@@ -149,7 +149,6 @@ class MapVC: UIViewController {
                 vc.placeCoordinate = self.address
                 vc.longitude = coordinate.longitude
                 vc.latitude = coordinate.latitude
-
                 
                 vc.completionHandler = {
                     self.mapView.addAnnotation(annotation) // Pin ekleme
@@ -293,4 +292,5 @@ extension MapVC: MKMapViewDelegate{
 
     
 }
+
 

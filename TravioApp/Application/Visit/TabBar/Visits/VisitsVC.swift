@@ -10,19 +10,13 @@
 import SnapKit
 import UIKit
 
+
 class VisitsVC: UIViewController {
     
-    var viewModel = MapViewModel()
     let visitsViewModel = VisitsViewModel()
-    var visits: [Visit] = [] {
-        didSet {
-            self.MyCollection.reloadData()
-        }
-    }
 
     private lazy var retangle: UIView = {
         let view = CustomView()
-        
         return view
     }()
     
@@ -43,9 +37,13 @@ class VisitsVC: UIViewController {
         cv.dataSource = self
         cv.register(VisitsCVC.self, forCellWithReuseIdentifier: "CustomCell")
         cv.backgroundColor = Color.lightGray.color
-        
         return cv
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        configureVM()
+    }
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,22 +52,6 @@ class VisitsVC: UIViewController {
         
         configureVM()
       
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-//        configureVM()
-       
-            self.MyCollection.reloadData()
-        
-    }
-    
-    
-    
-    func configureVM() {
-        visitsViewModel.getVisits(callback: { result in
-            self.visits.append(contentsOf: result.data.visits)
-            self.MyCollection.reloadData()
-        })
     }
     
     func setupViews() {
@@ -97,19 +79,31 @@ class VisitsVC: UIViewController {
             make.top.equalToSuperview()
         }
     }
+    
+    func configureVM() {
+        visitsViewModel.getVisits {
+            DispatchQueue.main.async {
+                self.MyCollection.reloadData()
+            }
+        }
+    }
 }
 
 extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        guard let visits = visitsViewModel.visits else { return 0 }
         return visits.count
+        
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? VisitsCVC else { return UICollectionViewCell() }
+       
+        guard let visits = visitsViewModel.visits else { return UICollectionViewCell() }
         let visit = visits[indexPath.item]
         
         cell.configure(with: visit)
-        
         
         return cell
     }
@@ -120,14 +114,12 @@ extension VisitsVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let visits = visitsViewModel.visits?.data else { return }
-        var visitData = visits.visits[indexPath.row]
-        var placeId = visitData.place_id
+        guard let visits = visitsViewModel.visits else { return }
+        let visitData = visits[indexPath.row]
+        let placeId = visitData.place_id
         
         let vc = VisitsDetailVC()
         vc.placeId = placeId
-        
-        
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

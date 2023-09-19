@@ -11,6 +11,7 @@ import MapKit
 import SnapKit
 
 
+
 class VisitsDetailVC: UIViewController {
     
     var viewModel = VisitsViewModel()
@@ -305,28 +306,22 @@ class VisitsDetailVC: UIViewController {
     }
 
     func getTravelDetail() {
-        
         viewModel.getVisitImage(placeId: placeId) { result in
             guard let images = self.viewModel.images else { return }
             self.visitImages = images.data.images
             self.collectionView.reloadData()
         }
-        
-        
     }
     
     func getDetail(){
         
-        
         viewModel.checkVisitByID(placeId: placeId) { response in
             if response.status == "success"{
                 self.deleteVisit.isHidden = false
-            }else if response.status == "error"{
+            } else if response.status == "error"{
                 self.addVisit.isHidden = false
             }
-            
         }
-        
         
         viewModel.getPlaceById(placeId: placeId) { result in
             
@@ -337,16 +332,11 @@ class VisitsDetailVC: UIViewController {
             self.descriptionLbl.text = result.description
             self.labelAddedBy.text = "Added by \(result.creator)"
             self.setMapView(latitude: result.latitude, longitude: result.longitude, title: result.title)
-            
         }
-        
-
-
-        
     }
     
-    
     @objc func deleteVisits(){
+        
         CustomAlert.showAlert(
             in: self,
             title: "Alert",
@@ -357,15 +347,10 @@ class VisitsDetailVC: UIViewController {
                 self.viewModel.deleteVisit(placeId: self.placeId) { result in
                     self.addVisit.isHidden = false
                     self.deleteVisit.isHidden = true
-//                    DispatchQueue.main.async {
-//                        VisitsVC().MyCollection.reloadData()
-//                    }
                 }
             }
         )
         
-
-
     }
     
     @objc func addVisits(){
@@ -382,21 +367,16 @@ class VisitsDetailVC: UIViewController {
                 let today = Date()
                 let formattedDate = dateFormatter.string(from: today)
 
-
                 let param: [String : Any] = ["place_id":self.placeId, "visited_at": formattedDate ]
                 
                 self.viewModel.postVisit(parameters: param) { result in
                     self.addVisit.isHidden = true
                     self.deleteVisit.isHidden = false
-                    DispatchQueue.main.async {
-                        VisitsVC().MyCollection.reloadData()
-                    }
+                    
                 }
             }
         )
         
-
-
     }
     
     func darkMode() {
