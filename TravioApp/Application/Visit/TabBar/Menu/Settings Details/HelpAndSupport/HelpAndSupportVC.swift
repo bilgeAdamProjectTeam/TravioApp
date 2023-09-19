@@ -51,7 +51,7 @@ class HelpAndSupportVC: UIViewController {
         layout.minimumLineSpacing = 12
         layout.minimumInteritemSpacing = 0
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 0, bottom: 20, right: 0)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
@@ -127,20 +127,17 @@ class HelpAndSupportVC: UIViewController {
 
 extension HelpAndSupportVC: UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        //let size = CGSize(width: 342 , height: 140)
-//        let size = CGSize(width: retangle.frame.width * 0.87 , height: retangle.frame.height * 0.2)
-//        // let size = CGSize(width: retangle.frame.width * 0.87 , height: retangle.frame.height * 0.1)
-//        return size
-//     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let isCellSelected = selectedCellIndex == indexPath.row
         
-        let titleSize = CGSize(width: retangle.frame.width * 0.87, height: 36)
-        let descriptionSize = isCellSelected ? CGSize(width: retangle.frame.width * 0.87, height: 60) : .zero
+        let object = viewModel.labelviewArray[indexPath.row]
+        let titleSize = viewModel.calculateTextSize(text: object.labelTitle, font: Font.medium(size: 14).font)
+        let descriptionSize = viewModel.calculateTextSize(text: object.labelDescription, font: Font.medium(size: 14).font)
         
-        return CGSize(width: titleSize.width, height: titleSize.height + descriptionSize.height)
+        let minSize = CGSize(width: retangle.frame.width * 0.87, height: titleSize.height + 16)
+        let maxSize = isCellSelected ? CGSize(width: retangle.frame.width * 0.87, height: descriptionSize.height + 12) : .zero
+        
+        return CGSize(width: minSize.width, height: minSize.height + maxSize.height + 16)
     }
     
     
@@ -157,7 +154,14 @@ extension HelpAndSupportVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HelpAndSupportCollectionViewCell else { return UICollectionViewCell() }
         
-        let object = viewModel.labelviewArray[indexPath.row]
+        var object = viewModel.labelviewArray[indexPath.row]
+        let isCellSelected = selectedCellIndex == indexPath.row
+        if isCellSelected == true {
+            object.checkHidden = false
+        } else {
+            object.checkHidden = true
+        }
+        
         cell.configure(data: object)
      
          return cell

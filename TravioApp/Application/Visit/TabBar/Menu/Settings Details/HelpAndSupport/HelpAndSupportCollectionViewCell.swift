@@ -81,6 +81,7 @@ class HelpAndSupportCollectionViewCell: UICollectionViewCell {
     func configure(data:Helps){
         self.titleLabel.text = data.labelTitle
         self.descriptionLabel.text = data.labelDescription
+        self.descriptionLabel.isHidden = data.checkHidden
         
     }
     

@@ -281,10 +281,6 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
         switch toggle {
         case 0:
             
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-            
             if isOn{
                 AVCaptureDevice.requestAccess(for: .video) { granted in
                     if granted {
@@ -294,11 +290,11 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
                 }
             }
             
-        case 1:
-            
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
+            
+        case 1:
             
             if isOn{
                 PHPhotoLibrary.requestAuthorization { status in
@@ -311,17 +307,21 @@ extension SecuritySettingsVC: isOnSwitchDelegate {
                 }
             }
             
-        case 2:
-            
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
+            
+        case 2:
             
             if isOn{
                 let locationManager = CLLocationManager()
                 
                 locationManager.requestWhenInUseAuthorization()
                 locationManager.requestAlwaysAuthorization()
+            }
+            
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
             
         default:

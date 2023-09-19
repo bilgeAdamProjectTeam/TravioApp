@@ -309,7 +309,6 @@ extension AddNewPlaceVC: UIImagePickerControllerDelegate{
         
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage,
            let selectedIndexPath = selectedIndexPath {
-            // Seçilen fotoğrafı ilgili hücreye ekle
             let imageToData = selectedImage.jpegData(compressionQuality: 0.5)
             dataImage.append(imageToData)
             cellImages[selectedIndexPath.item] = selectedImage

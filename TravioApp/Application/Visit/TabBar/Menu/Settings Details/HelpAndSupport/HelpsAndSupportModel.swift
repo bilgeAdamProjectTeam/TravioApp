@@ -11,5 +11,6 @@ struct Helps {
     
     var labelTitle: String
     var labelDescription: String
+    var checkHidden: Bool
     
 }
