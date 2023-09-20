@@ -14,7 +14,6 @@ import CoreLocation
 class MapVC: UIViewController {
     
     var viewModel = MapViewModel()
-    var allPlaces: [Place]?
     var address:String?
     
     private lazy var mapView: MKMapView = {
@@ -34,7 +33,6 @@ class MapVC: UIViewController {
         
     }()
     
-    
     private lazy var collectionView:UICollectionView = {
         
         //MARK: -- CollectionView arayüzü için sağlanan layout protocolü.
@@ -43,15 +41,12 @@ class MapVC: UIViewController {
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
 
-        
-        
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
         cv.backgroundColor = .clear
         cv.contentInsetAdjustmentBehavior = .never
         cv.showsHorizontalScrollIndicator = false
-        
         cv.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCell")
         
         return cv
@@ -59,9 +54,8 @@ class MapVC: UIViewController {
     
 
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+
+        getAllPlace()
     }
     
     override func viewDidLoad() {
@@ -70,12 +64,18 @@ class MapVC: UIViewController {
     
         setupView()
         
-        viewModel.getAllPlace(callback: { result, error in
-            if let result = result{
-                self.allPlaces = result.data?.places
+        getAllPlace()
+        
+    }
+    
+    func getAllPlace() {
+        
+        viewModel.getAllPlace {
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
-                self.addPinsToMap()
             }
+            self.addPinsToMap()
+        } errorCallback: {error in
             if let error = error {
                 CustomAlert.showAlert(
                     in: self,
@@ -84,14 +84,12 @@ class MapVC: UIViewController {
                     okActionTitle: "Ok"
                 )
             }
-        })
-        
-        
-
+        }
     }
     
     func addPinsToMap() {
-        guard let allPlaces = allPlaces else { return }
+        
+        guard let allPlaces = viewModel.placeArr else { return }
         
         for place in allPlaces {
             guard let latitude = place.latitude, let longitude = place.longitude else { return }
@@ -131,7 +129,6 @@ class MapVC: UIViewController {
                 }
                 
                 guard let placemark = placemarks?.first else {
-                    //print("Yer bulunamadı.")
                     CustomAlert.showAlert(in: self, title: "Hata!", message: "Yer bulunamadı.", okActionTitle: "Ok")
                     return
                 }
@@ -150,14 +147,15 @@ class MapVC: UIViewController {
                 vc.placeCoordinate = self.address
                 vc.longitude = coordinate.longitude
                 vc.latitude = coordinate.latitude
-
-                
-                vc.completionHandler = {
-                    self.mapView.addAnnotation(annotation) // Pin ekleme
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                }
+                vc.delegate = self
+//                vc.completionHandler = {
+//                    self.mapView.addAnnotation(annotation) // Pin ekleme
+////                    DispatchQueue.main.async {
+////                        self.collectionView.reloadData()
+////                    }
+//                    //self.collectionView.reloadData()
+//                    self.getAllPlace()
+//                }
                 
                 self.present(vc, animated: true, completion: nil)
    
@@ -210,7 +208,7 @@ extension MapVC: UICollectionViewDelegateFlowLayout{
 extension MapVC: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let allPlaces = allPlaces else {return 0}
+        guard let allPlaces = viewModel.placeArr else {return 0}
         return allPlaces.count
     }
     
@@ -219,7 +217,7 @@ extension MapVC: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? MapCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let allPlaces = allPlaces else {return  UICollectionViewCell() }
+        guard let allPlaces = viewModel.placeArr else {return  UICollectionViewCell() }
 
         let places = allPlaces[indexPath.item]
         
@@ -229,7 +227,7 @@ extension MapVC: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let data = allPlaces else { return }
+        guard let data = viewModel.placeArr else { return }
         let visitData = data[indexPath.row]
         let placeId = visitData.id
         
@@ -239,9 +237,6 @@ extension MapVC: UICollectionViewDataSource{
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
-    
-    
-    
 }
 
 extension MapVC: MKMapViewDelegate{
@@ -284,14 +279,19 @@ extension MapVC: MKMapViewDelegate{
             let region = MKCoordinateRegion(center: coordinate, span: span)
             mapView.setRegion(region, animated: true)
             
-            guard let allPlaces = allPlaces else { return }
+            guard let allPlaces = viewModel.placeArr else { return }
             if let index = allPlaces.firstIndex(where: {$0.latitude == annotation.coordinate.latitude && $0.longitude == annotation.coordinate.longitude}) {
                 let indexPath = IndexPath(item: index, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             }
         }
     }
-
-    
 }
+
+extension MapVC: AddNewPlaceDelegate {
+    func didAddNewPlace() {
+        self.getAllPlace()
+    }
+}
+
 

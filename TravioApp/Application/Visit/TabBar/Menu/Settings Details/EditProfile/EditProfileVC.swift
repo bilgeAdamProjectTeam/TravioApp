@@ -111,17 +111,42 @@ class EditProfileVC: UIViewController {
     }()
     
     @objc func changeButtonTapped() {
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            present(imagePicker, animated: true, completion: nil)
-        } else {
-            CustomAlert.showAlert(in: self,
-                                  title: "Error",
-                                  message: "Camera permission required",
-                                  okActionTitle: "OK")
+        let photoLibraryPicker = UIImagePickerController()
+        photoLibraryPicker.delegate = self
+        photoLibraryPicker.sourceType = .photoLibrary
+        
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.delegate = self
+        cameraPicker.sourceType = .camera
+        
+        let alertController = UIAlertController(title: "Select Photo", message: nil, preferredStyle: .actionSheet)
+
+        let photoLibraryAction = UIAlertAction(title: "Choose from Library", style: .default) { _ in
+            self.present(photoLibraryPicker, animated: true, completion: nil)
         }
+        alertController.addAction(photoLibraryAction)
+
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Take Photo", style: .default) { _ in
+                self.present(cameraPicker, animated: true, completion: nil)
+            }
+            alertController.addAction(cameraAction)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
+        
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            present(imagePicker, animated: true, completion: nil)
+//        } else {
+//            CustomAlert.showAlert(in: self,
+//                                  title: "Error",
+//                                  message: "Camera permission required",
+//                                  okActionTitle: "OK")
+//        }
     }
     
     @objc func backTapped(){
@@ -260,71 +285,6 @@ class EditProfileVC: UIViewController {
             }
         }
     }
-    
-//    func updateUser() {
-//
-//        self.dispatchGroup.enter()
-//        self.viewModel.uploadPhoto(image: self.imageData) { result in
-//            guard let result = result.first else { return }
-//            self.imageUrl = result
-//            self.dispatchGroup.leave()
-//        } errorCallback: { error in
-//            if let error = error {
-//                CustomAlert.showAlert(in: self,
-//                                      title: "Error!",
-//                                      message: error.localizedDescription,
-//                                      okActionTitle: "OK")
-//            } else {
-//                self.dismiss(animated: true)
-//            }
-//        }
-//
-//        self.dispatchGroup.enter()
-//        guard let fullname = self.fullName.txtField.text,
-//              let email = self.mail.txtField.text,
-//              let url = self.imageUrl else { return }
-//
-//        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
-//        self.viewModel.updateUser(input: data) { error in
-//            if let error = error {
-//                CustomAlert.showAlert(in: self,
-//                                      title: "Error!",
-//                                      message: error.localizedDescription,
-//                                      okActionTitle: "OK")
-//            } else {
-//                self.dispatchGroup.leave()
-//                self.dismiss(animated: true)
-//            }
-//
-//        }
-//        self.dispatchGroup.notify(queue: .main) {
-//            print("tamamlandı")
-//        }
-//
-//    }
-    
-//    func updateUser() {
-//        dispatchGroup.enter()
-//        self.viewModel.uploadPhoto(image: self.imageData) { result in
-//            guard let result = result.first else { return }
-//            self.imageUrl = result
-//            self.dispatchGroup.leave()
-//        }
-//
-//        dispatchGroup.enter()
-//        guard let fullname = self.fullName.txtField.text,
-//              let email = self.mail.txtField.text,
-//              let url = self.imageUrl else { return }
-//
-//        let data = EditRequest(full_name: fullname, email: email, pp_url: url)
-//        self.viewModel.updateUser(input: data) {
-//            self.dispatchGroup.leave()
-//        }
-//
-//        self.dispatchGroup.notify(queue: .main) {
-//            self.dismiss(animated: true)
-//        }
-//    }
     
     func updateUser() {
         

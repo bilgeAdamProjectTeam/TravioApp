@@ -10,23 +10,23 @@ import Alamofire
 
 class MapViewModel{
     
-    var placeArr: PlaceResponse?
+    var placeArr: [Place]?
     
-    func getAllPlace(callback: @escaping (PlaceResponse?,Error?) -> Void){
-        
+    func getAllPlace(callback: @escaping () -> Void, errorCallback: @escaping (Error?) -> Void){
+
         let params = ["page":1, "limit":50]
-        
+
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllPlaces(parameters: params)){ (result: Result<PlaceResponse, Error>) in
             switch result {
             case .success(let places):
-                self.placeArr = places
-                callback(places,nil)
+                self.placeArr = places.data?.places
+                callback()
+                errorCallback(nil)
             case .failure(let error):
                 callback(nil,error)
             }
         }
     }
-    
 }
 
 

@@ -145,7 +145,7 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
         
-        var data = serviceDataArray[indexPath.row]
+        let data = serviceDataArray[indexPath.row]
         cell.configureCollectionViewCell(with: data)
 
         return cell

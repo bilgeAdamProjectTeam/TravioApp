@@ -48,12 +48,9 @@ class HomeVC: UIViewController {
     }()
     
     override func viewWillAppear(_ animated: Bool) {
-        
+
         getServiceData()
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+
     }
     
     override func viewDidLoad() {
