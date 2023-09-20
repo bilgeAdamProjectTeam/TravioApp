@@ -109,10 +109,7 @@ class LoginVC: UIViewController {
                     in: self,
                     title: "Hata!",
                     message: error.localizedDescription,
-                    okActionTitle: "Tamam",
-                    okCompletion: {
-                        print("Tamam düğmesine tıklandı.")
-                    }
+                    okActionTitle: "Tamam"
                 )
             } else {
                 

@@ -45,10 +45,8 @@ class AddNewPlaceViewModel {
             switch result {
             case .success(let data):
                 callback(nil)
-                //print("Create Gallery: \(data)")
             case .failure(let error):
                 callback(error)
-                //print("Hata:", error.localizedDescription)
             }
         }
         

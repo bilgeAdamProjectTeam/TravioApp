@@ -16,6 +16,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         let img = UIImageView()
         img.backgroundColor = .darkGray
         img.contentMode = .scaleAspectFill
+        img.kf.indicatorType = .activity
         return img
     }()
     

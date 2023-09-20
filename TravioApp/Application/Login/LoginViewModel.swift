@@ -25,10 +25,8 @@ class LoginViewModel {
                    let data = Data(token.accessToken.utf8)
                    self.saveToKeychain(data: data)
                    callback(nil)
-                   print(token.accessToken)
                case .failure(let error):
                    callback(error)
-                   print(error)
                }
            })
            

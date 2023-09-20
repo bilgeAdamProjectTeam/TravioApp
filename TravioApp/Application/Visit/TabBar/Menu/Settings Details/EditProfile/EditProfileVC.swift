@@ -139,14 +139,6 @@ class EditProfileVC: UIViewController {
 
         present(alertController, animated: true, completion: nil)
         
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            present(imagePicker, animated: true, completion: nil)
-//        } else {
-//            CustomAlert.showAlert(in: self,
-//                                  title: "Error",
-//                                  message: "Camera permission required",
-//                                  okActionTitle: "OK")
-//        }
     }
     
     @objc func backTapped(){
@@ -271,8 +263,8 @@ class EditProfileVC: UIViewController {
                 self.birthday.label.text = data.created_at
                 self.birthday.label.text = self.convertDateFormat(inputDateString: data.created_at, outputDateFormat: "dd MMMM yyyy")
                 self.userRole.label.text = data.role
-                self.fullName.placeholderName = data.full_name
-                self.mail.placeholderName = data.email
+                self.fullName.txtField.text = data.full_name
+                self.mail.txtField.text = data.email
             }
             
             if let error = error{

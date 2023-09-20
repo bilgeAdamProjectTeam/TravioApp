@@ -31,10 +31,7 @@ enum MyAPIRouter: URLRequestConvertible {
             
             if let convertedString = String(data: data, encoding: .utf8) {
                 temp = convertedString
-                print("Converted String: \(convertedString)")
-            } else {
-                print("Failed to convert data to string.")
-            }
+            } 
         }
         return temp
     }

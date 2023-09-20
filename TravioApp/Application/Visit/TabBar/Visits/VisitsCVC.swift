@@ -16,6 +16,7 @@ class VisitsCVC: UICollectionViewCell {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
         img.backgroundColor = .clear
+        img.kf.indicatorType = .activity
         return img
     }()
     

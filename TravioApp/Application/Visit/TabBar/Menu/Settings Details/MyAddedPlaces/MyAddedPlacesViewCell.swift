@@ -21,6 +21,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
         let img = UIImageView()
         img.backgroundColor = Color.darkGray.color
         img.contentMode = .scaleToFill
+        img.kf.indicatorType = .activity
         return img
     }()
     

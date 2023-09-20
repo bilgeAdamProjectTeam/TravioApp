@@ -155,9 +155,7 @@ extension HomeTableViewCell: UICollectionViewDataSource {
         let placesData = serviceDataArray[indexPath.row]
         let placeId = placesData.id
         placeIdDelegate?.placeIdTransfer(placeId: placeId, in: self)
-        print(placeId)
-        
-        
+      
     }
 }
 

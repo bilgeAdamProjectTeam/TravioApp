@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class VisitsDetailCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
         img.contentMode = .scaleAspectFill
+        img.kf.indicatorType = .activity
         return img
     }()
     
