@@ -81,10 +81,21 @@ class VisitsVC: UIViewController {
     }
     
     func configureVM() {
-        viewModel.getVisits {
-            DispatchQueue.main.async {
-                self.MyCollection.reloadData()
+        viewModel.getVisits { error in
+            if let error = error {
+                CustomAlert.showAlert(
+                    in: self,
+                    title: "Error!",
+                    message: error.localizedDescription,
+                    okActionTitle: "Ok"
+                )
+                
+            }else {
+                DispatchQueue.main.async {
+                    self.MyCollection.reloadData()
+                }
             }
+
         }
     }
 }

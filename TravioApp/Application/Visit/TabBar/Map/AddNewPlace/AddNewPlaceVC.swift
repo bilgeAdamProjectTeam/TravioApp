@@ -217,9 +217,9 @@ class AddNewPlaceVC: UIViewController {
               let longitude = longitude else { return }
         
         
-        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls in
+        self.viewModel.uploadPhotoAPI(image: dataImage, callback: { [self] urls, error in
             
-            guard let url = urls.first else { return }
+            guard let url = urls?.first else { return }
             
             let params = ["place": place, "title": title, "description":desc, "cover_image_url": url, "latitude": latitude, "longitude": longitude] as [String : Any]
             

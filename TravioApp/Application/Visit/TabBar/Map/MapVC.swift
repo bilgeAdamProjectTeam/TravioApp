@@ -70,12 +70,7 @@ class MapVC: UIViewController {
     
     func getAllPlace() {
         
-        viewModel.getAllPlace {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-            self.addPinsToMap()
-        } errorCallback: {error in
+        viewModel.getAllPlace { error in
             if let error = error {
                 CustomAlert.showAlert(
                     in: self,
@@ -83,7 +78,13 @@ class MapVC: UIViewController {
                     message: error.localizedDescription,
                     okActionTitle: "Ok"
                 )
+            }else{
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                self.addPinsToMap()
             }
+
         }
     }
     

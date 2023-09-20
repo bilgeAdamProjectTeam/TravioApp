@@ -26,8 +26,8 @@ class AddNewPlaceViewModel {
                 let id = data.message
                 for url in self.urls{
                     let params = ["place_id": id, "image_url": url]
-                    self.postGallery(params: params, callback:{
-                        print("alert eklenecek")
+                    self.postGallery(params: params, callback:{ error in
+                        print(error?.localizedDescription)
                     })
                 }
                 callback(nil)
@@ -39,15 +39,15 @@ class AddNewPlaceViewModel {
     
     
     
-    func postGallery(params:Parameters, callback: @escaping () -> Void){
+    func postGallery(params:Parameters, callback: @escaping (Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.postImage(parameters: params)) { (result: Result<GalleryResponse, Error>) in
             switch result {
             case .success(let data):
-                callback()
+                callback(nil)
                 //print("Create Gallery: \(data)")
             case .failure(let error):
-                callback()
+                callback(error)
                 //print("Hata:", error.localizedDescription)
             }
         }

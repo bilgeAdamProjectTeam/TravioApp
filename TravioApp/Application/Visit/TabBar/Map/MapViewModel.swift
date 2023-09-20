@@ -12,7 +12,7 @@ class MapViewModel{
     
     var placeArr: [Place]?
     
-    func getAllPlace(callback: @escaping () -> Void, errorCallback: @escaping (Error?) -> Void){
+    func getAllPlace(callback: @escaping (Error?) -> Void){
 
         let params = ["page":1, "limit":50]
 
@@ -20,10 +20,9 @@ class MapViewModel{
             switch result {
             case .success(let places):
                 self.placeArr = places.data?.places
-                callback()
-                errorCallback(nil)
+                callback(nil)
             case .failure(let error):
-                callback(nil,error)
+                callback(error)
             }
         }
     }

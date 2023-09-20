@@ -17,7 +17,7 @@ class VisitsViewModel {
     var places: Place?
     
     
-    func getVisits(callback: @escaping () -> Void){
+    func getVisits(callback: @escaping (Error?) -> Void){
         
         let params = ["page":1,"limit":50]
         
@@ -26,9 +26,9 @@ class VisitsViewModel {
             switch result {
             case .success(let visits):
                 self.visits = visits.data.visits
-                callback()
+                callback(nil)
             case .failure(let error):
-                callback(nil,error)
+                callback(error)
             }
         })
     }
@@ -87,7 +87,7 @@ class VisitsViewModel {
         })
     }
     
-    func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse) -> Void){
+    func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse?,Error?) -> Void){
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getCheckVisit(placeId: placeId), callback: {(result: Result<VisitPostResponse, Error>) in
             switch result {
