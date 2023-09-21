@@ -47,16 +47,12 @@ class AddNewPlaceCVC: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super .init(frame: frame)
-        
-//       self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
-//        self.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
-        
         setupViews()
     }
     
     required init?(coder : NSCoder) {
         super.init(coder: coder)
-        
+
         self.setupViews()
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,10 +60,9 @@ class AddNewPlaceCVC: UICollectionViewCell {
     func setupViews(){
         
         
-        self.backgroundColor = .white
-        
-        self.clipsToBounds = true
-        
+        self.contentView.backgroundColor = .white
+        self.contentView.clipsToBounds = true
+        self.radiusWithShadow(corners: [.topLeft,.topRight,.bottomLeft])
         self.addSubviews(images,
                          stackView)
         

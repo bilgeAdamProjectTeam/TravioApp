@@ -11,6 +11,13 @@ import WebKit
 
 class TermOfUseVC: UIViewController {
     
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .gray
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private lazy var retangle: UIView = {
         let view = CustomView()
         
@@ -38,6 +45,7 @@ class TermOfUseVC: UIViewController {
         if let url = URL(string: "https://www.thesprucepets.com/") {
             let request = URLRequest(url: url)
             wv.load(request)}
+        wv.navigationDelegate = self
         return wv
     }()
 
@@ -59,7 +67,7 @@ class TermOfUseVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = Color.turquoise.color
         
-        self.view.addSubviews(backButton,header,retangle)
+        self.view.addSubviews(backButton,header,retangle,loadingIndicator)
         retangle.addSubviews(webView)
         
         setupLayout()
@@ -87,6 +95,22 @@ class TermOfUseVC: UIViewController {
         webView.snp.makeConstraints({make in
             make.top.leading.trailing.bottom.equalToSuperview()
         })
+        
+        loadingIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
+        })
     }
 
+}
+
+
+extension TermOfUseVC: WKNavigationDelegate{
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+            loadingIndicator.startAnimating()
+        }
+
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            loadingIndicator.stopAnimating()
+        }
 }

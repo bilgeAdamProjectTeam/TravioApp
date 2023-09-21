@@ -14,7 +14,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private lazy var images : UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = .darkGray
         img.contentMode = .scaleAspectFill
         img.kf.indicatorType = .activity
         return img

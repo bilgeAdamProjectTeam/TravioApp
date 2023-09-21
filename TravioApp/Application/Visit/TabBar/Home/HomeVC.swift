@@ -47,6 +47,14 @@ class HomeVC: UIViewController {
         return tv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
 
         getServiceData()
@@ -68,7 +76,8 @@ class HomeVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         
         view.addSubviews(retangle,
-                         logo)
+                         logo,
+                         activityIndicator)
         
         retangle.addSubview(tableView)
         
@@ -97,9 +106,32 @@ class HomeVC: UIViewController {
             make.trailing.equalToSuperview()
 
         })
+        
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
+        })
     }
     
     func getServiceData() {
+        
+        homeViewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.homeViewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.tableView.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.tableView.alpha = 1.0
+                        
+                    })
+                    
+                }
+            }
+        }
         
         dispatchGroup.enter()
         homeViewModel.getPopulerPlaces(limit: 5) { result, error in

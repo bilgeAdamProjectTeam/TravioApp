@@ -133,6 +133,14 @@ class VisitsDetailVC: UIViewController {
         return button
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
+    
     @objc func buttonBackTapped() {
         navigationController?.popViewController(animated: true)
     }
@@ -162,10 +170,32 @@ class VisitsDetailVC: UIViewController {
         
         darkMode()
         
+        getDetailPageInf()
+      
+    }
+    
+    func getDetailPageInf(){
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.view.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.view.alpha = 1.0
+                    })
+                }
+            }
+        }
+        
         getTravelDetail()
         
         getDetail()
-      
     }
     
     func setupView() {
@@ -180,7 +210,8 @@ class VisitsDetailVC: UIViewController {
                               pageControl,
                               scrollView,
                               addVisit,
-                              deleteVisit)
+                              deleteVisit,
+                              activityIndicator)
         
         scrollView.addSubview(scrollContentView)
         
@@ -276,6 +307,10 @@ class VisitsDetailVC: UIViewController {
             make.top.equalTo(mapView.snp.bottom).offset(24)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
+        }
+        
+        activityIndicator.snp.makeConstraints{make in
+            make.centerX.centerY.equalToSuperview()
         }
 
     }

@@ -19,7 +19,6 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     private lazy var image: UIImageView = {
         let img = UIImageView()
-        img.backgroundColor = Color.darkGray.color
         img.contentMode = .scaleToFill
         img.kf.indicatorType = .activity
         return img

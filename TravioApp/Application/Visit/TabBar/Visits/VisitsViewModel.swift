@@ -13,19 +13,26 @@ class VisitsViewModel {
     var visits: [Visit]?
     var placeId: String?
     var images: ImageResponse?
-    var isLoadingDidChange: ((Bool) -> Void)?
     var places: Place?
+    var updateLoadingStatus: (()->())?
+    
+    var isLoading: Bool = false {
+            didSet {
+                self.updateLoadingStatus?()
+            }
+        }
     
     
     func getVisits(callback: @escaping (Error?) -> Void){
         
         let params = ["page":1,"limit":50]
-        
+        self.isLoading = true
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getVisits(parameters: params), callback: { (result: Result<VisitResponse, Error>) in
             switch result {
             case .success(let visits):
                 self.visits = visits.data.visits
+                self.isLoading = false
                 callback(nil)
             case .failure(let error):
                 callback(error)
@@ -36,13 +43,13 @@ class VisitsViewModel {
     
     func getVisitImage(placeId:String, callback: @escaping (ImageResponse?,Error?) -> Void) {
         
-        isLoadingDidChange?(true)
+        self.isLoading = true
         
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getAllImagesbyPlaceID(placeId: placeId), callback: {(result: Result<ImageResponse, Error>) in
             switch result {
             case .success(let images):
                 self.images = images
-                self.isLoadingDidChange?(false)
+                self.isLoading = false
                 callback(images,nil)
             case .failure(let error):
                 callback(nil,error)
@@ -52,9 +59,12 @@ class VisitsViewModel {
     
     func getPlaceById(placeId:String, callback: @escaping(PlaceResponseNew?,Error?) -> Void){
         
+        self.isLoading = true
+        
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getPlaceByID(placeId: placeId), callback:{(result: Result<PlaceResponseNew, Error>) in
             switch result {
             case .success(let data):
+                self.isLoading = false
                 callback(data,nil)
             case .failure(let error):
                 callback(nil,error)
@@ -89,9 +99,12 @@ class VisitsViewModel {
     
     func checkVisitByID(placeId: String, callback: @escaping(VisitPostResponse?,Error?) -> Void){
         
+        self.isLoading = true
+        
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getCheckVisit(placeId: placeId), callback: {(result: Result<VisitPostResponse, Error>) in
             switch result {
             case .success(let response):
+                self.isLoading = false
                 callback(response,nil)
             case .failure(let error):
                 callback(nil,error)

@@ -149,7 +149,7 @@ class AddNewPlaceVC: UIViewController {
     }
     
     func setupViews(){
-        
+        collectionView.roundCornersWithShadow([.topLeft,.topRight,.bottomLeft], radius: 16)
         view.addSubviews(rectangle,
                          placeName,
                          visitDescription,

@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class SettingsVC: UIViewController {
     
@@ -39,6 +40,7 @@ class SettingsVC: UIViewController {
         img.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         img.layer.cornerRadius = img.frame.size.width / 2
         img.clipsToBounds = true
+        img.kf.indicatorType = .activity
         return img
     }()
     
@@ -87,6 +89,14 @@ class SettingsVC: UIViewController {
         return cv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
+    
     @objc func showEditProfile(){
         
         let fullScreenVC = EditProfileVC()
@@ -127,7 +137,8 @@ class SettingsVC: UIViewController {
         
         self.view.addSubviews(settingTitle,
                               buttonLogout,
-                              retangle)
+                              retangle,
+                              activityIndicator)
         
         retangle.addSubviews(collectionView,
                              userPhoto,
@@ -176,9 +187,31 @@ class SettingsVC: UIViewController {
             make.top.equalTo(editProfile.snp.bottom).offset(24)
             make.leading.trailing.bottom.equalToSuperview()
         })
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
+        })
     }
     
     func getUser(){
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.collectionView.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.collectionView.alpha = 1.0
+                        
+                    })
+                    
+                }
+            }
+        }
         
         viewModel.getUsername { result, error in
             if let result = result{

@@ -61,6 +61,14 @@ class MyAddedPlacesVC: UIViewController {
         return cv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
+    
     
     @objc func backVectorTapped(){
         
@@ -98,6 +106,25 @@ class MyAddedPlacesVC: UIViewController {
     
     func getMyAddedPlaces(){
         
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.collectionView.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.collectionView.alpha = 1.0
+                        
+                    })
+                    
+                }
+            }
+        }
+        
         viewModel.getMyAddedPlaces(callback: { [self] result, error in
             if let result = result {
                 guard let places = viewModel.myAddedPlaces?.data.places else { return }
@@ -132,7 +159,8 @@ class MyAddedPlacesVC: UIViewController {
         
         self.view.addSubviews(backButton,
                          header,
-                         retangle)
+                         retangle,
+                         activityIndicator)
 
         retangle.addSubviews(sortButton,
                              collectionView)
@@ -170,6 +198,10 @@ class MyAddedPlacesVC: UIViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
+        })
+        
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
         })
     }
     

@@ -52,6 +52,13 @@ class MapVC: UIViewController {
         return cv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
 
     override func viewWillAppear(_ animated: Bool) {
 
@@ -69,6 +76,23 @@ class MapVC: UIViewController {
     }
     
     func getAllPlace() {
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.mapView.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.mapView.alpha = 1.0
+                    })
+                }
+            }
+        }
         
         viewModel.getAllPlace { error in
             if let error = error {
@@ -170,7 +194,7 @@ class MapVC: UIViewController {
         
         navigationController?.isNavigationBarHidden = true
         
-        view.addSubviews(mapView)
+        view.addSubviews(mapView,activityIndicator)
         
         mapView.addSubview(collectionView)
         
@@ -190,6 +214,11 @@ class MapVC: UIViewController {
             make.trailing.equalToSuperview()
             make.height.equalTo(178)
             
+        })
+        
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
         })
         
     }

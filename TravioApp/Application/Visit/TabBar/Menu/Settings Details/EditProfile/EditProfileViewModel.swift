@@ -14,12 +14,21 @@ class EditProfileViewModel{
     var userProfile: UserReturn?
     var url: [String] = []
     var image: [UIImage] = []
+    var updateLoadingStatus: (()->())?
+    
+    var isLoading: Bool = false {
+            didSet {
+                self.updateLoadingStatus?()
+            }
+        }
     
     func getUser(callback: @escaping (UserReturn?,Error?) -> Void){
         
+        self.isLoading = true
         NetworkingHelper.shared.objectRequestRouter(request: MyAPIRouter.getProfile){ (result: Result<UserReturn, Error>) in
             switch result {
             case .success(let data):
+                self.isLoading = false
                 self.userProfile = data
                 callback(data,nil)
             case .failure(let error):

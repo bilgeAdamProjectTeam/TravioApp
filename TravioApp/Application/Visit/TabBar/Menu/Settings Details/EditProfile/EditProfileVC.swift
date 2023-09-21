@@ -47,6 +47,7 @@ class EditProfileVC: UIViewController {
         img.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         img.layer.cornerRadius = img.frame.size.width / 2
         img.clipsToBounds = true
+        img.kf.indicatorType = .activity
         return img
     }()
     
@@ -108,6 +109,14 @@ class EditProfileVC: UIViewController {
         btn.labelText = "Save"
         btn.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return btn
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
     }()
     
     @objc func changeButtonTapped() {
@@ -176,7 +185,8 @@ class EditProfileVC: UIViewController {
         
         view.addSubviews(header,
                          exitButton,
-                         retangle)
+                         retangle,
+                         activityIndicator)
         
         retangle.addSubviews(userPhoto,
                              changePhoto,
@@ -249,9 +259,32 @@ class EditProfileVC: UIViewController {
             make.trailing.equalToSuperview().offset(-24)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-18)
         })
+        
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
+        })
     }
     
     func getProfileInf() {
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.view.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.view.alpha = 1.0
+                        
+                    })
+                    
+                }
+            }
+        }
         
         viewModel.getUser { [self] data, error in
             if let data = data{

@@ -40,6 +40,14 @@ class VisitsVC: UIViewController {
         return cv
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let ac = UIActivityIndicatorView()
+        ac.style = .large
+        ac.color = .gray
+        ac.translatesAutoresizingMaskIntoConstraints = false
+        return ac
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
 
         configureVM()
@@ -58,7 +66,8 @@ class VisitsVC: UIViewController {
         view.backgroundColor =  Color.turquoise.color
         navigationController?.navigationBar.isHidden = true
         view.addSubviews(retangle,
-                         header)
+                         header,
+                         activityIndicator)
         retangle.addSubviews(MyCollection)
         setupLayouts()
     }
@@ -78,9 +87,31 @@ class VisitsVC: UIViewController {
             make.bottom.leading.trailing.equalToSuperview()
             make.top.equalToSuperview()
         }
+        
+        activityIndicator.snp.makeConstraints({make in
+            make.centerX.centerY.equalToSuperview()
+        })
     }
     
     func configureVM() {
+        
+        viewModel.updateLoadingStatus = { [weak self] () in
+            DispatchQueue.main.async {
+                let isLoading = self?.viewModel.isLoading ?? false
+                if isLoading {
+                    self?.activityIndicator.startAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.MyCollection.alpha = 0.0
+                    })
+                }else {
+                    self?.activityIndicator.stopAnimating()
+                    UIView.animate(withDuration: 0.2, animations: {
+                        self?.MyCollection.alpha = 1.0
+                    })
+                }
+            }
+        }
+        
         viewModel.getVisits { error in
             if let error = error {
                 CustomAlert.showAlert(
